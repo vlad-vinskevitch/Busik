@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "155858264715",
+    "project_id": "busic-baa62",
+    "storage_bucket": "busic-baa62.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:155858264715:android:b4c367c8a22991d20a6a8e",
+        "android_client_info": {
+          "package_name": "com.sharkit.busik"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "155858264715-6ob2cct58bcsqcvbb5l9up3auvalvpkf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sharkit.busik",
+            "certificate_hash": "d4ce7ac372366c7b0c1333c71ba11f1761a5d013"
+          }
+        },
+        {
+          "client_id": "155858264715-2csgjfpp581orso231bd7ds3ervt04uj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_z_q6F4GLXQYhYm1UkjshsvBg5u7y2Qw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "155858264715-2csgjfpp581orso231bd7ds3ervt04uj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
