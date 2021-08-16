@@ -21,6 +21,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.sharkit.busik.Admin;
+import com.sharkit.busik.Entity.StaticUser;
 import com.sharkit.busik.Entity.User;
 import com.sharkit.busik.Exception.ToastMessage;
 import com.sharkit.busik.MainActivity;
@@ -50,28 +52,30 @@ public class Login extends Fragment {
 
     private void authorisation() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        mAuth.signInWithEmailAndPassword(email.getText().toString().trim(), password.getText().toString().trim())
-                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                    @Override
-                    public void onSuccess(AuthResult authResult) {
-                        FirebaseFirestore db = FirebaseFirestore.getInstance();
-                        db.collection("Users")
-                                .whereEqualTo("email", email.getText().toString())
-                                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                    @Override
-                                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                                        for (QueryDocumentSnapshot queryDocumentSnapshot : value){
-                                            User user = queryDocumentSnapshot.toObject(User.class);
-                                            if (user.getRole().equals("Sender")){
-                                                startActivity(new Intent(getActivity(), Sender.class));
-                                            }else if (user.getRole().equals("Carrier")){
-                                                startActivity(new Intent(getActivity(), Transport.class));
-                                            }
-                                        }
-                                    }
-                                });
 
-                    }
+
+
+
+
+        mAuth.signInWithEmailAndPassword(email.getText().toString().trim(), password.getText().toString().trim())
+                .addOnSuccessListener(authResult -> {
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    db.collection("Users")
+                            .whereEqualTo("email", email.getText().toString())
+                            .addSnapshotListener((value, error) -> {
+                                for (QueryDocumentSnapshot queryDocumentSnapshot : value){
+                                    User user = queryDocumentSnapshot.toObject(User.class);
+                                    writeCurrentUser(user);
+                                    if (user.getRole().equals("Sender")){
+                                        startActivity(new Intent(getActivity(), Sender.class));
+                                    }else if (user.getRole().equals("Carrier")){
+                                        startActivity(new Intent(getActivity(), Transport.class));
+                                    }else if (user.getRole().equals("Admin")){
+                                        startActivity(new Intent(getActivity(), Admin.class));
+                                    }
+                                }
+                            });
+
                 }).addOnFailureListener(e -> {
                     try {
                         throw new ToastMessage("Введенные почта или пароль не верны", getContext());
@@ -79,6 +83,17 @@ public class Login extends Fragment {
                         toastMessage.printStackTrace();
                     }
                 });
+    }
+
+    private void writeCurrentUser(User user) {
+        StaticUser.setName(user.getName());
+        StaticUser.setLast_name(user.getLast_name());
+        StaticUser.setCountry(user.getCountry());
+        StaticUser.setCity(user.getCity());
+        StaticUser.setPhone(user.getPhone());
+        StaticUser.setEmail(user.getEmail());
+        StaticUser.setRole(user.getRole());
+        StaticUser.setPassword(user.getPassword());
     }
 
     private void findView(View root) {
