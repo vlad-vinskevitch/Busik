@@ -1,176 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_height="match_parent">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Регистрация пользователя"/>
-
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@drawable/icon_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:textAlignment="textEnd"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:text="@string/setting"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:ignore="RtlCompat" />
+    </LinearLayout>
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-<LinearLayout
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <Spinner
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <RadioGroup
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <RadioButton
-            android:checked="true"
-            android:id="@+id/carrier_xml"
-            android:layout_weight="1"
-            android:text="Перевозчик"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <RadioButton
-            android:id="@+id/sender_xml"
-            android:layout_weight="1"
-            android:text="Отправитель"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </RadioGroup>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:hintEnabled="true"
         app:hintAnimationEnabled="true"
         android:hint="@string/name">
-
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/name_xml"
             android:inputType="text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:hintEnabled="true"
         app:hintAnimationEnabled="true"
         android:hint="@string/surname">
-
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/last_name_xml"
             android:inputType="text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content"/>
 
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:hintEnabled="true"
         app:hintAnimationEnabled="true"
         android:hint="@string/country">
-
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/country_xml"
             android:inputType="text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content"/>
 
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:hintEnabled="true"
         app:hintAnimationEnabled="true"
         android:hint="@string/city">
-
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/city_xml"
             android:inputType="text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content"/>
 
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:hintAnimationEnabled="true"
-        app:counterEnabled="true"
-        app:counterMaxLength="12"
+        app:hintEnabled="true"
         app:prefixText=" + "
+        app:counterEnabled="true"
+        app:counterMaxLength="10"
+        app:hintAnimationEnabled="true"
         android:hint="@string/phone_number">
-
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/phone_xml"
-            android:inputType="number"
+            android:inputType="phone"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content"/>
 
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:hintEnabled="true"
         app:hintAnimationEnabled="true"
         android:hint="@string/e_mail">
-
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/email_xml"
             android:inputType="textEmailAddress"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content"/>
 
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hintEnabled="true"
+        app:hintAnimationEnabled="true"
+        android:hint="@string/rating">
+        <com.google.android.material.textfield.TextInputEditText
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hintEnabled="true"
+        app:hintAnimationEnabled="true"
         app:passwordToggleEnabled="true"
-        android:layout_height="wrap_content"
-        app:hintAnimationEnabled="true"
-        android:hint="@string/password">
-
+        android:hint="@string/now_pass">
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/password_xml"
-            android:inputType="textPassword"
+            android:inputType="numberPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content"/>
 
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:hintEnabled="true"
         app:hintAnimationEnabled="true"
-        android:hint="Подтверждения пароля">
-
+        android:hint="@string/new_pass">
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/accept_pass_xml"
             android:inputType="textPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hintEnabled="true"
+        app:hintAnimationEnabled="true"
+        android:hint="@string/confirm_new_pass">
+        <com.google.android.material.textfield.TextInputEditText
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/registration_xml"
-        android:layout_gravity="center"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/registration"/>
-
-</LinearLayout>
-
-
-
-
+        android:text="@string/save"
+        android:layout_height="wrap_content"/>
     </ScrollView>
+
+
+
 
 </LinearLayout>
