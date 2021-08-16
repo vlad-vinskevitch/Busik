@@ -208,6 +208,145 @@ public class ValidationRegistration {
         return true;
 
     }
+
+    public boolean isValidChange()  {
+        if (TextUtils.isEmpty(name.getText())){
+            try {
+                throw new ToastMessage("Введите имя", context);
+            } catch (ToastMessage toastMessage) {
+                toastMessage.printStackTrace();
+            }
+            return false;
+        }
+        if (name.getText().length() < 2){
+            try {
+                throw new ToastMessage("Имя должно иметь больше 1 буквы", context);
+            } catch (ToastMessage toastMessage) {
+                toastMessage.printStackTrace();
+            }
+            return false;
+        }
+        if (name.getText().length() > 70){
+            try {
+                throw new ToastMessage("Имя не должно иметь больше 70 букв", context);
+            } catch (ToastMessage toastMessage) {
+                toastMessage.printStackTrace();
+            }
+        }
+        if (Validator(name.getText().toString().trim())){
+            try {
+                throw new ToastMessage("Имя не должно иметь символов или цифр", context);
+            } catch (ToastMessage toastMessage) {
+                toastMessage.printStackTrace();
+            }
+            return false;
+        }
+
+        if (TextUtils.isEmpty(last_name.getText())){
+            try {
+                throw new ToastMessage("Введите фамилию", context);
+            } catch (ToastMessage toastMessage) {
+                toastMessage.printStackTrace();
+            }
+            return false;
+        }
+
+        if (last_name.getText().length() < 2){
+            try {
+                throw new ToastMessage("Фамилия не должна иметь больше 1 буквы", context);
+            } catch (ToastMessage toastMessage) {
+                toastMessage.printStackTrace();
+            }
+            return false;
+        }
+        if (last_name.getText().length() > 70){
+            try {
+                throw new ToastMessage("Фамилия не должна иметь больше 70 букв", context);
+            } catch (ToastMessage toastMessage) {
+                toastMessage.printStackTrace();
+            }
+        }
+        if (Validator(last_name.getText().toString().trim())){
+            try {
+                throw new ToastMessage("Фамилия не должна иметь символов или цифр", context);
+            } catch (ToastMessage toastMessage) {
+                toastMessage.printStackTrace();
+            }
+            return false;
+        }
+
+        if (TextUtils.isEmpty(country.getText())) {
+            try {
+                throw new ToastMessage("Введите страну", context);
+            } catch (ToastMessage toastMessage) {
+                toastMessage.printStackTrace();
+            }
+            return false;
+        }
+
+        if (Validator(country.getText().toString().trim())){
+            try {
+                throw new ToastMessage("Страна не должна иметь символов или цифр", context);
+            } catch (ToastMessage toastMessage) {
+                toastMessage.printStackTrace();
+            }
+            return false;
+        }
+
+        if (TextUtils.isEmpty(city.getText())){
+            try {
+                throw new ToastMessage("Введите город", context);
+            } catch (ToastMessage toastMessage) {
+                toastMessage.printStackTrace();
+            }
+            return false;
+
+        }
+
+        if (Validator(city.getText().toString().trim())){
+            try {
+                throw new ToastMessage("Город не должен иметь символов или цифр", context);
+            } catch (ToastMessage toastMessage) {
+                toastMessage.printStackTrace();
+            }
+            return false;
+        }
+        if (TextUtils.isEmpty(phone.getText())){
+            try {
+                throw new ToastMessage("Введите номер телефона", context);
+            } catch (ToastMessage toastMessage) {
+                toastMessage.printStackTrace();
+            }
+            return false;
+        }
+        if (phone.getText().length() != 12){
+            try {
+                throw new ToastMessage("Введите корректный номер телефона", context);
+            } catch (ToastMessage toastMessage) {
+                toastMessage.printStackTrace();
+            }
+            return false;
+        }
+        if (TextUtils.isEmpty(email.getText())){
+            try {
+                throw new ToastMessage("Введите почту", context);
+            } catch (ToastMessage toastMessage) {
+                toastMessage.printStackTrace();
+            }
+            return false;
+        }
+        if (!isValidEmail(email.getText())){
+            try {
+                throw new ToastMessage("Введите корректный формат почты", context);
+            } catch (ToastMessage toastMessage) {
+                toastMessage.printStackTrace();
+            }
+            return false;
+        }
+
+        return true;
+
+    }
     private boolean Validator(String s){
         Pattern num = Pattern.compile("[0-9]");
         Pattern sign = Pattern.compile("[!@#$:%&*()_+=|<>?{}\\[\\]~×÷/€£¥₴^\";,`]°•○●□■♤♡◇♧☆▪¤《》¡¿,.]");
@@ -229,7 +368,7 @@ public class ValidationRegistration {
         return  (hasCyrillic.find() || hasSpace.find() || hasSign.find());
     }
 
-    private final static boolean isValidEmail(CharSequence target) {
+    public final static boolean isValidEmail(CharSequence target) {
         return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 }

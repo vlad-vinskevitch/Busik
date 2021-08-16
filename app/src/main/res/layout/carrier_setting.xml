@@ -117,10 +117,32 @@
             android:layout_height="wrap_content"/>
 
     </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/pass_layout_xml"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:hintEnabled="true"
+                app:hintAnimationEnabled="true"
+                app:passwordToggleEnabled="true"
+                android:hint="@string/password">
+                <com.google.android.material.textfield.TextInputEditText
+
+                    android:id="@+id/password_xml"
+                    android:inputType="text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
     <com.google.android.material.textfield.TextInputLayout
+        android:enabled="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:enabled="false"
         app:hintEnabled="true"
         app:hintAnimationEnabled="true"
         android:hint="@string/rating">
@@ -131,44 +153,16 @@
             android:layout_height="wrap_content"/>
 
     </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
+
+    <Button
+        android:id="@+id/change_pass_xml"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:hintEnabled="true"
-        app:hintAnimationEnabled="true"
-        app:passwordToggleEnabled="true"
-        android:hint="@string/now_pass">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/password_xml"
-            android:inputType="numberPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+        android:text="Изменить пароль"
+        style="@style/styleButton"
+        android:layout_marginVertical="10dp"
+        android:layout_marginHorizontal="60dp"/>
 
-    </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:hintEnabled="true"
-        app:hintAnimationEnabled="true"
-        android:hint="@string/new_pass">
-        <com.google.android.material.textfield.TextInputEditText
-            android:inputType="textPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:hintEnabled="true"
-        app:hintAnimationEnabled="true"
-        android:hint="@string/confirm_new_pass">
-        <com.google.android.material.textfield.TextInputEditText
-            android:inputType="textPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:visibility="gone"

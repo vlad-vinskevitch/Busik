@@ -18,8 +18,10 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.sharkit.busik.Entity.User;
+import com.sharkit.busik.Exception.NoConnectInternet;
 import com.sharkit.busik.Exception.ToastMessage;
 import com.sharkit.busik.R;
+import com.sharkit.busik.Validation.Configuration;
 import com.sharkit.busik.Validation.ValidationRegistration;
 
 public class Registration extends Fragment {
@@ -45,7 +47,14 @@ public class Registration extends Fragment {
                     city,password,phone,email,
                     accept_pass, getContext()
             );
-
+            if (!Configuration.hasConnection(getContext())){
+                try {
+                    throw new NoConnectInternet(getContext());
+                } catch (NoConnectInternet noConnectInternet) {
+                    noConnectInternet.printStackTrace();
+                }
+                return;
+            }
                 if (validationRegistration.isEmptyInput()){
                     registrationProfile();
                 }

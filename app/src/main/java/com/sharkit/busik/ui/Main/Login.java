@@ -2,6 +2,7 @@ package com.sharkit.busik.ui.Main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +20,11 @@ import com.sharkit.busik.Admin;
 import com.sharkit.busik.Carrier;
 import com.sharkit.busik.Entity.StaticUser;
 import com.sharkit.busik.Entity.User;
+import com.sharkit.busik.Exception.NoConnectInternet;
 import com.sharkit.busik.Exception.ToastMessage;
 import com.sharkit.busik.R;
 import com.sharkit.busik.Sender;
+import com.sharkit.busik.Validation.Configuration;
 import com.sharkit.busik.Validation.ValidationAuthorisation;
 
 public class Login extends Fragment {
@@ -39,6 +42,14 @@ public class Login extends Fragment {
     private void onClick() {
         signIn.setOnClickListener(v -> {
             ValidationAuthorisation validationAuthorisation = new ValidationAuthorisation(email, password, getContext());
+            if (!Configuration.hasConnection(getContext())){
+                try {
+                    throw  new NoConnectInternet(getContext());
+                } catch (NoConnectInternet noConnectInternet) {
+                    noConnectInternet.printStackTrace();
+                }
+                return;
+            }
             authorisation();
         });
     }
@@ -56,12 +67,14 @@ public class Login extends Fragment {
                     db.collection("Users")
                             .whereEqualTo("email", email.getText().toString())
                             .addSnapshotListener((value, error) -> {
+
                                 for (QueryDocumentSnapshot queryDocumentSnapshot : value){
                                     User user = queryDocumentSnapshot.toObject(User.class);
                                     writeCurrentUser(user);
                                     if (user.getRole().equals("Sender")){
                                         startActivity(new Intent(getActivity(), Sender.class));
                                     }else if (user.getRole().equals("Carrier")){
+                                        Log.d("TAG", "qwerty");
                                         startActivity(new Intent(getActivity(), Carrier.class));
                                     }else if (user.getRole().equals("Admin")){
                                         startActivity(new Intent(getActivity(), Admin.class));
