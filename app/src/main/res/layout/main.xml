@@ -13,10 +13,12 @@
         android:layout_height="wrap_content"
         android:text="Продолжить как"/>
     <Button
+        android:id="@+id/sign_xml"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Войти"/>в
     <Button
+        android:id="@+id/registration_xml"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Регистрация"/>
