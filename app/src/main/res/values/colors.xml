@@ -9,5 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="orange_main">#dfa841</color>
     <color name="red">#FF0000</color>
+    <color name="main_ripple">#80580E</color>
 
 </resources>

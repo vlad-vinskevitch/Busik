@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="styleTextView" parent="Theme.AppCompat">
-
+    <style name="styleTextView" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:fontFamily">@font/capriola</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:padding">5dp</item>
     </style>
+    <style name="styleButton" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:fontFamily">@font/capriola</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:background">@drawable/button</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:padding">10dp</item>
+        
+    </style>
+    
+    <style name="styleEditText" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:fontFamily">@font/capriola</item>
+        
+    </style>
+
 
 
 

@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_height="match_parent">
 
@@ -10,14 +11,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
+            app:tint="@color/black"
             android:src="@drawable/icon_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
+            style="@style/styleTextView"
+            android:textSize="24sp"
             android:textAlignment="textEnd"
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
-            android:text="Рейсы"
+            android:text="@string/flights"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             tools:ignore="RtlCompat" />
@@ -30,11 +34,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <Button
+        style="@style/styleButton"
+        android:layout_marginHorizontal="60dp"
+        android:layout_marginVertical="10dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:id="@+id/button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Добавить рейс"/>
+        android:text="@string/add_flights"/>
 
 </RelativeLayout>
