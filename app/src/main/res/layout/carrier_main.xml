@@ -6,16 +6,17 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/name_xml"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Имя фамилия"/>
 
     <LinearLayout
+        android:id="@+id/flight_xml"
         android:layout_gravity="center"
         android:clickable="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:focusable="true">
+        android:layout_height="wrap_content">
         <ImageView
             android:src="@drawable/bus"
             android:layout_width="wrap_content"
@@ -26,12 +27,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>
+
     <LinearLayout
+        android:id="@+id/reviews_xml"
         android:layout_gravity="center"
         android:clickable="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:focusable="true">
+        android:layout_height="wrap_content">
         <ImageView
             android:src="@drawable/icon_star"
             android:layout_width="wrap_content"
@@ -41,12 +43,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>
+
     <LinearLayout
+        android:id="@+id/settings_xml"
         android:layout_gravity="center"
         android:clickable="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:focusable="true">
+        android:layout_height="wrap_content">
         <ImageView
             android:src="@drawable/icon_setting"
             android:layout_width="wrap_content"
@@ -56,12 +59,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>
+
     <LinearLayout
+        android:id="@+id/exit_xml"
         android:layout_gravity="center"
         android:clickable="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:focusable="true">
+        android:layout_height="wrap_content">
         <ImageView
             android:src="@drawable/icon_log_out"
             android:layout_width="wrap_content"

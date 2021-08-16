@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
@@ -23,10 +22,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.sharkit.busik.Entity.User;
 import com.sharkit.busik.Exception.ToastMessage;
-import com.sharkit.busik.MainActivity;
 import com.sharkit.busik.R;
 import com.sharkit.busik.Sender;
-import com.sharkit.busik.Transport;
+import com.sharkit.busik.Carrier;
 import com.sharkit.busik.Validation.ValidationAuthorisation;
 
 public class Login extends Fragment {
@@ -65,7 +63,7 @@ public class Login extends Fragment {
                                             if (user.getRole().equals("Sender")){
                                                 startActivity(new Intent(getActivity(), Sender.class));
                                             }else if (user.getRole().equals("Carrier")){
-                                                startActivity(new Intent(getActivity(), Transport.class));
+                                                startActivity(new Intent(getActivity(), Carrier.class));
                                             }
                                         }
                                     }

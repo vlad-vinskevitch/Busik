@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Busik">
         <activity
-            android:name=".Transport"
+            android:name=".Carrier"
             android:exported="true" />
         <activity
             android:name=".Sender"
