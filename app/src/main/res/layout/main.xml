@@ -16,12 +16,12 @@
         android:id="@+id/sign_xml"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Войти"/>в
+        android:text="@string/login"/>
     <Button
         android:id="@+id/registration_xml"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Регистрация"/>
+        android:text="@string/registration"/>
 
 
 </LinearLayout>
