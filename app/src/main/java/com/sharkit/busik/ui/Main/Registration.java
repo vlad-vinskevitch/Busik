@@ -64,12 +64,11 @@ public class Registration extends Fragment {
 
     private  void createUser(User user){
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        Log.d(tag, user.getEmail()+ ", " + user.getPassword());
         mAuth.createUserWithEmailAndPassword(user.getEmail(),user.getPassword())
                 .addOnSuccessListener(authResult -> {
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    db.collection("Users")
-                            .add(user)
+                    db.collection("Users").document(user.getEmail())
+                            .set(user)
                             .addOnSuccessListener(documentReference -> {
                                 try {
                                     throw new ToastMessage("Успешная регистрация",getContext());
