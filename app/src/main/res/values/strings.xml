@@ -15,4 +15,6 @@
     <string name="new_pass">Новый пароль</string>
     <string name="confirm_new_pass">Подтверждение нового пароля</string>
     <string name="save">Сохранить</string>
+    <string name="add_flights">Добавить рейс</string>
+    <string name="flights">Рейсы</string>
 </resources>
