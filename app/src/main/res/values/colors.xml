@@ -10,5 +10,7 @@
     <color name="orange_main">#dfa841</color>
     <color name="red">#FF0000</color>
     <color name="main_ripple">#80580E</color>
+    <color name="color_stroke">#5C5C5C</color>
+    <color name="prozory">#00FFFFFF</color>
 
 </resources>

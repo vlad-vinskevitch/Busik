@@ -43,6 +43,8 @@
         android:hint="@string/name">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/name_xml"
+
+            style="@style/styleEditText"
             android:inputType="text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -128,7 +130,6 @@
                 app:passwordToggleEnabled="true"
                 android:hint="@string/password">
                 <com.google.android.material.textfield.TextInputEditText
-
                     android:id="@+id/password_xml"
                     android:inputType="text"
                     android:layout_width="match_parent"

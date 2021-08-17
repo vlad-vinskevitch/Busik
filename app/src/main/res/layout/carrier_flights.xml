@@ -29,19 +29,20 @@
 
     <ListView
         android:layout_below="@+id/linear"
-        android:layout_above="@+id/button"
+        android:layout_above="@+id/add_flights_xml"
         android:id="@+id/list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
     <Button
+        android:id="@+id/add_flights_xml"
         style="@style/styleButton"
-        android:layout_marginHorizontal="60dp"
-        android:layout_marginVertical="10dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/add_flights"/>
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="60dp"
+        android:layout_marginVertical="10dp"
+        android:text="@string/add_flights" />
 
 </RelativeLayout>
