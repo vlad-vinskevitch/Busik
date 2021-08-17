@@ -57,10 +57,6 @@ public class Login extends Fragment {
     private void authorisation() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-
-
-
-
         mAuth.signInWithEmailAndPassword(email.getText().toString().trim(), password.getText().toString().trim())
                 .addOnSuccessListener(authResult -> {
                     FirebaseFirestore db = FirebaseFirestore.getInstance();

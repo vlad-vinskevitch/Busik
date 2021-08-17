@@ -131,15 +131,18 @@ public class CarrierSetting extends Fragment {
 
             if (registration.isValidChange()){
                 if (!email.getText().toString().equals(StaticUser.getEmail())) {
-//                    if (!password.getText().toString().equals(StaticUser.getPassword())) {
-//                        try {
-//                            throw new ToastMessage("Введите пароль", getContext());
-//                        } catch (ToastMessage toastMessage) {
-//                            toastMessage.printStackTrace();
-//                        }
-//                        return;
-//                    }
+                    if (!password.getText().toString().equals(StaticUser.getPassword())) {
+                        try {
+                            throw new ToastMessage("Введите пароль", getContext());
+                        } catch (ToastMessage toastMessage) {
+                            toastMessage.printStackTrace();
+                        }
+                        return;
+                    }
                     updateEmail();
+                    writeToObject();
+                    writeToFirestore();
+                    return;
                 }
                 writeToObject();
                 writeToFirestore();
