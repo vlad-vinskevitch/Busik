@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation_carrier"
+    app:startDestination="@id/nav_carrier_main">
+
+    <fragment
+        android:id="@+id/nav_carrier_main"
+        android:name="com.sharkit.busik.ui.Carrier.CarrierMain"
+        tools:layout="@layout/carrier_main" />
+
+    <fragment
+        android:id="@+id/nav_carrier_flights"
+        android:name="com.sharkit.busik.ui.Carrier.CarrierFlights"
+        tools:layout="@layout/carrier_flights" />
+
+    <fragment
+        android:id="@+id/nav_carrier_setting"
+        android:name="com.sharkit.busik.ui.Carrier.CarrierSetting"
+        tools:layout="@layout/carrier_setting" />
+
+    <fragment
+        android:id="@+id/nav_carrier_reviews"
+        android:name="com.sharkit.busik.ui.Carrier.CarrierReviews"
+        tools:layout="@layout/carrier_reviews" />
+
+
+</navigation>
