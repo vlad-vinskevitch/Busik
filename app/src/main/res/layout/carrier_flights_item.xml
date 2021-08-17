@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/flights_item_linear"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            style="@style/styleTextView"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ukr + khmel -- ukr + harkiv"/>
+        <ImageView
+            app:tint="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_item_flights"/>
+    </LinearLayout>
+    <TextView
+        style="@style/styleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-- 10 $/kg"/>
+    <TextView
+        style="@style/styleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-- 12 $/pasager"/>
+    <TextView
+        style="@style/styleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-- otpr + 19.08.2021"/>
+    <TextView
+        style="@style/styleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-- pribitie + 20.08.2021"/>
+    <TextView
+        style="@style/styleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-- status : 'sobir ehat'"/>
+    <TextView
+        style="@style/styleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Podrobnosti : "/>
+
+
+</LinearLayout>
