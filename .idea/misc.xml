@@ -3,30 +3,24 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/drawable/button.xml" value="0.2833333333333333" />
-        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/drawable/flights_item_linear.xml" value="0.27685185185185185" />
-        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/drawable/icon_bussss.xml" value="0.2866666666666667" />
-        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/drawable/icon_star.xml" value="0.2833333333333333" />
-        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/carrier_add_flights.xml" value="0.264" />
-        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/carrier_flights.xml" value="0.264" />
-        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/carrier_flights_item.xml" value="0.264" />
-        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/carrier_main.xml" value="0.264" />
-        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/carrier_reviews.xml" value="0.22780797101449277" />
-        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/carrier_setting.xml" value="0.264" />
-        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/layout_carrier_main.xml" value="0.176" />
-        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/layout_main.xml" value="0.16032608695652173" />
-        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/layout_registration.xml" value="0.16032608695652173" />
-        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/login.xml" value="0.22780797101449277" />
-        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/main.xml" value="0.22780797101449277" />
-        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/registration.xml" value="0.22780797101449277" />
+        <entry key="app/src/main/res/drawable/button.xml" value="0.1828125" />
         <entry key="app/src/main/res/layout/activity_carrier.xml" value="0.29483695652173914" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.29483695652173914" />
         <entry key="app/src/main/res/layout/activity_sender.xml" value="0.29483695652173914" />
         <entry key="app/src/main/res/layout/activity_transport.xml" value="0.29483695652173914" />
+        <entry key="app/src/main/res/layout/alert_change_email.xml" value="0.3203125" />
+        <entry key="app/src/main/res/layout/calendar_picker.xml" value="0.3203125" />
+        <entry key="app/src/main/res/layout/carrier_add_flights.xml" value="0.3203125" />
+        <entry key="app/src/main/res/layout/carrier_flights.xml" value="0.16666666666666666" />
+        <entry key="app/src/main/res/layout/carrier_main.xml" value="0.16666666666666666" />
+        <entry key="app/src/main/res/layout/carrier_reviews.xml" value="0.16666666666666666" />
+        <entry key="app/src/main/res/layout/login.xml" value="0.3203125" />
+        <entry key="app/src/main/res/layout/main.xml" value="0.29483695652173914" />
+        <entry key="app/src/main/res/layout/registration.xml" value="0.3203125" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

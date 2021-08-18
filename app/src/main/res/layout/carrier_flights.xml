@@ -28,11 +28,11 @@
     </LinearLayout>
 
     <ListView
-        android:layout_below="@+id/linear"
-        android:layout_above="@+id/add_flights_xml"
         android:id="@+id/list"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/add_flights_xml"
+        android:layout_below="@+id/linear" />
 
     <Button
         android:id="@+id/add_flights_xml"
