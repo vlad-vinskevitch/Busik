@@ -2,6 +2,7 @@ package com.sharkit.busik.ui.Main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,24 +12,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.sharkit.busik.Admin;
+import com.sharkit.busik.Carrier;
 import com.sharkit.busik.Entity.StaticUser;
 import com.sharkit.busik.Entity.User;
+import com.sharkit.busik.Exception.NoConnectInternet;
 import com.sharkit.busik.Exception.ToastMessage;
-import com.sharkit.busik.MainActivity;
 import com.sharkit.busik.R;
 import com.sharkit.busik.Sender;
-import com.sharkit.busik.Transport;
+import com.sharkit.busik.Validation.Configuration;
 import com.sharkit.busik.Validation.ValidationAuthorisation;
 
 public class Login extends Fragment {
@@ -46,6 +42,14 @@ public class Login extends Fragment {
     private void onClick() {
         signIn.setOnClickListener(v -> {
             ValidationAuthorisation validationAuthorisation = new ValidationAuthorisation(email, password, getContext());
+            if (!Configuration.hasConnection(getContext())){
+                try {
+                    throw  new NoConnectInternet(getContext());
+                } catch (NoConnectInternet noConnectInternet) {
+                    noConnectInternet.printStackTrace();
+                }
+                return;
+            }
             authorisation();
         });
     }
@@ -53,23 +57,21 @@ public class Login extends Fragment {
     private void authorisation() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-
-
-
-
         mAuth.signInWithEmailAndPassword(email.getText().toString().trim(), password.getText().toString().trim())
                 .addOnSuccessListener(authResult -> {
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
                     db.collection("Users")
                             .whereEqualTo("email", email.getText().toString())
                             .addSnapshotListener((value, error) -> {
+
                                 for (QueryDocumentSnapshot queryDocumentSnapshot : value){
                                     User user = queryDocumentSnapshot.toObject(User.class);
                                     writeCurrentUser(user);
                                     if (user.getRole().equals("Sender")){
                                         startActivity(new Intent(getActivity(), Sender.class));
                                     }else if (user.getRole().equals("Carrier")){
-                                        startActivity(new Intent(getActivity(), Transport.class));
+                                        Log.d("TAG", "qwerty");
+                                        startActivity(new Intent(getActivity(), Carrier.class));
                                     }else if (user.getRole().equals("Admin")){
                                         startActivity(new Intent(getActivity(), Admin.class));
                                     }
@@ -86,6 +88,7 @@ public class Login extends Fragment {
     }
 
     private void writeCurrentUser(User user) {
+        StaticUser.setRating(user.getRating());
         StaticUser.setName(user.getName());
         StaticUser.setLast_name(user.getLast_name());
         StaticUser.setCountry(user.getCountry());
