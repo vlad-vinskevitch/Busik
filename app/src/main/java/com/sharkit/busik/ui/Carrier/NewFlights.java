@@ -109,13 +109,13 @@ public class NewFlights extends Fragment {
     }
 
     private void writeToObject(Flight flight) {
-        flight.setStartCountry(startCountry.getText().toString());
-        flight.setFinishCountry(finishCountry.getText().toString());
-        flight.setStartCity(startCity.getText().toString());
-        flight.setFinishCity(finishCity.getText().toString());
-        flight.setPriceCargo(priceCargo.getText().toString());
-        flight.setPricePassenger(pricePassenger.getText().toString());
-        flight.setNote(note.getText().toString());
+        flight.setStartCountry(startCountry.getText().toString().trim());
+        flight.setFinishCountry(finishCountry.getText().toString().trim());
+        flight.setStartCity(startCity.getText().toString().trim());
+        flight.setFinishCity(finishCity.getText().toString().trim());
+        flight.setPriceCargo(priceCargo.getText().toString().trim());
+        flight.setPricePassenger(pricePassenger.getText().toString().trim());
+        flight.setNote(note.getText().toString().trim());
     }
 
     private void findView(View root) {
