@@ -2,6 +2,7 @@ package com.sharkit.busik.Entity;
 
 public class User {
     private String role, name, last_name, country, city, phone, email, password;
+    private long rating;
 
     public String getRole() {
         return role;
@@ -65,5 +66,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public long getRating() {
+        return rating;
+    }
+
+    public void setRating(long rating) {
+        this.rating = rating;
     }
 }

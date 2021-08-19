@@ -25,5 +25,9 @@
         android:name="com.sharkit.busik.ui.Carrier.CarrierReviews"
         tools:layout="@layout/carrier_reviews" />
 
+    <fragment
+        android:id="@+id/nav_carrier_add_flights"
+        android:name="com.sharkit.busik.ui.Carrier.NewFlights"
+        tools:layout="@layout/carrier_add_flights" />
 
 </navigation>
