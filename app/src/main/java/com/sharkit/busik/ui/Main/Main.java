@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.sharkit.busik.MainActivity;
 import com.sharkit.busik.R;
 
 public class Main extends Fragment implements View.OnClickListener {
@@ -39,7 +40,7 @@ public class Main extends Fragment implements View.OnClickListener {
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
-        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
+        NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         switch (v.getId()){
             case R.id.sign_xml:
                 navController.navigate(R.id.nav_login);

@@ -27,6 +27,7 @@
                 app:hintAnimationEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/start_country_xml"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"/>
@@ -39,6 +40,7 @@
                 android:hint="Куда(страна)">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/finish_country_xml"
                     android:inputType="text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -50,6 +52,7 @@
                 app:hintAnimationEnabled="true"
                 android:hint="Откуда(город)">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/start_city_xml"
                     android:inputType="text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -62,6 +65,7 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/finish_city_xml"
                     android:inputType="text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -74,6 +78,7 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/price_cargo_xml"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"/>
@@ -85,47 +90,56 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/price_passenger_xml"
                     android:inputType="numberDecimal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </com.google.android.material.textfield.TextInputLayout>
+
+
             <com.google.android.material.textfield.TextInputLayout
-                android:hint="Дата отправления"
                 app:hintAnimationEnabled="true"
+                android:hint="Start date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:inputType="date"
+                    android:id="@+id/start_date_xml"
+                    android:focusableInTouchMode="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                app:hintAnimationEnabled="true"
+                android:hint="finish date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/finish_date_xml"
+                    android:focusableInTouchMode="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:hint="Дата прибытия"
-                app:hintAnimationEnabled="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:inputType="date"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
                 app:hintAnimationEnabled="true"
                 android:hint="Подробности/Комментарий"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/note_xml"
                     android:inputType="textMultiLine"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
+                android:id="@+id/create_xml"
                 android:layout_marginHorizontal="60dp"
                 android:layout_marginVertical="10dp"
                 style="@style/styleButton"

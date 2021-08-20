@@ -18,8 +18,10 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.sharkit.busik.Entity.User;
+import com.sharkit.busik.Exception.NoConnectInternet;
 import com.sharkit.busik.Exception.ToastMessage;
 import com.sharkit.busik.R;
+import com.sharkit.busik.Validation.Configuration;
 import com.sharkit.busik.Validation.ValidationRegistration;
 
 public class Registration extends Fragment {
@@ -45,7 +47,14 @@ public class Registration extends Fragment {
                     city,password,phone,email,
                     accept_pass, getContext()
             );
-
+            if (!Configuration.hasConnection(getContext())){
+                try {
+                    throw new NoConnectInternet(getContext());
+                } catch (NoConnectInternet noConnectInternet) {
+                    noConnectInternet.printStackTrace();
+                }
+                return;
+            }
                 if (validationRegistration.isEmptyInput()){
                     registrationProfile();
                 }
@@ -64,12 +73,11 @@ public class Registration extends Fragment {
 
     private  void createUser(User user){
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        Log.d(tag, user.getEmail()+ ", " + user.getPassword());
         mAuth.createUserWithEmailAndPassword(user.getEmail(),user.getPassword())
                 .addOnSuccessListener(authResult -> {
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    db.collection("Users")
-                            .add(user)
+                    db.collection("Users").document(user.getEmail())
+                            .set(user)
                             .addOnSuccessListener(documentReference -> {
                                 try {
                                     throw new ToastMessage("Успешная регистрация",getContext());

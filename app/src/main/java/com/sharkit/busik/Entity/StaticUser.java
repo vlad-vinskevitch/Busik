@@ -2,6 +2,15 @@ package com.sharkit.busik.Entity;
 
 public class StaticUser {
     private static String role, name, last_name, country, city, phone, email, password;
+    private static long rating;
+
+    public static long getRating() {
+        return rating;
+    }
+
+    public static void setRating(long rating) {
+        StaticUser.rating = rating;
+    }
 
     public static String getRole() {
         return role;
