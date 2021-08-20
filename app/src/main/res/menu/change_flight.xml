@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/main"
+        android:title="Главная">
+    </item>
+
+    <item
+        android:id="@+id/ration"
+        android:title="Рацион" >
+    </item>
+
+    <item
+        android:id="@+id/calendar"
+        android:title="Календарь"/>
+
+    <item
+        android:id="@+id/weight"
+        android:title="Вес" >
+    </item>
+</menu>

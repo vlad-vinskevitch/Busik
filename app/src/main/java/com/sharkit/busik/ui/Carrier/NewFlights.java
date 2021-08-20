@@ -21,6 +21,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.sharkit.busik.Entity.Flight;
+import com.sharkit.busik.Entity.StaticUser;
 import com.sharkit.busik.Exception.NoConnectInternet;
 import com.sharkit.busik.Exception.ToastMessage;
 import com.sharkit.busik.R;
@@ -116,6 +117,7 @@ public class NewFlights extends Fragment {
         flight.setPriceCargo(priceCargo.getText().toString().trim());
         flight.setPricePassenger(pricePassenger.getText().toString().trim());
         flight.setNote(note.getText().toString().trim());
+        flight.setOwner(StaticUser.getEmail());
     }
 
     private void findView(View root) {

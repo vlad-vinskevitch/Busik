@@ -1,8 +1,24 @@
 package com.sharkit.busik.Entity;
 
 public class Flight {
-    private String startCountry, finishCountry, startCity, finishCity, note, priceCargo, pricePassenger;
+    private String startCountry, finishCountry, startCity, finishCity, note, priceCargo, pricePassenger, status, owner;
     private long startDate, finishDate;
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getStartCountry() {
         return startCountry;
