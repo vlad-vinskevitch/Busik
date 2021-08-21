@@ -24,4 +24,20 @@
     <string name="list_flight">Список перевозчиков</string>
     <string name="massage_from_driver">Сообщения от водителей</string>
     <string name="reviews">Отзывы</string>
+    <string name="exit">Выход</string>
+    <string name="change_pass">Изменить пароль</string>
+    <string name="min_pasag">Мин Є/пасажир</string>
+    <string name="max_pasag">Макс Є/пасажир</string>
+    <string name="min_kg">Мин Є/кг</string>
+    <string name="max_kg">Макс Є/кг</string>
+    <string name="from_country">из(Страна)</string>
+    <string name="in_country">В(Страна)</string>
+    <string name="from_city">из (Город)</string>
+    <string name="in_city">в(Город)</string>
+    <string name="date_send_from">дата отправления от</string>
+    <string name="date_send_before">дата отправления до</string>
+    <string name="date_arrival_from">дата прибытия от</string>
+    <string name="date_arrival_before">дата прибытия до</string>
+    <string name="carrier">Перевозчик</string>
+    <string name="sender">Отправитель</string>
 </resources>

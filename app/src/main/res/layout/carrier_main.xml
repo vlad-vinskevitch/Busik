@@ -1,135 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/name_xml"
+        style="@style/styleTextView"
         android:layout_width="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:textSize="24sp" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line"/>
 
+    <LinearLayout
 
-
-
-
-
-
-
-
-
-
-
-
-        <TextView
-            android:id="@+id/name_xml"
-            style="@style/styleTextView"
-            android:textSize="24sp"
-            android:layout_margin="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Имя фамилия"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <LinearLayout
-
-            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="5dp"
+            android:id="@+id/flight_xml"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:focusable="true">
 
-            <LinearLayout
-                android:id="@+id/flight_xml"
-                android:layout_gravity="center"
-                android:clickable="true"
-                android:layout_width="200dp"
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:focusable="true">
-                <ImageView
-                    android:layout_weight="1"
-                    android:src="@drawable/bus"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    app:tint="@color/orange_main"/>
-                <TextView
-                    android:layout_weight="1"
-                    style="@style/styleTextView"
-                    android:layout_gravity="center"
-                    android:text="@string/flights"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/reviews_xml"
-                android:layout_gravity="center"
-                android:clickable="true"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:focusable="true">
-                <ImageView
-                    android:layout_weight="1"
-                    android:src="@drawable/icon_star"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"/>
-                <TextView
-                    style="@style/styleTextView"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:text="Отзывы"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/settings_xml"
-                android:layout_gravity="center"
-                android:clickable="true"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:focusable="true">
-                <ImageView
-                    android:layout_marginLeft="5dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/icon_setting"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"/>
-                <TextView
-                    style="@style/styleTextView"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
-                    android:text="Настройки"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_gravity="center"
-                android:clickable="true"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:focusable="true">
-                <ImageView
-                    android:layout_weight="1"
-                    android:src="@drawable/icon_log_out"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    app:tint="@color/orange_main"/>
-                <TextView
-                    android:layout_weight="1"
-                    android:textAlignment="textEnd"
-                    style="@style/styleTextView"
-                    android:layout_gravity="center"
-                    android:text="Выход"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:ignore="RtlCompat" />
-            </LinearLayout>
+                android:src="@drawable/bus"
+                app:tint="@color/orange_main" />
 
+            <TextView
+                android:textAlignment="center"
+                style="@style/styleTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="@string/flights" />
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_marginHorizontal="5dp"
+            android:id="@+id/reviews_xml"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:focusable="true">
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_star" />
+
+            <TextView
+                android:textAlignment="center"
+                style="@style/styleTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="@string/reviews" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginHorizontal="5dp"
+            android:id="@+id/settings_xml"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_setting" />
+
+            <TextView
+                android:textAlignment="center"
+                style="@style/styleTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="@string/setting" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/exit_xml"
+            android:layout_marginHorizontal="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_log_out"
+                app:tint="@color/orange_main" />
+
+            <TextView
+                style="@style/styleTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="@string/exit"
+                android:textAlignment="center"
+                tools:ignore="RtlCompat" />
         </LinearLayout>
 
 
-
-
-
-
-
     </LinearLayout>
+
+
+</LinearLayout>
 
 
 
