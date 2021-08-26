@@ -67,13 +67,16 @@ public class Login extends Fragment {
                                 for (QueryDocumentSnapshot queryDocumentSnapshot : value){
                                     User user = queryDocumentSnapshot.toObject(User.class);
                                     writeCurrentUser(user);
-                                    if (user.getRole().equals("Sender")){
-                                        startActivity(new Intent(getActivity(), Sender.class));
-                                    }else if (user.getRole().equals("Carrier")){
-                                        Log.d("TAG", "qwerty");
-                                        startActivity(new Intent(getActivity(), Carrier.class));
-                                    }else if (user.getRole().equals("Admin")){
-                                        startActivity(new Intent(getActivity(), Admin.class));
+                                    switch (user.getRole()) {
+                                        case "Sender":
+                                            startActivity(new Intent(getActivity(), Sender.class));
+                                            break;
+                                        case "Carrier":
+                                            startActivity(new Intent(getActivity(), Carrier.class));
+                                            break;
+                                        case "Admin":
+                                            startActivity(new Intent(getActivity(), Admin.class));
+                                            break;
                                     }
                                 }
                             });

@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/mobile_navigation_sender">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation_sender"
+    app:startDestination="@id/nav_sender_main">
 
+    <fragment
+        android:id="@+id/nav_sender_main"
+        android:name="com.sharkit.busik.ui.Sender.SenderMain"
+        tools:layout="@layout/sender_main" />
 
+    <fragment
+        android:id="@+id/nav_sender_profile"
+        android:name="com.sharkit.busik.ui.Sender.SenderProfile"
+        tools:layout="@layout/sender_profile" />
 </navigation>

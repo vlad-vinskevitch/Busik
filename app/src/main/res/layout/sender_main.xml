@@ -10,10 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
+            android:id="@+id/profile_xml"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/icon_profile"/>
         <ImageView
+            android:id="@+id/filter_xml"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/icon_filter"/>
@@ -27,6 +29,7 @@
         android:layout_height="wrap_content"
         android:text="@string/list_flight"/>
     <ListView
+        android:id="@+id/list_xml"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

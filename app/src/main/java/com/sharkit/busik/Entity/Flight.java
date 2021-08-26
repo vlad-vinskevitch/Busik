@@ -1,11 +1,28 @@
 package com.sharkit.busik.Entity;
 
 public class Flight {
-    private String startCountry, finishCountry, startCity, finishCity, note, priceCargo, pricePassenger, status, owner;
+    private String startCountry, finishCountry, startCity, finishCity, note, status, owner;
     private long startDate, finishDate;
+    private float  priceCargo, pricePassenger;
 
     public String getOwner() {
         return owner;
+    }
+
+    public float getPriceCargo() {
+        return priceCargo;
+    }
+
+    public void setPriceCargo(float priceCargo) {
+        this.priceCargo = priceCargo;
+    }
+
+    public float getPricePassenger() {
+        return pricePassenger;
+    }
+
+    public void setPricePassenger(float pricePassenger) {
+        this.pricePassenger = pricePassenger;
     }
 
     public void setOwner(String owner) {
@@ -22,22 +39,6 @@ public class Flight {
 
     public String getStartCountry() {
         return startCountry;
-    }
-
-    public String getPriceCargo() {
-        return priceCargo;
-    }
-
-    public void setPriceCargo(String priceCargo) {
-        this.priceCargo = priceCargo;
-    }
-
-    public String getPricePassenger() {
-        return pricePassenger;
-    }
-
-    public void setPricePassenger(String pricePassenger) {
-        this.pricePassenger = pricePassenger;
     }
 
     public void setStartCountry(String startCountry) {

@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/nav_host_sender"
-        android:name="androidx.navigation.fragment.NavHostFragment"
+        class="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:defaultNavHost="true"

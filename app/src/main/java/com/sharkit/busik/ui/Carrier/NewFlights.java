@@ -77,7 +77,7 @@ public class NewFlights extends Fragment {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 Calendar calendar = Calendar.getInstance();
-                calendar.set(year, month, dayOfMonth);
+                calendar.set(year, month, dayOfMonth,0,0,0);
                 SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
                 if (!b){
                     flight.setStartDate(calendar.getTimeInMillis());
@@ -114,8 +114,8 @@ public class NewFlights extends Fragment {
         flight.setFinishCountry(finishCountry.getText().toString().trim());
         flight.setStartCity(startCity.getText().toString().trim());
         flight.setFinishCity(finishCity.getText().toString().trim());
-        flight.setPriceCargo(priceCargo.getText().toString().trim());
-        flight.setPricePassenger(pricePassenger.getText().toString().trim());
+        flight.setPriceCargo(Float.parseFloat(priceCargo.getText().toString().trim()));
+        flight.setPricePassenger(Float.parseFloat(pricePassenger.getText().toString().trim()));
         flight.setNote(note.getText().toString().trim());
         flight.setOwner(StaticUser.getEmail());
     }
