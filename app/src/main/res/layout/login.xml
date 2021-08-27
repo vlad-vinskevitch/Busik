@@ -30,6 +30,7 @@
             app:hintAnimationEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
+
                 android:id="@+id/email_xml"
                 style="@style/styleEditText"
                 android:layout_width="match_parent"
