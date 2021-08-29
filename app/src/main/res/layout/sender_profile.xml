@@ -91,6 +91,7 @@
             android:textAlignment="center" />
     </LinearLayout>
 
+
     <LinearLayout
         android:id="@+id/reviews_xml"
         android:layout_width="match_parent"

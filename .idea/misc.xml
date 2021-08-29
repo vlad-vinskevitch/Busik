@@ -3,6 +3,30 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/activity_admin.xml" value="0.11924119241192412" />
+        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/application_on_passenger.xml" value="0.2418478260869565" />
+        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/carrier_add_flights.xml" value="0.264" />
+        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/carrier_flights.xml" value="0.11924119241192412" />
+        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/carrier_flights_item.xml" value="0.264" />
+        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/carrier_main.xml" value="0.264" />
+        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/carrier_reviews.xml" value="0.264" />
+        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/carrier_setting.xml" value="0.264" />
+        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/item_reviews.xml" value="0.2418478260869565" />
+        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/login.xml" value="0.2" />
+        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/main.xml" value="0.152" />
+        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/profile_carrier.xml" value="0.2418478260869565" />
+        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/profile_sender.xml" value="0.2418478260869565" />
+        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/registration.xml" value="0.264" />
+        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/reviews.xml" value="0.2418478260869565" />
+        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/reviews_item.xml" value="0.24444444444444444" />
+        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/sender_filter.xml" value="0.264" />
+        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/sender_flights.xml" value="0.24444444444444444" />
+        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/sender_item.xml" value="0.2246376811594203" />
+        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/sender_main.xml" value="0.1009946442234124" />
+        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/sender_massage.xml" value="0.24444444444444444" />
+        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/sender_profile.xml" value="0.264" />
+        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/sender_reviews.xml" value="0.24444444444444444" />
+        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/sender_setting.xml" value="0.24444444444444444" />
         <entry key="app/src/main/res/drawable/button.xml" value="0.1828125" />
         <entry key="app/src/main/res/layout/activity_carrier.xml" value="0.29483695652173914" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.29483695652173914" />
@@ -15,25 +39,13 @@
         <entry key="app/src/main/res/layout/carrier_flights_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/carrier_main.xml" value="0.16666666666666666" />
         <entry key="app/src/main/res/layout/carrier_reviews.xml" value="0.16666666666666666" />
-        <entry key="app/src/main/res/layout/create_reviews.xml" value="0.3203125" />
-        <entry key="app/src/main/res/layout/item_application_on_passenger.xml" value="0.3203125" />
-        <entry key="app/src/main/res/layout/item_reviews.xml" value="0.3203125" />
         <entry key="app/src/main/res/layout/login.xml" value="0.3203125" />
         <entry key="app/src/main/res/layout/main.xml" value="0.29483695652173914" />
-        <entry key="app/src/main/res/layout/profile_carrier.xml" value="0.3203125" />
         <entry key="app/src/main/res/layout/registration.xml" value="0.3203125" />
-        <entry key="app/src/main/res/layout/reviews_item.xml" value="0.3203125" />
-        <entry key="app/src/main/res/layout/sender_filter.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/sender_item.xml" value="0.17395833333333333" />
-        <entry key="app/src/main/res/layout/sender_main.xml" value="0.17395833333333333" />
-        <entry key="app/src/main/res/layout/sender_massage.xml" value="0.17395833333333333" />
-        <entry key="app/src/main/res/layout/sender_profile.xml" value="0.3203125" />
-        <entry key="app/src/main/res/layout/sender_reviews.xml" value="0.17395833333333333" />
-        <entry key="app/src/main/res/menu/change_flight.xml" value="0.3203125" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

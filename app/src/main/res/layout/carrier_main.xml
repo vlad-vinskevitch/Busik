@@ -53,6 +53,7 @@
         </LinearLayout>
 
 
+
         <LinearLayout
             android:layout_marginHorizontal="5dp"
             android:id="@+id/reviews_xml"

@@ -1,6 +1,7 @@
 package com.sharkit.busik.Adapter;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -23,6 +24,7 @@ import com.sharkit.busik.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class SenderAdapter extends BaseAdapter {
     private Context mContext;
@@ -90,9 +92,71 @@ public class SenderAdapter extends BaseAdapter {
                                 return true;
                             }
                         });
+                menu.add("Оставить отзыв")
+                        .setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                leaveReview(position);
+                                return true;
+                            }
+                        });
             }
         });
         return convertView;
+    }
+
+    private void leaveReview(int position) {
+
+        db.collection("Flights")
+                .whereEqualTo("owner", mGroup.get(position).getOwner())
+                .whereEqualTo("startCountry", mGroup.get(position).getStartCountry())
+                .whereEqualTo("finishCountry", mGroup.get(position).getFinishCountry())
+                .whereEqualTo("startCity", mGroup.get(position).getStartCity())
+                .whereEqualTo("finishCity", mGroup.get(position).getFinishCity())
+                .whereEqualTo("note",mGroup.get(position).getNote())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
+                            flight = queryDocumentSnapshot.toObject(Flight.class);
+                        }
+                        validationPassenger();
+                    }
+                });
+    }
+
+    private void validationPassenger() {
+        Calendar calendar = Calendar.getInstance();
+        for (int i = 0; i < flight.getPassengers().size(); i++){
+            if (!flight.getPassengers().get(i).equals(StaticUser.getEmail())){
+                try {
+                    throw new ToastMessage("Вы должны быть пассажиром даного рейса", mContext);
+                } catch (ToastMessage toastMessage) {
+                    toastMessage.printStackTrace();
+                }
+                return;
+            }
+        }
+
+        if (flight.getStartDate() > calendar.getTimeInMillis()){
+            try {
+                throw new ToastMessage("Вы не можете поставить отзыв раньше отправления", mContext);
+            } catch (ToastMessage toastMessage) {
+                toastMessage.printStackTrace();
+            }
+            return;
+        }
+
+        addReview();
+    }
+
+    private void addReview() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+        View view = inflater.inflate(R.layout.create_reviews, null);
+        dialog.setView(view);
+        dialog.show();
     }
 
     private void cancelBoarding(int position) {
