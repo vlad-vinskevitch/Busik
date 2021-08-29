@@ -54,6 +54,30 @@
 
         <LinearLayout
             android:layout_marginHorizontal="5dp"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_profile" />
+
+            <TextView
+                android:textAlignment="center"
+                style="@style/styleTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="@string/profile" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginHorizontal="5dp"
             android:id="@+id/reviews_xml"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

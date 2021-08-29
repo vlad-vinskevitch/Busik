@@ -13,5 +13,6 @@
     <color name="color_stroke">#5C5C5C</color>
     <color name="prozory">#00FFFFFF</color>
     <color name="line">#5C5C5C</color>
+    <color name="green">#4CAF50</color>
 
 </resources>

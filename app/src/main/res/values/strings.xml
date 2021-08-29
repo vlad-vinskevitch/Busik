@@ -42,4 +42,7 @@
     <string name="sender">Отправитель</string>
     <string name="massage">Сообщения</string>
     <string name="upcoming_flights">Предстоящие рейсы</string>
+    <string name="search_flight">Поиск рейса</string>
+    <string name="my_package">Мои отправления</string>
+    <string name="profile">Профиль</string>
 </resources>
