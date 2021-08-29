@@ -128,7 +128,17 @@ public class SenderAdapter extends BaseAdapter {
 
     private void validationPassenger() {
         Calendar calendar = Calendar.getInstance();
+
+        if (flight.getPassengers().size() == 0){
+            try {
+                throw new ToastMessage("Вы должны быть пассажиром даного рейса", mContext);
+            } catch (ToastMessage toastMessage) {
+                toastMessage.printStackTrace();
+            }
+            return;
+        }
         for (int i = 0; i < flight.getPassengers().size(); i++){
+
             if (!flight.getPassengers().get(i).equals(StaticUser.getEmail())){
                 try {
                     throw new ToastMessage("Вы должны быть пассажиром даного рейса", mContext);
