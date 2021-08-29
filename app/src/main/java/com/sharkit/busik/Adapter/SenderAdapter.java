@@ -3,6 +3,8 @@ package com.sharkit.busik.Adapter;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -10,14 +12,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.sharkit.busik.Entity.Flight;
+import com.sharkit.busik.Entity.Review;
 import com.sharkit.busik.Entity.StaticUser;
 import com.sharkit.busik.Exception.ToastMessage;
 import com.sharkit.busik.R;
@@ -54,7 +61,6 @@ public class SenderAdapter extends BaseAdapter {
         return position;
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null){
@@ -62,16 +68,8 @@ public class SenderAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.carrier_flights_item, null);
         }
         findView(convertView);
-        @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        direction.setText(mGroup.get(position).getStartCountry() + "(" + mGroup.get(position).getStartCity() + ") - " +
-                mGroup.get(position).getFinishCountry() + "(" + mGroup.get(position).getFinishCity() + ")");
-        priceCargo.setText("- " + mGroup.get(position).getPriceCargo() + " $/kg");
-        pricePassenger.setText("- " + mGroup.get(position).getPricePassenger() + " $/пассажир");
+        writeToField(position);
 
-        startDate.setText(startDate.getText() + " " + simpleDateFormat.format(mGroup.get(position).getStartDate()));
-        finishDate.setText(finishDate.getText() + " " + simpleDateFormat.format(mGroup.get(position).getFinishDate()));
-        note.setText(note.getText() + " " + mGroup.get(position).getNote());
 
         dropdownMenu.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
             @Override
@@ -105,6 +103,21 @@ public class SenderAdapter extends BaseAdapter {
         return convertView;
     }
 
+    @SuppressLint("SetTextI18n")
+    private void writeToField(int position) {
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        direction.setText(mGroup.get(position).getStartCountry() + "(" + mGroup.get(position).getStartCity() + ") - " +
+                mGroup.get(position).getFinishCountry() + "(" + mGroup.get(position).getFinishCity() + ")");
+
+        priceCargo.setText("- " + mGroup.get(position).getPriceCargo() + " $/kg");
+        pricePassenger.setText("- " + mGroup.get(position).getPricePassenger() + " $/пассажир");
+
+        startDate.setText(simpleDateFormat.format(mGroup.get(position).getStartDate()));
+        finishDate.setText(simpleDateFormat.format(mGroup.get(position).getFinishDate()));
+        note.setText(note.getText() + " " + mGroup.get(position).getNote());
+    }
+
     private void leaveReview(int position) {
 
         db.collection("Flights")
@@ -121,12 +134,12 @@ public class SenderAdapter extends BaseAdapter {
                         for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
                             flight = queryDocumentSnapshot.toObject(Flight.class);
                         }
-                        validationPassenger();
+                        validationPassenger(position);
                     }
                 });
     }
 
-    private void validationPassenger() {
+    private void validationPassenger(int position) {
         Calendar calendar = Calendar.getInstance();
 
         if (flight.getPassengers().size() == 0){
@@ -158,15 +171,58 @@ public class SenderAdapter extends BaseAdapter {
             return;
         }
 
-        addReview();
+        addReview(position);
     }
 
-    private void addReview() {
+    private void addReview(int position) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.create_reviews, null);
+        RatingBar ratingBar = view.findViewById(R.id.rating_xml);
+        TextInputEditText text = view.findViewById(R.id.text_xml);
+        dialog.setOnDismissListener(DialogInterface::dismiss);
+        dialog.setPositiveButton("Оставить отзыв", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (TextUtils.isEmpty(text.getText())){
+                    try {
+                        throw new ToastMessage("Введите сообщение", mContext);
+                    } catch (ToastMessage toastMessage) {
+                        toastMessage.printStackTrace();
+                    }
+                    return;
+                }
+                createReview(text.getText().toString(), ratingBar.getRating(), position, dialog);
+            }
+        });
+
         dialog.setView(view);
         dialog.show();
+    }
+
+    private void createReview(String text, float ratingBarRating, int position, DialogInterface dialog) {
+        Review review = new Review();
+        Calendar calendar = Calendar.getInstance();
+        review.setText(text);
+        review.setDate(calendar.getTimeInMillis());
+        review.setRecipient(mGroup.get(position).getOwner());
+        review.setRating(ratingBarRating);
+        review.setOwner(StaticUser.getName() + " " + StaticUser.getLast_name());
+        review.setFlight(mGroup.get(position).getStartCountry() + "(" + mGroup.get(position).getStartCity() + ") - " +
+                mGroup.get(position).getFinishCountry() + "(" + mGroup.get(position).getFinishCity() + ")");
+        db.collection("Reviews")
+                .add(review)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        try {
+                            throw new ToastMessage("Отзыв оставлен", mContext);
+                        } catch (ToastMessage toastMessage) {
+                            toastMessage.printStackTrace();
+                        }
+                        dialog.dismiss();
+                    }
+                });
     }
 
     private void cancelBoarding(int position) {
