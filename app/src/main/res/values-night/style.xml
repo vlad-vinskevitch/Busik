@@ -24,12 +24,10 @@
 
     <style name="styleRadioButton" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="colorAccent">@color/orange_main</item>
-
     </style>
 
 
-
-
-
-
+    <style name="styleLinearLayout" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:background">@drawable/flights_item_linear_night</item>
+    </style>
 </resources>
