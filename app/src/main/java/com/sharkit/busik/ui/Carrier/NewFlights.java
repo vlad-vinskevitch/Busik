@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -33,6 +35,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class NewFlights extends Fragment {
+    private AutoCompleteTextView textView;
+
     private TextInputEditText startCountry, finishCountry, startCity, finishCity, priceCargo, pricePassenger, note, startDate, finishDate;
     private Button create;
     private int year, month, day;
@@ -43,6 +47,12 @@ public class NewFlights extends Fragment {
         View root = inflater.inflate(R.layout.carrier_add_flights, container, false);
         findView(root);
         onClick();
+
+
+        String [] contain = getResources().getStringArray(R.array.countries_array);
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, contain);
+        textView.setAdapter(adapter);
         return root;
     }
 
@@ -78,6 +88,7 @@ public class NewFlights extends Fragment {
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(year, month, dayOfMonth,0,0,0);
+                @SuppressLint("SimpleDateFormat")
                 SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
                 if (!b){
                     flight.setStartDate(calendar.getTimeInMillis());
@@ -121,7 +132,8 @@ public class NewFlights extends Fragment {
     }
 
     private void findView(View root) {
-        startCountry = root.findViewById(R.id.start_country_xml);
+        textView = root.findViewById(R.id.autocomplete_country);
+//        startCountry = root.findViewById(R.id.start_country_xml);
         finishCountry = root.findViewById(R.id.finish_country_xml);
         startCity = root.findViewById(R.id.start_city_xml);
         finishCity = root.findViewById(R.id.finish_city_xml);

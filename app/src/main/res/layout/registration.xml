@@ -28,21 +28,21 @@
                 android:orientation="horizontal">
 
                 <RadioButton
-                    android:buttonTint="@color/main_ripple"
+                    style="@style/styleRadioButton"
                     android:id="@+id/carrier_xml"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:checked="true"
-                    android:text="Перевозчик" />
+                    android:text="@string/carrier" />
 
                 <RadioButton
-                    android:buttonTint="@color/main_ripple"
+                    style="@style/styleRadioButton"
                     android:id="@+id/sender_xml"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Отправитель" />
+                    android:text="@string/sender" />
             </RadioGroup>
 
             <com.google.android.material.textfield.TextInputLayout

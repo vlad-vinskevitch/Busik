@@ -23,7 +23,6 @@
             android:text="ukr + khmel -- ukr + harkiv"
             tools:ignore="RtlCompat" />
         <ImageView
-            android:id="@+id/dropdown_menu_xml"
             app:tint="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

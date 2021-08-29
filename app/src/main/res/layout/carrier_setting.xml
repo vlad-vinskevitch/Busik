@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginHorizontal="5dp"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
@@ -137,29 +137,19 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:enabled="false"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:hintEnabled="true"
-        app:hintAnimationEnabled="true"
-        android:hint="@string/rating">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/rating_xml"
-            android:inputType="text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/rating_xml"
+                android:layout_margin="5dp"
+                style="@style/styleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rating"/>
 
     <Button
         android:id="@+id/change_pass_xml"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Изменить пароль"
+        android:text="@string/change_pass"
         style="@style/styleButton"
         android:layout_marginVertical="10dp"
         android:layout_marginHorizontal="60dp"/>

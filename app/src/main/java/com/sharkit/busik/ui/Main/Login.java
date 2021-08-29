@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.sharkit.busik.Admin;
@@ -30,18 +31,28 @@ import com.sharkit.busik.Validation.ValidationAuthorisation;
 public class Login extends Fragment {
     private TextInputEditText email, password;
     private Button signIn;
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.login, container, false);
         findView(root);
         onClick();
+        login();
         return root;
     }
 
+    private void login() {
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        if (firebaseUser != null) {
+            signInCurrentUser(firebaseUser.getEmail());
+        }
+    }
+
+
     private void onClick() {
         signIn.setOnClickListener(v -> {
-            ValidationAuthorisation validationAuthorisation = new ValidationAuthorisation(email, password, getContext());
             if (!Configuration.hasConnection(getContext())){
                 try {
                     throw  new NoConnectInternet(getContext());
@@ -54,38 +65,42 @@ public class Login extends Fragment {
         });
     }
 
+
     private void authorisation() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         mAuth.signInWithEmailAndPassword(email.getText().toString().trim(), password.getText().toString().trim())
                 .addOnSuccessListener(authResult -> {
-                    FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    db.collection("Users")
-                            .whereEqualTo("email", email.getText().toString())
-                            .addSnapshotListener((value, error) -> {
-
-                                for (QueryDocumentSnapshot queryDocumentSnapshot : value){
-                                    User user = queryDocumentSnapshot.toObject(User.class);
-                                    writeCurrentUser(user);
-                                    switch (user.getRole()) {
-                                        case "Sender":
-                                            startActivity(new Intent(getActivity(), Sender.class));
-                                            break;
-                                        case "Carrier":
-                                            startActivity(new Intent(getActivity(), Carrier.class));
-                                            break;
-                                        case "Admin":
-                                            startActivity(new Intent(getActivity(), Admin.class));
-                                            break;
-                                    }
-                                }
-                            });
+                 signInCurrentUser(email.getText().toString().trim());
 
                 }).addOnFailureListener(e -> {
                     try {
                         throw new ToastMessage("Введенные почта или пароль не верны", getContext());
                     } catch (ToastMessage toastMessage) {
                         toastMessage.printStackTrace();
+                    }
+                });
+    }
+
+    private void signInCurrentUser(String mail) {
+        db.collection("Users")
+                .whereEqualTo("email", mail)
+                .addSnapshotListener((value, error) -> {
+
+                    for (QueryDocumentSnapshot queryDocumentSnapshot : value){
+                        User user = queryDocumentSnapshot.toObject(User.class);
+                        writeCurrentUser(user);
+                        switch (user.getRole()) {
+                            case "Sender":
+                                startActivity(new Intent(getActivity(), Sender.class));
+                                break;
+                            case "Carrier":
+                                startActivity(new Intent(getActivity(), Carrier.class));
+                                break;
+                            case "Admin":
+                                startActivity(new Intent(getActivity(), Admin.class));
+                                break;
+                        }
                     }
                 });
     }

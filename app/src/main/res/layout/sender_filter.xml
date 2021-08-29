@@ -1,197 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_margin="5dp"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="horizontal">
+
         <com.google.android.material.textfield.TextInputLayout
-            android:hint="Мин Є/пасажир"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/min_pasag">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:selectAllOnFocus="true"
                 android:id="@+id/min_price_passenger_xml"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:hint="Макс Є/пасажир"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/max_pasag">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:selectAllOnFocus="true"
                 android:id="@+id/max_price_passenger_xml"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
-
     </LinearLayout>
+
     <LinearLayout
-        android:layout_margin="5dp"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="horizontal">
+
         <com.google.android.material.textfield.TextInputLayout
-            android:hint="Мин Є/кг"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/min_kg">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:selectAllOnFocus="true"
                 android:id="@+id/min_price_cargo_xml"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:hint="Макс Є/кг"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/max_kg">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:selectAllOnFocus="true"
                 android:id="@+id/max_price_cargo_xml"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
-
     </LinearLayout>
+
     <LinearLayout
-        android:layout_margin="5dp"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="horizontal">
+
         <com.google.android.material.textfield.TextInputLayout
-            android:hint="из(Страна)"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/from_country">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:selectAllOnFocus="true"
                 android:id="@+id/start_country_xml"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:hint="В(Страна)"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/in_country">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:selectAllOnFocus="true"
                 android:id="@+id/finish_country_xml"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
-
 
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_margin="5dp"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="horizontal">
+
         <com.google.android.material.textfield.TextInputLayout
-            android:hint="из (Город)"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/from_city">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:selectAllOnFocus="true"
                 android:id="@+id/start_city_xml"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:hint="в(Город)"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/in_city">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:selectAllOnFocus="true"
                 android:id="@+id/finish_city_xml"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
-
     </LinearLayout>
+
     <LinearLayout
-        android:layout_margin="5dp"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="horizontal">
+
         <com.google.android.material.textfield.TextInputLayout
-            android:hint="дата отправления от"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/date_send_from">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:focusableInTouchMode="false"
                 android:id="@+id/start_date_do_xml"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:hint="дата отправления до"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/date_send_before">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:focusableInTouchMode="false"
                 android:id="@+id/start_date_after_xml"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
-
     </LinearLayout>
+
     <LinearLayout
-        android:layout_margin="5dp"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="horizontal">
+
         <com.google.android.material.textfield.TextInputLayout
-            android:hint="дата прибытия от"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/date_arrival_from">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:focusableInTouchMode="false"
                 android:id="@+id/finish_date_do_xml"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:hint="дата прибытия до"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/date_arrival_before">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:focusableInTouchMode="false"
                 android:id="@+id/finish_date_after_xml"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,7 +39,8 @@ import com.sharkit.busik.Validation.ValidationRegistration;
 public class CarrierSetting extends Fragment {
     private TextInputLayout pass;
     private TextInputEditText name, last_name, country,
-            city, phone, email, rating, password;
+            city, phone, email, password;
+    private TextView rating;
     private Button save, changePass;
     private String mail;
 
@@ -119,6 +121,7 @@ public class CarrierSetting extends Fragment {
         registration = new ValidationRegistration(name,
                 last_name, country, city, password, phone, email, password, getContext());
         save.setOnClickListener(v -> {
+
             if (!Configuration.hasConnection(getContext())){
                 try {
                     throw new NoConnectInternet(getContext());

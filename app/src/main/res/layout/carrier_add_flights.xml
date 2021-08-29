@@ -26,11 +26,16 @@
                 android:hint="Откуда(страна)"
                 app:hintAnimationEnabled="true">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/start_country_xml"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"/>
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    android:id="@+id/start_country_xml"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:inputType="textAutoComplete"/>-->
+
+                <AutoCompleteTextView
+                    android:id="@+id/autocomplete_country"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout

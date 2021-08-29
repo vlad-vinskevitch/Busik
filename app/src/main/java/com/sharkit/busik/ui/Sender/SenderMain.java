@@ -38,7 +38,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class SenderMain extends Fragment {
+public class SenderMain extends Fragment implements View.OnClickListener {
     private ImageView profile, filter;
     private TextInputEditText minPricePassenger, maxPricePassenger, maxPriceCargo, minPriceCargo,
     startCountry, finishCountry, startCity, finishCity, startDateDo, startDateAfter, finishDateDo, finishDateAfter;
@@ -77,9 +77,8 @@ public class SenderMain extends Fragment {
     }
 
     private void onClick() {
-//        NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_sender);
-//        profile.setOnClickListener(v -> navController.navigate(R.id.nav_sender_profile));
-        filter.setOnClickListener(v -> createAlertFilter());
+        profile.setOnClickListener(this);
+        filter.setOnClickListener(this);
     }
 
     private void createAlertFilter() {
@@ -185,8 +184,14 @@ public class SenderMain extends Fragment {
         if (!TextUtils.isEmpty(startDateDo.getText())){
             query = getQueryWhereGreater(query, "startDate", Filter.getStartDateDo());
         }
+        if (!TextUtils.isEmpty(startDateDo.getText())){
+            query = getQueryWhereLess(query, "finishDate", Filter.getFinishDateDo());
+        }
         if (!TextUtils.isEmpty(finishDateDo.getText())){
-            query = getQueryWhereGreater(query, "finishDate", Filter.getFinishDateDo());
+            query = getQueryWhereGreater(query, "startDate", Filter.getStartDateDo());
+        }
+        if (!TextUtils.isEmpty(finishDateDo.getText())){
+            query = getQueryWhereLess(query, "finishDate", Filter.getFinishDateDo());
         }
 
 
@@ -262,4 +267,18 @@ public class SenderMain extends Fragment {
         filter = root.findViewById(R.id.filter_xml);
     }
 
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public void onClick(View v) {
+        NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_sender);
+        switch (v.getId()){
+            case R.id.filter_xml:
+                createAlertFilter();
+                break;
+            case R.id.profile_xml:
+                navController.navigate(R.id.nav_sender_profile);
+                break;
+
+        }
+    }
 }
