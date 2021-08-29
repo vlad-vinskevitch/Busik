@@ -21,7 +21,7 @@ import com.sharkit.busik.MainActivity;
 import com.sharkit.busik.R;
 
 public class SenderProfile extends Fragment implements View.OnClickListener {
-    private LinearLayout flight, message, review, setting, exit;
+    private LinearLayout flight, message, review, setting, exit, mainFlights;
 
     @Nullable
     @Override
@@ -33,6 +33,7 @@ public class SenderProfile extends Fragment implements View.OnClickListener {
     }
 
     private void findView(View root) {
+        mainFlights = root.findViewById(R.id.main_flights_xml);
         flight = root.findViewById(R.id.flight_xml);
         message = root.findViewById(R.id.message_xml);
         review = root.findViewById(R.id.reviews_xml);
@@ -40,6 +41,7 @@ public class SenderProfile extends Fragment implements View.OnClickListener {
         exit = root.findViewById(R.id.exit_xml);
     }
     private void onClick(){
+        mainFlights.setOnClickListener(this);
         flight.setOnClickListener(this);
         message.setOnClickListener(this);
         review.setOnClickListener(this);
@@ -56,7 +58,11 @@ public class SenderProfile extends Fragment implements View.OnClickListener {
             case R.id.flight_xml:
                 navController.navigate(R.id.nav_sender_main);
                 break;
+            case R.id.main_flights_xml:
+                navController.navigate(R.id.nav_main_flights);
+                break;
             case R.id.message_xml:
+                navController.navigate(R.id.nav_sender_message);
                 break;
             case R.id.reviews_xml:
                 ElseVariable.setProfile(StaticUser.getEmail());

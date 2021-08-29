@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:padding="2dp"
+    style="@style/styleLinearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:layout_marginHorizontal="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
+            android:id="@+id/name_xml"
             android:layout_weight="1"
             android:gravity="center"
             android:layout_width="0dp"
@@ -16,6 +20,7 @@
             style="@style/styleTextView"
             android:text="ФИО"/>
         <TextView
+            android:id="@+id/date_xml"
             android:layout_weight="1"
             android:gravity="center"
             android:layout_width="0dp"
@@ -25,12 +30,14 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/flight_xml"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/styleTextView"
         android:text="@string/flights"/>
     <TextView
+        android:id="@+id/rating_xml"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

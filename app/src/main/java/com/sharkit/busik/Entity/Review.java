@@ -1,8 +1,9 @@
 package com.sharkit.busik.Entity;
 
 public class Review {
-    private String owner, text, flight, date, recipient;
-    private int rating;
+    private String owner, text, flight, recipient;
+    private float rating;
+    private long date;
 
     public String getOwner() {
         return owner;
@@ -28,11 +29,11 @@ public class Review {
         this.flight = flight;
     }
 
-    public String getDate() {
+    public long getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(long date) {
         this.date = date;
     }
 
@@ -44,11 +45,11 @@ public class Review {
         this.recipient = recipient;
     }
 
-    public int getRating() {
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 }

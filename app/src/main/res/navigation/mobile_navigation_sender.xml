@@ -24,4 +24,14 @@
         android:id="@+id/nav_sender_setting"
         android:name="com.sharkit.busik.ui.Sender.SenderSetting"
         tools:layout="@layout/sender_setting" />
+
+    <fragment
+        android:id="@+id/nav_sender_message"
+        android:name="com.sharkit.busik.ui.Sender.SenderMessage"
+        tools:layout="@layout/sender_massage" />
+
+    <fragment
+        android:id="@+id/nav_main_flights"
+        android:name="com.sharkit.busik.ui.Sender.MainFlights"
+        tools:layout="@layout/sender_flights" />
 </navigation>
