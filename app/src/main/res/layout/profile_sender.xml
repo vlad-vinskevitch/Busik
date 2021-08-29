@@ -3,38 +3,5 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:gravity="center"
-        android:text="ФИО"
-        style="@style/styleTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:gravity="center"
-        android:text="@string/phone_number"
-        style="@style/styleTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:gravity="center"
-        android:text="@string/country"
-        style="@style/styleTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:gravity="center"
-        android:text="@string/city"
-        style="@style/styleTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:gravity="center"
-        android:text="@string/rating"
-        style="@style/styleTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
 
 </LinearLayout>
