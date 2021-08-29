@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/drawable/flights_item_linear.xml" value="0.2587962962962963" />
+        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/drawable/flights_item_linear_night.xml" value="0.2587962962962963" />
         <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/activity_admin.xml" value="0.11924119241192412" />
         <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/application_on_passenger.xml" value="0.2418478260869565" />
+        <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/calendar_picker.xml" value="0.2418478260869565" />
         <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/carrier_add_flights.xml" value="0.264" />
         <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/carrier_flights.xml" value="0.11924119241192412" />
         <entry key="..\:/proect/Android/bussik/Busik/app/src/main/res/layout/carrier_flights_item.xml" value="0.264" />
