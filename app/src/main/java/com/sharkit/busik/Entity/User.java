@@ -3,6 +3,15 @@ package com.sharkit.busik.Entity;
 public class User {
     private String role, name, last_name, country, city, phone, email, password;
     private long rating;
+    private String flight;
+
+    public String getFlight() {
+        return flight;
+    }
+
+    public void setFlight(String flight) {
+        this.flight = flight;
+    }
 
     public String getRole() {
         return role;

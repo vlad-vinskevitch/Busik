@@ -1,5 +1,6 @@
 package com.sharkit.busik.ui.Sender;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.sharkit.busik.Entity.ElseVariable;
+import com.sharkit.busik.Entity.StaticUser;
 import com.sharkit.busik.MainActivity;
 import com.sharkit.busik.R;
 
@@ -44,6 +47,7 @@ public class SenderProfile extends Fragment implements View.OnClickListener {
         exit.setOnClickListener(this);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_sender);
@@ -55,8 +59,11 @@ public class SenderProfile extends Fragment implements View.OnClickListener {
             case R.id.message_xml:
                 break;
             case R.id.reviews_xml:
+                ElseVariable.setProfile(StaticUser.getEmail());
+                navController.navigate(R.id.nav_sender_reviews);
                 break;
             case R.id.settings_xml:
+                navController.navigate(R.id.nav_sender_setting);
                 break;
             case R.id.exit_xml:
                 mAuth.signOut();

@@ -1,8 +1,16 @@
 package com.sharkit.busik.Entity;
 
 public class StaticUser {
-    private static String role, name, last_name, country, city, phone, email, password;
+    private static String role, name, last_name, country, city, phone, email, password, flight;
     private static long rating;
+
+    public static String getFlight() {
+        return flight;
+    }
+
+    public static void setFlight(String flight) {
+        StaticUser.flight = flight;
+    }
 
     public static long getRating() {
         return rating;

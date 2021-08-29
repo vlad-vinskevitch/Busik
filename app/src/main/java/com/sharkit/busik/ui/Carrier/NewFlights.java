@@ -32,6 +32,7 @@ import com.sharkit.busik.Validation.ValidationFlight;
 import com.sharkit.busik.Validation.ValidationRegistration;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class NewFlights extends Fragment {
@@ -49,10 +50,10 @@ public class NewFlights extends Fragment {
         onClick();
 
 
-        String [] contain = getResources().getStringArray(R.array.countries_array);
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, contain);
-        textView.setAdapter(adapter);
+//        String [] contain = getResources().getStringArray(R.array.countries_array);
+//        ArrayAdapter<String> adapter =
+//                new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, contain);
+//        textView.setAdapter(adapter);
         return root;
     }
 
@@ -132,11 +133,13 @@ public class NewFlights extends Fragment {
         flight.setPricePassenger(Float.parseFloat(pricePassenger.getText().toString().trim()));
         flight.setNote(note.getText().toString().trim());
         flight.setOwner(StaticUser.getEmail());
+        flight.setPassengers(new ArrayList<>());
+        flight.setStatus("During");
     }
 
     private void findView(View root) {
-        textView = root.findViewById(R.id.autocomplete_country);
-//        startCountry = root.findViewById(R.id.start_country_xml);
+//        textView = root.findViewById(R.id.autocomplete_country);
+        startCountry = root.findViewById(R.id.start_country_xml);
         finishCountry = root.findViewById(R.id.finish_country_xml);
         startCity = root.findViewById(R.id.start_city_xml);
         finishCity = root.findViewById(R.id.finish_city_xml);

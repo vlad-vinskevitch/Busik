@@ -106,7 +106,7 @@ public class Registration extends Fragment {
         user.setEmail(email.getText().toString().trim());
         user.setPassword(password.getText().toString());
         user.setRole(s);
-
+        user.setFlight("null");
     }
 
     private void findView(View root) {

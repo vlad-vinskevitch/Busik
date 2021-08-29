@@ -16,7 +16,9 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.sharkit.busik.Entity.ElseVariable;
 import com.sharkit.busik.Entity.StaticUser;
+import com.sharkit.busik.Entity.User;
 import com.sharkit.busik.MainActivity;
 import com.sharkit.busik.R;
 
@@ -60,6 +62,7 @@ public class CarrierMain extends Fragment implements View.OnClickListener {
                 navController.navigate(R.id.nav_carrier_flights);
                 break;
             case R.id.reviews_xml:
+                ElseVariable.setProfile(StaticUser.getEmail());
                 navController.navigate(R.id.nav_carrier_reviews);
                 break;
             case R.id.settings_xml:

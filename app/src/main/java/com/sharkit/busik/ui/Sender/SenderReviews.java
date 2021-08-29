@@ -1,4 +1,4 @@
-package com.sharkit.busik.ui.Carrier;
+package com.sharkit.busik.ui.Sender;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,13 +21,13 @@ import com.sharkit.busik.R;
 
 import java.util.ArrayList;
 
-public class CarrierReviews extends Fragment {
+public class SenderReviews extends Fragment {
     private ListView listReviews;
     private ArrayList<Review> reviews = new ArrayList<>();
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.carrier_reviews, container, false);
+        View root = inflater.inflate(R.layout.sender_reviews, container, false);
         findView(root);
         getReviewsFromDB();
         return root;

@@ -4,36 +4,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
+        android:id="@+id/name_xml"
         android:gravity="center"
         android:text="ФИО"
         style="@style/styleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <TextView
+        android:id="@+id/phone_xml"
         android:gravity="center"
         android:text="@string/phone_number"
         style="@style/styleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <TextView
+        android:id="@+id/country_xml"
         android:gravity="center"
         android:text="@string/country"
         style="@style/styleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <TextView
+        android:id="@+id/city_xml"
         android:gravity="center"
         android:text="@string/city"
         style="@style/styleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <TextView
+        android:id="@+id/rating_xml"
         android:gravity="center"
         android:text="@string/rating"
         style="@style/styleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <ListView
+        android:id="@+id/list_reviews_xml"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

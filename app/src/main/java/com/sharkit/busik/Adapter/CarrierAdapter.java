@@ -83,6 +83,7 @@ public class CarrierAdapter extends BaseAdapter {
     private void dropdownMenuListener(int position) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         NavController navController = Navigation.findNavController((Activity) mContext, R.id.nav_host_carrier);
+
         dropdownMenu.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
             @Override
             public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -136,6 +137,7 @@ public class CarrierAdapter extends BaseAdapter {
                         db.collection("Flights")
                                 .document(flight.getName())
                                 .delete();
+                        navController.navigate(R.id.nav_carrier_flights);
                         return true;
                     }
                 });

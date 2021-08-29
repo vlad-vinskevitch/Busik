@@ -1,9 +1,20 @@
 package com.sharkit.busik.Entity;
 
+import java.util.ArrayList;
+
 public class Flight {
     private String startCountry, finishCountry, startCity, finishCity, note, status, owner, name;
     private long startDate, finishDate;
     private float  priceCargo, pricePassenger;
+    private ArrayList<String> passengers;
+
+    public ArrayList<String> getPassengers() {
+        return passengers;
+    }
+
+    public void setPassengers(ArrayList<String> passengers) {
+        this.passengers = passengers;
+    }
 
     public String getOwner() {
         return owner;

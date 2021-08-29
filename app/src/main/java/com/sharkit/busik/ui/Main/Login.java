@@ -115,6 +115,7 @@ public class Login extends Fragment {
         StaticUser.setEmail(user.getEmail());
         StaticUser.setRole(user.getRole());
         StaticUser.setPassword(user.getPassword());
+        StaticUser.setFlight(user.getFlight());
     }
 
     private void findView(View root) {

@@ -14,4 +14,14 @@
         android:id="@+id/nav_sender_profile"
         android:name="com.sharkit.busik.ui.Sender.SenderProfile"
         tools:layout="@layout/sender_profile" />
+
+    <fragment
+        android:id="@+id/nav_sender_reviews"
+        android:name="com.sharkit.busik.ui.Sender.SenderReviews"
+        tools:layout="@layout/sender_reviews" />
+
+    <fragment
+        android:id="@+id/nav_sender_setting"
+        android:name="com.sharkit.busik.ui.Sender.SenderSetting"
+        tools:layout="@layout/sender_setting" />
 </navigation>
