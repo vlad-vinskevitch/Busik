@@ -26,6 +26,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.sharkit.busik.Entity.Flight;
 import com.sharkit.busik.Entity.Review;
 import com.sharkit.busik.Entity.StaticUser;
+import com.sharkit.busik.Entity.User;
 import com.sharkit.busik.Exception.ToastMessage;
 import com.sharkit.busik.R;
 
@@ -39,6 +40,7 @@ public class SenderAdapter extends BaseAdapter {
     private TextView direction, priceCargo, pricePassenger, startDate, finishDate, status, note;
     private ImageView dropdownMenu;
     private Flight flight;
+    private User user;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public SenderAdapter(Context mContext, ArrayList<Flight> mGroup) {
@@ -210,6 +212,22 @@ public class SenderAdapter extends BaseAdapter {
         review.setOwner(StaticUser.getName() + " " + StaticUser.getLast_name());
         review.setFlight(mGroup.get(position).getStartCountry() + "(" + mGroup.get(position).getStartCity() + ") - " +
                 mGroup.get(position).getFinishCountry() + "(" + mGroup.get(position).getFinishCity() + ")");
+        db.collection("Users")
+                .whereEqualTo("email", mGroup.get(position).getOwner())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
+                            user = queryDocumentSnapshot.toObject(User.class);
+                        }
+                        db.collection("Users")
+                                .document(user.getEmail())
+                                .update("rating", user.getRating() + ratingBarRating);
+                    }
+                });
+
+
         db.collection("Reviews")
                 .add(review)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

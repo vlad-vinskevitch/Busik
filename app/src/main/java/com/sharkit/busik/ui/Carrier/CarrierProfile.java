@@ -50,6 +50,7 @@ public class CarrierProfile extends Fragment {
                 });
     }
 
+
     private void setAdapter(){
         ReviewsAdapter adapter = new ReviewsAdapter(getContext(), reviews);
         list_reviews.setAdapter(adapter);

@@ -2,7 +2,7 @@ package com.sharkit.busik.Entity;
 
 public class User {
     private String role, name, last_name, country, city, phone, email, password;
-    private long rating;
+    private float rating;
     private String flight;
 
     public String getFlight() {
@@ -77,11 +77,11 @@ public class User {
         this.password = password;
     }
 
-    public long getRating() {
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(long rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 }

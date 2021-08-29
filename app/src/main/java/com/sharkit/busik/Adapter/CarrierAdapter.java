@@ -2,7 +2,9 @@ package com.sharkit.busik.Adapter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -16,6 +18,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -23,6 +26,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.sharkit.busik.Entity.Flight;
 import com.sharkit.busik.Entity.StaticUser;
+import com.sharkit.busik.Exception.ToastMessage;
 import com.sharkit.busik.R;
 
 import java.text.SimpleDateFormat;
@@ -34,6 +38,7 @@ public class CarrierAdapter extends BaseAdapter {
     private TextView direction, priceCargo, pricePassenger, startDate, finishDate, status, note;
     private ImageView dropdownMenu;
     private static Flight flight;
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public CarrierAdapter(ArrayList<Flight> mGroup, Context mContext) {
         this.mGroup = mGroup;
@@ -81,7 +86,7 @@ public class CarrierAdapter extends BaseAdapter {
     }
 
     private void dropdownMenuListener(int position) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
         NavController navController = Navigation.findNavController((Activity) mContext, R.id.nav_host_carrier);
 
         dropdownMenu.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
@@ -149,6 +154,33 @@ public class CarrierAdapter extends BaseAdapter {
     }
 
     private void createAlertDialogChangeDescription() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+        View view = inflater.inflate(R.layout.change_descriptions, null);
+
+        TextInputEditText text = view.findViewById(R.id.description_xml);
+        dialog.setPositiveButton("Изменить", (dialog1, which) -> changeDescription(text.getText().toString()));
+        dialog.setOnDismissListener(DialogInterface::dismiss);
+        dialog.setView(view);
+        dialog.show();
+    }
+
+    private void changeDescription( String text) {
+        db.collection("Flights")
+                .document(flight.getName())
+                .update("note", text)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        try {
+                            throw new ToastMessage("Описание успешно изменено", mContext );
+                        } catch (ToastMessage toastMessage) {
+                            toastMessage.printStackTrace();
+                        }
+                        NavController navController = Navigation.findNavController((Activity) mContext, R.id.nav_host_carrier);
+                        navController.navigate(R.id.nav_carrier_flights);
+                    }
+                });
     }
 
     private void findView(View convertView) {

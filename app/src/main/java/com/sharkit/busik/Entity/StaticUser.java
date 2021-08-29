@@ -2,7 +2,7 @@ package com.sharkit.busik.Entity;
 
 public class StaticUser {
     private static String role, name, last_name, country, city, phone, email, password, flight;
-    private static long rating;
+    private static float rating;
 
     public static String getFlight() {
         return flight;
@@ -12,11 +12,11 @@ public class StaticUser {
         StaticUser.flight = flight;
     }
 
-    public static long getRating() {
+    public static float getRating() {
         return rating;
     }
 
-    public static void setRating(long rating) {
+    public static void setRating(float rating) {
         StaticUser.rating = rating;
     }
 
