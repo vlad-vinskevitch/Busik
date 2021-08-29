@@ -45,8 +45,8 @@
     <string name="search_flight">Поиск рейса</string>
     <string name="my_package">Мои отправления</string>
     <string name="profile">Профиль</string>
-
-
+    <string name="change_description">Изменение описания</string>
+    <string name="description">Описание</string>
 
 
     <string-array name="countries_array">
