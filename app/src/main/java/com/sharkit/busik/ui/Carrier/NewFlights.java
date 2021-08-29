@@ -107,8 +107,11 @@ public class NewFlights extends Fragment {
 
     private void createNewFlights(Flight flight) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Calendar calendar = Calendar.getInstance();
+        flight.setName(String.valueOf(calendar.getTimeInMillis()));
         db.collection("Flights")
-                .add(flight)
+                .document(flight.getName())
+                .set(flight)
                 .addOnSuccessListener(documentReference -> {
                     try {
                         throw new ToastMessage("Рейс успешно добавлен", getContext());

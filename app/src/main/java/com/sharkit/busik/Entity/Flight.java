@@ -1,7 +1,7 @@
 package com.sharkit.busik.Entity;
 
 public class Flight {
-    private String startCountry, finishCountry, startCity, finishCity, note, status, owner;
+    private String startCountry, finishCountry, startCity, finishCity, note, status, owner, name;
     private long startDate, finishDate;
     private float  priceCargo, pricePassenger;
 
@@ -11,6 +11,14 @@ public class Flight {
 
     public float getPriceCargo() {
         return priceCargo;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setPriceCargo(float priceCargo) {

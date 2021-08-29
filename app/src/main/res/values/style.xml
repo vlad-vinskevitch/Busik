@@ -24,7 +24,10 @@
 
     <style name="styleRadioButton" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="android:buttonTint">@color/black</item>
-
+    </style>
+    <style name="styleRatingBar" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorControlActivated">@color/green</item>
+        <item name="colorControlNormal">@color/orange_main</item>
     </style>
 
 

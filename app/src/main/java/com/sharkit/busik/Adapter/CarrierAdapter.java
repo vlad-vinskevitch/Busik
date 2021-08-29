@@ -1,6 +1,7 @@
 package com.sharkit.busik.Adapter;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -11,9 +12,15 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.sharkit.busik.Entity.Flight;
 import com.sharkit.busik.Entity.StaticUser;
 import com.sharkit.busik.R;
@@ -26,6 +33,7 @@ public class CarrierAdapter extends BaseAdapter {
     private Context mContext;
     private TextView direction, priceCargo, pricePassenger, startDate, finishDate, status, note;
     private ImageView dropdownMenu;
+    private static Flight flight;
 
     public CarrierAdapter(ArrayList<Flight> mGroup, Context mContext) {
         this.mGroup = mGroup;
@@ -74,26 +82,71 @@ public class CarrierAdapter extends BaseAdapter {
 
     private void dropdownMenuListener(int position) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-//       DocumentReference doc = db.collection("Flights")
-//                .whereEqualTo("owner", StaticUser.getEmail())
-//                .whereEqualTo("startCountry", mGroup.get(position).getStartCountry())
-//                .whereEqualTo("finishCountry", mGroup.get(position).getFinishCountry())
-//                .whereEqualTo("startCity", mGroup.get(position).getStartCity())
-//                .whereEqualTo("finishCity", mGroup.get(position).getFinishCity())
+        NavController navController = Navigation.findNavController((Activity) mContext, R.id.nav_host_carrier);
         dropdownMenu.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
             @Override
             public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+                db.collection("Flights")
+                        .whereEqualTo("owner", StaticUser.getEmail())
+                        .whereEqualTo("startCountry", mGroup.get(position).getStartCountry())
+                        .whereEqualTo("finishCountry", mGroup.get(position).getFinishCountry())
+                        .whereEqualTo("startCity", mGroup.get(position).getStartCity())
+                        .whereEqualTo("finishCity", mGroup.get(position).getFinishCity())
+                        .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
+                            flight = queryDocumentSnapshot.toObject(Flight.class);
+                        }
+                    }
+                });
                 menu.add("Завершить").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
+                    db.collection("Flights")
+                            .document(flight.getName())
+                            .update("status", "complete");
+                        return true;
+                    }
+                });
+                menu.add("Пассажиры").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
 
-
-
+                        return true;
+                    }
+                });
+                menu.add("Изменить описание").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        createAlertDialogChangeDescription();
+                        return true;
+                    }
+                });
+                menu.add("Написать сообщение").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        writeTheMessage();
+                        return true;
+                    }
+                });
+                menu.add("Удалить").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        db.collection("Flights")
+                                .document(flight.getName())
+                                .delete();
                         return true;
                     }
                 });
             }
         });
+    }
+
+    private void writeTheMessage() {
+    }
+
+    private void createAlertDialogChangeDescription() {
     }
 
     private void findView(View convertView) {
