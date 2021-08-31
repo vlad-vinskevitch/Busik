@@ -47,6 +47,10 @@
     <string name="profile">Профиль</string>
     <string name="change_description">Изменение описания</string>
     <string name="description">Описание</string>
+    <string name="massage_for_passag">Сообщение пассажирам</string>
+    <string name="last_massage">Последние сообщения:</string>
+    <string name="enter_text_massage">Введите текст сообщения</string>
+    <string name="send">Отправить</string>
 
 
     <string-array name="countries_array">

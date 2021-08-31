@@ -34,6 +34,7 @@ import com.sharkit.busik.Validation.ValidationRegistration;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 public class NewFlights extends Fragment {
     private AutoCompleteTextView textView;
@@ -133,7 +134,7 @@ public class NewFlights extends Fragment {
         flight.setPricePassenger(Float.parseFloat(pricePassenger.getText().toString().trim()));
         flight.setNote(note.getText().toString().trim());
         flight.setOwner(StaticUser.getEmail());
-        flight.setPassengers(new ArrayList<>());
+        flight.setPassengers(new HashMap<>());
         flight.setStatus("During");
     }
 

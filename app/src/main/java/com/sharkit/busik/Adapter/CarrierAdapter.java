@@ -24,6 +24,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.sharkit.busik.Entity.ElseVariable;
 import com.sharkit.busik.Entity.Flight;
 import com.sharkit.busik.Entity.StaticUser;
 import com.sharkit.busik.Exception.ToastMessage;
@@ -118,7 +119,8 @@ public class CarrierAdapter extends BaseAdapter {
                 menu.add("Пассажиры").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-
+                        ElseVariable.setNameFlight(flight.getName());
+                        navController.navigate(R.id.nav_carrier_passengers);
                         return true;
                     }
                 });

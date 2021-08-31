@@ -34,4 +34,10 @@
         android:id="@+id/nav_main_flights"
         android:name="com.sharkit.busik.ui.Sender.MainFlights"
         tools:layout="@layout/sender_flights" />
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.sharkit.busik.ui.Carrier.Profile"
+        tools:layout="@layout/profile" />
+
 </navigation>

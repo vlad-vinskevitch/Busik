@@ -5,25 +5,23 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.sharkit.busik.Entity.Flight;
+import com.sharkit.busik.Entity.Passenger;
 import com.sharkit.busik.Entity.Review;
 import com.sharkit.busik.Entity.StaticUser;
 import com.sharkit.busik.Entity.User;
@@ -33,6 +31,7 @@ import com.sharkit.busik.R;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Map;
 
 public class SenderAdapter extends BaseAdapter {
     private Context mContext;
@@ -40,6 +39,7 @@ public class SenderAdapter extends BaseAdapter {
     private TextView direction, priceCargo, pricePassenger, startDate, finishDate, status, note;
     private ImageView dropdownMenu;
     private Flight flight;
+    private Review review;
     private User user;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -152,9 +152,9 @@ public class SenderAdapter extends BaseAdapter {
             }
             return;
         }
-        for (int i = 0; i < flight.getPassengers().size(); i++){
 
-            if (!flight.getPassengers().get(i).equals(StaticUser.getEmail())){
+
+            if (!flight.getPassengers().containsKey(StaticUser.getEmail())){
                 try {
                     throw new ToastMessage("Вы должны быть пассажиром даного рейса", mContext);
                 } catch (ToastMessage toastMessage) {
@@ -162,7 +162,7 @@ public class SenderAdapter extends BaseAdapter {
                 }
                 return;
             }
-        }
+
 
         if (flight.getStartDate() > calendar.getTimeInMillis()){
             try {
@@ -194,6 +194,14 @@ public class SenderAdapter extends BaseAdapter {
                     }
                     return;
                 }
+                if (flight.getPassengers().get(StaticUser.getEmail()).getReview().equals("true")){
+                    try {
+                        throw new ToastMessage("Вы уже оставили отзыв", mContext);
+                    } catch (ToastMessage toastMessage) {
+                        toastMessage.printStackTrace();
+                    }
+                    return;
+                }
                 createReview(text.getText().toString(), ratingBar.getRating(), position, dialog);
             }
         });
@@ -212,6 +220,7 @@ public class SenderAdapter extends BaseAdapter {
         review.setOwner(StaticUser.getName() + " " + StaticUser.getLast_name());
         review.setFlight(mGroup.get(position).getStartCountry() + "(" + mGroup.get(position).getStartCity() + ") - " +
                 mGroup.get(position).getFinishCountry() + "(" + mGroup.get(position).getFinishCity() + ")");
+
         db.collection("Users")
                 .whereEqualTo("email", mGroup.get(position).getOwner())
                 .get()
@@ -221,24 +230,34 @@ public class SenderAdapter extends BaseAdapter {
                         for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
                             user = queryDocumentSnapshot.toObject(User.class);
                         }
+
                         db.collection("Users")
                                 .document(user.getEmail())
                                 .update("rating", user.getRating() + ratingBarRating);
-                    }
-                });
 
+                        Map<String, Passenger> map = flight.getPassengers();
+                        Passenger passenger = flight.getPassengers().get(StaticUser.getEmail());
+                        passenger.setReview("true");
+                        map.put(StaticUser.getEmail(), passenger);
 
-        db.collection("Reviews")
-                .add(review)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        try {
-                            throw new ToastMessage("Отзыв оставлен", mContext);
-                        } catch (ToastMessage toastMessage) {
-                            toastMessage.printStackTrace();
-                        }
-                        dialog.dismiss();
+                        db.collection("Flights")
+                                .document(flight.getName())
+                                .update("passengers", map);
+
+                        db.collection("Reviews")
+                                .document(String.valueOf(review.getDate()))
+                                .set(review)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        try {
+                                            throw new ToastMessage("Отзыв оставлен", mContext);
+                                        } catch (ToastMessage toastMessage) {
+                                            toastMessage.printStackTrace();
+                                        }
+                                        dialog.dismiss();
+                                    }
+                                });
                     }
                 });
     }
@@ -258,9 +277,11 @@ public class SenderAdapter extends BaseAdapter {
                         for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
                             flight = queryDocumentSnapshot.toObject(Flight.class);
                         }
-                        for (int i = 0; i < flight.getPassengers().size(); i++) {
-                            if (flight.getPassengers().get(i).equals(StaticUser.getEmail())) {
-                                flight.getPassengers().remove(i);
+                            if (flight.getPassengers().containsKey(StaticUser.getEmail())) {
+                                if (flight.getPassengers().get(StaticUser.getEmail()).getReview().equals("true")) {
+                                    deleteReview(position);
+                                }
+                                flight.getPassengers().remove(StaticUser.getEmail());
                                 db.collection("Flights")
                                         .document(flight.getName())
                                         .update("passengers", flight.getPassengers());
@@ -271,12 +292,50 @@ public class SenderAdapter extends BaseAdapter {
                                 }
                                 return;
                             }
-                        }
+
+
+
                         try {
                             throw new ToastMessage("Вы не пассажир этого рейса", mContext);
                         } catch (ToastMessage toastMessage) {
                             toastMessage.printStackTrace();
                         }
+                    }
+                });
+    }
+
+    private void deleteReview(int position) {
+        db.collection("Reviews")
+                .whereEqualTo("flight", mGroup.get(position).getStartCountry() + "(" + mGroup.get(position).getStartCity() + ") - " +
+                        mGroup.get(position).getFinishCountry() + "(" + mGroup.get(position).getFinishCity() + ")")
+                .whereEqualTo("owner", StaticUser.getName() + " " + StaticUser.getLast_name())
+                .whereEqualTo("recipient", mGroup.get(position).getOwner())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
+                            review = queryDocumentSnapshot.toObject(Review.class);
+                        }
+                        db.collection("Users")
+                                .whereEqualTo("email", mGroup.get(position).getOwner())
+                                .get()
+                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                          @Override
+                                                          public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                                              for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
+                                                                  user = queryDocumentSnapshot.toObject(User.class);
+                                                              }
+
+                                                              db.collection("Users")
+                                                                      .document(user.getEmail())
+                                                                      .update("rating", user.getRating() - review.getRating());
+                                                          }
+                                                      });
+
+                        db.collection("Reviews")
+                                .document(String.valueOf(review.getDate()))
+                                .delete();
                     }
                 });
     }
@@ -304,17 +363,20 @@ public class SenderAdapter extends BaseAdapter {
 
     private void addPassenger() {
 
-                for (int i = 0; i < flight.getPassengers().size(); i++){
-                    if (flight.getPassengers().get(i).equals(StaticUser.getEmail())){
-                        try {
-                            throw new ToastMessage("Пассажир уже зарегестрируван на рейс",mContext);
-                        } catch (ToastMessage toastMessage) {
-                            toastMessage.printStackTrace();
-                        }
-                        return;
-                    }
-                }
-                flight.getPassengers().add(StaticUser.getEmail());
+
+        if (flight.getPassengers().containsKey(StaticUser.getEmail())){
+            try {
+                throw new ToastMessage("Пассажир уже зарегестрируван на рейс",mContext);
+            } catch (ToastMessage toastMessage) {
+                toastMessage.printStackTrace();
+            }
+            return;
+        }
+                Passenger passenger = new Passenger();
+                passenger.setProfile(StaticUser.getEmail());
+                passenger.setReview("false");
+                passenger.setStatus("Ожидает решения");
+                flight.getPassengers().put(StaticUser.getEmail(), passenger);
 
                 db.collection("Flights")
                         .document(flight.getName())

@@ -22,7 +22,7 @@ import com.sharkit.busik.R;
 
 import java.util.ArrayList;
 
-public class CarrierProfile extends Fragment {
+public class Profile extends Fragment {
     private TextView name, phone, country, city, rating;
     private ListView list_reviews;
     private final ArrayList<Review> reviews = new ArrayList<>();
@@ -31,7 +31,7 @@ public class CarrierProfile extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.profile_carrier, container, false);
+        View root = inflater.inflate(R.layout.profile, container, false);
         findView(root);
         getFieldFromDB();
         getListReviews();
