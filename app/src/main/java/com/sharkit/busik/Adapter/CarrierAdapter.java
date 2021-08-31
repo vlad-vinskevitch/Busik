@@ -3,6 +3,8 @@ package com.sharkit.busik.Adapter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.navigation.NavController;
@@ -33,6 +36,7 @@ public class CarrierAdapter extends BaseAdapter {
     private Context mContext;
     private TextView direction, priceCargo, pricePassenger, startDate, finishDate, status, note;
     private ImageView dropdownMenu;
+    private LinearLayout linear_item, linear_flight, linear_cargo, linear_passenger, linear_departure,linear_arrival,linear_status,linear_details;
     private static Flight flight;
 
     public CarrierAdapter(ArrayList<Flight> mGroup, Context mContext) {
@@ -63,6 +67,10 @@ public class CarrierAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.carrier_flights_item, null);
         }
         findView(convertView);
+
+        Adaptive();
+
+
         @SuppressLint("SimpleDateFormat")
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
         direction.setText(mGroup.get(position).getStartCountry() + "(" + mGroup.get(position).getStartCity() + ") - " +
@@ -78,6 +86,73 @@ public class CarrierAdapter extends BaseAdapter {
 
 
         return convertView;
+    }
+
+
+    public void Adaptive (){
+
+        DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
+        int h = metrics.heightPixels;
+        int w = metrics.widthPixels;
+        Log.d("qwerty", "");
+
+        LinearLayout.LayoutParams linear_params = new LinearLayout.LayoutParams(-1,-2);
+        linear_params.setMargins(0,0,0,0);
+
+        linear_flight.setLayoutParams(linear_params);
+        linear_cargo.setLayoutParams(linear_params);
+        linear_passenger.setLayoutParams(linear_params);
+        linear_passenger.setLayoutParams(linear_params);
+        linear_details.setLayoutParams(linear_params);
+        linear_status.setLayoutParams(linear_params);
+        linear_arrival.setLayoutParams(linear_params);
+        linear_departure.setLayoutParams(linear_params);
+
+        direction.setPadding(0,0,0,0);
+        pricePassenger.setPadding(0,0,0,0);
+        priceCargo.setPadding(0,0,0,0);
+        startDate.setPadding(0,0,0,0);
+        finishDate.setPadding(0,0,0,0);
+        status.setPadding(0,0,0,0);
+
+        linear_flight.setPadding(0,0,0,0);
+        linear_cargo.setPadding(0,0,0,0);
+        linear_passenger.setPadding(0,0,0,0);
+        linear_passenger.setPadding(0,0,0,0);
+        linear_details.setPadding(0,0,0,0);
+        linear_status.setPadding(0,0,0,0);
+        linear_arrival.setPadding(0,0,0,0);
+        linear_departure.setPadding(0,0,0,0);
+
+
+
+        if(h > 1800){
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-1,(int)(h/4.6));
+            params.setMarginEnd(20);
+            params.setMarginStart(20);
+            params.setMargins(0,10,0,10);
+            linear_item.setLayoutParams(params);
+            direction.setTextSize(14);
+            priceCargo.setTextSize(14);
+            pricePassenger.setTextSize(14);
+            startDate.setTextSize(14);
+            finishDate.setTextSize(14);
+            status.setTextSize(14);
+        }else {
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-1,(int)(h/4.25));
+            params.setMargins(0,10,0,10);
+            params.setMarginEnd(20);
+            params.setMarginStart(20);
+            linear_item.setLayoutParams(params);
+            direction.setTextSize(11);
+            priceCargo.setTextSize(11);
+            pricePassenger.setTextSize(11);
+            startDate.setTextSize(11);
+            finishDate.setTextSize(11);
+            status.setTextSize(11);
+
+        }
+
     }
 
     private void dropdownMenuListener(int position) {
@@ -160,5 +235,14 @@ public class CarrierAdapter extends BaseAdapter {
         finishDate = convertView.findViewById(R.id.finish_date_xml);
         status = convertView.findViewById(R.id.status_xml);
         note = convertView.findViewById(R.id.note_xml);
+        linear_item = convertView.findViewById(R.id.linear_item);
+        linear_flight = convertView.findViewById(R.id.linear_flight);
+        linear_cargo = convertView.findViewById(R.id.linear_cargo);
+        linear_passenger = convertView.findViewById(R.id.linear_passenger);
+        linear_departure = convertView.findViewById(R.id.linear_departure);
+        linear_arrival = convertView.findViewById(R.id.linear_arrival);
+        linear_status = convertView.findViewById(R.id.linear_status);
+        linear_details = convertView.findViewById(R.id.linear_details);
+
     }
 }

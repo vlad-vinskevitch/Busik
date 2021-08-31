@@ -29,8 +29,11 @@
     </LinearLayout>
 
     <ListView
+        android:layout_marginHorizontal="10dp"
+        android:dividerHeight="5dp"
+        android:divider="@color/prozory"
         android:id="@+id/list"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/add_flights_xml"
         android:layout_below="@+id/linear" />
