@@ -17,8 +17,10 @@
         <entry key="app/src/main/res/layout/carrier_main.xml" value="0.16666666666666666" />
         <entry key="app/src/main/res/layout/carrier_reviews.xml" value="0.16666666666666666" />
         <entry key="app/src/main/res/layout/change_descriptions.xml" value="0.3203125" />
+        <entry key="app/src/main/res/layout/create_new_massage.xml" value="0.33" />
         <entry key="app/src/main/res/layout/create_reviews.xml" value="0.3203125" />
         <entry key="app/src/main/res/layout/item_application_on_passenger.xml" value="0.3203125" />
+        <entry key="app/src/main/res/layout/item_massage.xml" value="0.3203125" />
         <entry key="app/src/main/res/layout/item_reviews.xml" value="0.3203125" />
         <entry key="app/src/main/res/layout/login.xml" value="0.3203125" />
         <entry key="app/src/main/res/layout/main.xml" value="0.29483695652173914" />

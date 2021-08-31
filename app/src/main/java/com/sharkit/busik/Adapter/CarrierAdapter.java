@@ -26,12 +26,18 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.sharkit.busik.Entity.ElseVariable;
 import com.sharkit.busik.Entity.Flight;
+import com.sharkit.busik.Entity.Message;
+import com.sharkit.busik.Entity.Passenger;
 import com.sharkit.busik.Entity.StaticUser;
 import com.sharkit.busik.Exception.ToastMessage;
 import com.sharkit.busik.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.List;
 
 public class CarrierAdapter extends BaseAdapter {
     private ArrayList<Flight> mGroup;
@@ -76,8 +82,8 @@ public class CarrierAdapter extends BaseAdapter {
         priceCargo.setText("- " + mGroup.get(position).getPriceCargo() + " $/kg");
         pricePassenger.setText("- " + mGroup.get(position).getPricePassenger() + " $/пассажир");
 
-        startDate.setText(startDate.getText() + " " + simpleDateFormat.format(mGroup.get(position).getStartDate()));
-        finishDate.setText(finishDate.getText() + " " + simpleDateFormat.format(mGroup.get(position).getFinishDate()));
+        startDate.setText(simpleDateFormat.format(mGroup.get(position).getStartDate()));
+        finishDate.setText(simpleDateFormat.format(mGroup.get(position).getFinishDate()));
         note.setText(note.getText() + " " + mGroup.get(position).getNote());
 
         dropdownMenuListener(position);
@@ -134,7 +140,7 @@ public class CarrierAdapter extends BaseAdapter {
                 menu.add("Написать сообщение").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        writeTheMessage();
+                        writeTheMessage(position);
                         return true;
                     }
                 });
@@ -152,7 +158,42 @@ public class CarrierAdapter extends BaseAdapter {
         });
     }
 
-    private void writeTheMessage() {
+    private void writeTheMessage(int position) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.create_new_massage, null);
+        TextInputEditText message = view.findViewById(R.id.message_xml);
+        dialog.setPositiveButton("Отправить", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                sendNewMessage(message.getText().toString(), position);
+            }
+        });
+        dialog.setOnDismissListener(DialogInterface::dismiss);
+        dialog.setView(view);
+        dialog.show();
+    }
+
+    private void sendNewMessage(String text, int position) {
+        Message message = new Message();
+        Calendar calendar = Calendar.getInstance();
+        message.setMessage(text);
+        message.setDate(calendar.getTimeInMillis());
+        message.setStatus("Не прочитано");
+        message.setRecipient(Arrays.asList(flight.getPassengers().keySet().toArray()));
+        message.setFlight(mGroup.get(position).getStartCountry() + "(" + mGroup.get(position).getStartCity() + ") - " +
+                mGroup.get(position).getFinishCountry() + "(" + mGroup.get(position).getFinishCity() + ")");
+
+        db.collection("Messages")
+                .document(String.valueOf(calendar.getTimeInMillis()))
+                .set(message)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        ToastMessage("Сообщение отправлено");
+                    }
+                });
+
+
     }
 
     private void createAlertDialogChangeDescription() {
@@ -183,6 +224,13 @@ public class CarrierAdapter extends BaseAdapter {
                         navController.navigate(R.id.nav_carrier_flights);
                     }
                 });
+    }
+    private void ToastMessage(String message){
+        try {
+            throw new ToastMessage(message, mContext);
+        } catch (ToastMessage toastMessage) {
+            toastMessage.printStackTrace();
+        }
     }
 
     private void findView(View convertView) {
