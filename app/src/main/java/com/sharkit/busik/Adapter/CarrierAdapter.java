@@ -115,14 +115,16 @@ public class CarrierAdapter extends BaseAdapter {
         finishDate.setPadding(0,0,0,0);
         status.setPadding(0,0,0,0);
 
-        linear_flight.setPadding(0,0,0,0);
-        linear_cargo.setPadding(0,0,0,0);
-        linear_passenger.setPadding(0,0,0,0);
-        linear_passenger.setPadding(0,0,0,0);
-        linear_details.setPadding(0,0,0,0);
-        linear_status.setPadding(0,0,0,0);
-        linear_arrival.setPadding(0,0,0,0);
-        linear_departure.setPadding(0,0,0,0);
+        linear_flight.setPadding(5,0,0,0);
+        linear_cargo.setPadding(5,0,0,0);
+        linear_passenger.setPadding(5,0,0,0);
+        linear_passenger.setPadding(5,0,0,0);
+        linear_details.setPadding(5,0,0,0);
+        linear_status.setPadding(5,0,0,0);
+        linear_arrival.setPadding(5,0,0,0);
+        linear_departure.setPadding(5,0,0,0);
+        linear_details.setPadding(5,0,0,0);
+
 
 
 
@@ -138,9 +140,10 @@ public class CarrierAdapter extends BaseAdapter {
             startDate.setTextSize(14);
             finishDate.setTextSize(14);
             status.setTextSize(14);
+            note.setTextSize(14);
         }else {
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-1,(int)(h/4.25));
-            params.setMargins(0,10,0,10);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-1,(int)(h/3.9));
+            params.setMargins(0,10,0,0);
             params.setMarginEnd(20);
             params.setMarginStart(20);
             linear_item.setLayoutParams(params);
@@ -150,6 +153,8 @@ public class CarrierAdapter extends BaseAdapter {
             startDate.setTextSize(11);
             finishDate.setTextSize(11);
             status.setTextSize(11);
+            note.setTextSize(11);
+
 
         }
 

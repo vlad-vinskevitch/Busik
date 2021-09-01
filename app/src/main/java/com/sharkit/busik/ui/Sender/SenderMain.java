@@ -6,13 +6,16 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,11 +43,13 @@ import java.util.Calendar;
 
 public class SenderMain extends Fragment implements View.OnClickListener {
     private ImageView profile, filter;
+
     private TextInputEditText minPricePassenger, maxPricePassenger, maxPriceCargo, minPriceCargo,
     startCountry, finishCountry, startCity, finishCity, startDateDo, startDateAfter, finishDateDo, finishDateAfter;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private ListView listView;
     private ArrayList<Flight> flights = new ArrayList<>();
+
 
     private int year, month, day;
     private CollectionReference collectionReference = db.collection("Flights");
@@ -99,6 +104,9 @@ public class SenderMain extends Fragment implements View.OnClickListener {
         dialog.setView(view);
         dialog.show();
     }
+
+
+
 
     @SuppressLint("SimpleDateFormat")
     private void setTextToField() {
@@ -259,6 +267,10 @@ public class SenderMain extends Fragment implements View.OnClickListener {
         startDateAfter = view.findViewById(R.id.start_date_after_xml);
         finishDateDo = view.findViewById(R.id.finish_date_do_xml);
         finishDateAfter = view.findViewById(R.id.finish_date_after_xml);
+
+
+
+
     }
 
     private void findView(View root) {

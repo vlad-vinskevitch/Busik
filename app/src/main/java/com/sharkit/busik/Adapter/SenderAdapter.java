@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -40,6 +42,7 @@ public class SenderAdapter extends BaseAdapter {
     private ImageView dropdownMenu;
     private Flight flight;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private LinearLayout linear_flight, linear_cargo, linear_passenger, linear_departure,linear_arrival,linear_status,linear_details, linear;
 
     public SenderAdapter(Context mContext, ArrayList<Flight> mGroup) {
         this.mContext = mContext;
@@ -116,6 +119,50 @@ public class SenderAdapter extends BaseAdapter {
         startDate.setText(simpleDateFormat.format(mGroup.get(position).getStartDate()));
         finishDate.setText(simpleDateFormat.format(mGroup.get(position).getFinishDate()));
         note.setText(note.getText() + " " + mGroup.get(position).getNote());
+    }
+
+    public void Adaptive(){
+
+        DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
+        int h = metrics.heightPixels;
+        int w = metrics.widthPixels;
+        Log.d("qwerty", "Adaptive: ");
+
+        LinearLayout.LayoutParams linear_params = new LinearLayout.LayoutParams(-1,-2);
+        linear_params.setMargins(0,0,0,0);
+
+        if(h < 1800){
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-1,h);
+            linear.setLayoutParams(params);
+            direction.setTextSize(14);
+            priceCargo.setTextSize(14);
+            pricePassenger.setTextSize(14);
+            startDate.setTextSize(14);
+            finishDate.setTextSize(14);
+            status.setTextSize(14);
+
+        }else{
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-1,h);
+            linear.setLayoutParams(params);
+            linear.setLayoutParams(params);
+            direction.setTextSize(20);
+            priceCargo.setTextSize(20);
+            pricePassenger.setTextSize(20);
+            startDate.setTextSize(14);
+            finishDate.setTextSize(14);
+            status.setTextSize(14);
+        }
+
+//        direction_xml = view.findViewById(R.id.direction_xml);
+//        price_cargo_xml = view.findViewById(R.id.price_cargo_xml);
+//        price_passenger_xml = view.findViewById(R.id.price_passenger_xml);
+//        start_date_xml = view.findViewById(R.id.start_date_xml);
+//        finish_date_xml = view.findViewById(R.id.finish_date_xml);
+//        status_xml = view.findViewById(R.id.status_xml);
+//        note_xml = view.findViewById(R.id.note_xml);
+
+
+
     }
 
     private void leaveReview(int position) {
@@ -316,6 +363,23 @@ public class SenderAdapter extends BaseAdapter {
         pricePassenger = convertView.findViewById(R.id.price_passenger_xml);
         startDate = convertView.findViewById(R.id.start_date_xml);
         finishDate = convertView.findViewById(R.id.finish_date_xml);
+        status = convertView.findViewById(R.id.status_xml);
+        note = convertView.findViewById(R.id.note_xml);
+
+        linear = convertView.findViewById(R.id.linear);
+        linear_flight = convertView.findViewById(R.id.linear_flight);
+        linear_cargo = convertView.findViewById(R.id.linear_cargo);
+        linear_passenger = convertView.findViewById(R.id.linear_passenger);
+        linear_departure = convertView.findViewById(R.id.linear_departure);
+        linear_arrival = convertView.findViewById(R.id.linear_arrival);
+        linear_status = convertView.findViewById(R.id.linear_status);
+        linear_details = convertView.findViewById(R.id.linear_details);
+
+        direction = convertView.findViewById(R.id.direction_xml);
+        priceCargo = convertView.findViewById(R.id.price_cargo_xml);
+        pricePassenger = convertView.findViewById(R.id.price_passenger_xml);
+        startDate = convertView.findViewById(R.id.start_date_xml);
+        finishDate =convertView.findViewById(R.id.finish_date_xml);
         status = convertView.findViewById(R.id.status_xml);
         note = convertView.findViewById(R.id.note_xml);
     }
