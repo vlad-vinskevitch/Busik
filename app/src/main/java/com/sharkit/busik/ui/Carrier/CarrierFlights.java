@@ -23,6 +23,7 @@ import com.sharkit.busik.Entity.StaticUser;
 import com.sharkit.busik.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class CarrierFlights extends Fragment {
     private Button add;
@@ -40,8 +41,10 @@ public class CarrierFlights extends Fragment {
 
     private void readFlights() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Calendar calendar = Calendar.getInstance();
         db.collection("Flights")
                 .whereEqualTo("owner", StaticUser.getEmail())
+                .whereGreaterThan("finishDate", calendar.getTimeInMillis()+8640000)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override

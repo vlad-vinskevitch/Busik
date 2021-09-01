@@ -135,7 +135,7 @@ public class NewFlights extends Fragment {
         flight.setNote(note.getText().toString().trim());
         flight.setOwner(StaticUser.getEmail());
         flight.setPassengers(new HashMap<>());
-        flight.setStatus("During");
+        flight.setStatus("Ожидает");
     }
 
     private void findView(View root) {

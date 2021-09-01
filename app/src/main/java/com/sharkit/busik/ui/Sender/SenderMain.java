@@ -194,8 +194,10 @@ public class SenderMain extends Fragment implements View.OnClickListener {
             query = getQueryWhereLess(query, "finishDate", Filter.getFinishDateDo());
         }
 
-
-                query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        Calendar calendar = Calendar.getInstance();
+        query.whereGreaterThan("finishDate", calendar.getTimeInMillis()+8640000)
+                .whereEqualTo("status", "Ожидает")
+                        .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 try {

@@ -1,7 +1,7 @@
 package com.sharkit.busik.Entity;
 
 public class Message {
-    private String flight, message, status, name;
+    private String flight, message, name;
     private long date;
 
     public long getDate() {
@@ -36,14 +36,6 @@ public class Message {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
 }

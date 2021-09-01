@@ -1,14 +1,24 @@
 package com.sharkit.busik.Adapter;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.sharkit.busik.Entity.Message;
+import com.sharkit.busik.Entity.StaticUser;
+import com.sharkit.busik.Exception.ToastMessage;
 import com.sharkit.busik.R;
 
 import java.text.SimpleDateFormat;
@@ -45,7 +55,35 @@ public class MessagesAdapter extends BaseAdapter {
         }
         findView(convertView);
         writeToField(position);
+        onClick(parent,position);
         return convertView;
+    }
+
+    private void onClick(ViewGroup parent, int position) {
+        parent.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+            @Override
+            public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+                menu.add("Удалить")
+                        .setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        db.collection("Users/" + StaticUser.getEmail()+ "/Message")
+                                .document(String.valueOf(mGroup.get(position).getDate()))
+                                .delete()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                createToastMessage("Сообщение удалено");
+                                NavController navController = Navigation.findNavController((Activity) mContext, R.id.nav_host_sender);
+                                navController.navigate(R.id.nav_sender_message);
+                            }
+                        });
+                        return true;
+                    }
+                });
+            }
+        });
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -55,14 +93,19 @@ public class MessagesAdapter extends BaseAdapter {
         name.setText(mGroup.get(position).getName());
         flight.setText(mGroup.get(position).getFlight());
         text.setText(mGroup.get(position).getMessage());
-        status.setText(mGroup.get(position).getStatus());
     }
 
     private void findView(View convertView) {
         name = convertView.findViewById(R.id.name_xml);
         flight = convertView.findViewById(R.id.flight_xml);
         text = convertView.findViewById(R.id.text_xml);
-        status = convertView.findViewById(R.id.status_xml);
         date = convertView.findViewById(R.id.date_xml);
+    }
+    private void createToastMessage(String message){
+        try {
+            throw new ToastMessage(message,mContext);
+        } catch (ToastMessage toastMessage) {
+            toastMessage.printStackTrace();
+        }
     }
 }
