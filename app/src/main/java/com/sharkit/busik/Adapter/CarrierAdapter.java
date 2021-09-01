@@ -19,15 +19,12 @@ import androidx.navigation.Navigation;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.sharkit.busik.Entity.ElseVariable;
 import com.sharkit.busik.Entity.Flight;
 import com.sharkit.busik.Entity.Message;
-import com.sharkit.busik.Entity.Passenger;
 import com.sharkit.busik.Entity.StaticUser;
 import com.sharkit.busik.Exception.ToastMessage;
 import com.sharkit.busik.R;
@@ -36,7 +33,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.List;
 
 public class CarrierAdapter extends BaseAdapter {
@@ -179,19 +175,18 @@ public class CarrierAdapter extends BaseAdapter {
         message.setMessage(text);
         message.setDate(calendar.getTimeInMillis());
         message.setStatus("Не прочитано");
-        message.setRecipient(Arrays.asList(flight.getPassengers().keySet().toArray()));
+        message.setName(mGroup.get(position).getOwner());
         message.setFlight(mGroup.get(position).getStartCountry() + "(" + mGroup.get(position).getStartCity() + ") - " +
                 mGroup.get(position).getFinishCountry() + "(" + mGroup.get(position).getFinishCity() + ")");
 
-        db.collection("Messages")
-                .document(String.valueOf(calendar.getTimeInMillis()))
-                .set(message)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        ToastMessage("Сообщение отправлено");
-                    }
-                });
+        List<Object> list = Arrays.asList(flight.getPassengers().keySet().toArray());
+        for (int i = 0; i <list.size(); i++) {
+            db.collection("Users/" + list.get(i) + "/Message")
+                    .document(String.valueOf(calendar.getTimeInMillis()))
+                    .set(message);
+        }
+
+        ToastMessage("Сообщение отправлено");
 
 
     }

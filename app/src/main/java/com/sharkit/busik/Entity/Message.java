@@ -1,25 +1,21 @@
 package com.sharkit.busik.Entity;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 public class Message {
-    private String flight, message, status;
+    private String flight, message, status, name;
     private long date;
-    private List<Object> recipient;
 
     public long getDate() {
         return date;
     }
 
-    public List<Object> getRecipient() {
-        return recipient;
+    public String getName() {
+        return name;
     }
 
-    public void setRecipient(List<Object> recipient) {
-        this.recipient = recipient;
+    public void setName(String name) {
+        this.name = name;
     }
+
 
     public void setDate(long date) {
         this.date = date;

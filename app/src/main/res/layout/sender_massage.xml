@@ -26,6 +26,7 @@
             tools:ignore="RtlCompat" />
     </LinearLayout>
     <ListView
+        android:id="@+id/list_message_xml"
         android:layout_below="@+id/linear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
