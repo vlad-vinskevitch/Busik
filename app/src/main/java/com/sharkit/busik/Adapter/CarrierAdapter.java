@@ -2,9 +2,11 @@ package com.sharkit.busik.Adapter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.content.DialogInterface;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -19,17 +21,22 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.sharkit.busik.Entity.ElseVariable;
 import com.sharkit.busik.Entity.Flight;
+import com.sharkit.busik.Entity.Message;
 import com.sharkit.busik.Entity.StaticUser;
+import com.sharkit.busik.Exception.ToastMessage;
 import com.sharkit.busik.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
 
 public class CarrierAdapter extends BaseAdapter {
     private ArrayList<Flight> mGroup;
@@ -38,6 +45,7 @@ public class CarrierAdapter extends BaseAdapter {
     private ImageView dropdownMenu;
     private LinearLayout linear_item, linear_flight, linear_cargo, linear_passenger, linear_departure,linear_arrival,linear_status,linear_details;
     private static Flight flight;
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public CarrierAdapter(ArrayList<Flight> mGroup, Context mContext) {
         this.mGroup = mGroup;
@@ -78,8 +86,8 @@ public class CarrierAdapter extends BaseAdapter {
         priceCargo.setText("- " + mGroup.get(position).getPriceCargo() + " $/kg");
         pricePassenger.setText("- " + mGroup.get(position).getPricePassenger() + " $/пассажир");
 
-        startDate.setText(startDate.getText() + " " + simpleDateFormat.format(mGroup.get(position).getStartDate()));
-        finishDate.setText(finishDate.getText() + " " + simpleDateFormat.format(mGroup.get(position).getFinishDate()));
+        startDate.setText(simpleDateFormat.format(mGroup.get(position).getStartDate()));
+        finishDate.setText(simpleDateFormat.format(mGroup.get(position).getFinishDate()));
         note.setText(note.getText() + " " + mGroup.get(position).getNote());
 
         dropdownMenuListener(position);
@@ -147,13 +155,13 @@ public class CarrierAdapter extends BaseAdapter {
             params.setMarginEnd(20);
             params.setMarginStart(20);
             linear_item.setLayoutParams(params);
-            direction.setTextSize(11);
-            priceCargo.setTextSize(11);
-            pricePassenger.setTextSize(11);
-            startDate.setTextSize(11);
-            finishDate.setTextSize(11);
-            status.setTextSize(11);
-            note.setTextSize(11);
+            direction.setTextSize(12);
+            priceCargo.setTextSize(12);
+            pricePassenger.setTextSize(12);
+            startDate.setTextSize(12);
+            finishDate.setTextSize(12);
+            status.setTextSize(12);
+            note.setTextSize(12);
 
 
         }
@@ -161,7 +169,7 @@ public class CarrierAdapter extends BaseAdapter {
     }
 
     private void dropdownMenuListener(int position) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
         NavController navController = Navigation.findNavController((Activity) mContext, R.id.nav_host_carrier);
 
         dropdownMenu.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
@@ -193,7 +201,8 @@ public class CarrierAdapter extends BaseAdapter {
                 menu.add("Пассажиры").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-
+                        ElseVariable.setNameFlight(flight.getName());
+                        navController.navigate(R.id.nav_carrier_passengers);
                         return true;
                     }
                 });
@@ -207,7 +216,7 @@ public class CarrierAdapter extends BaseAdapter {
                 menu.add("Написать сообщение").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        writeTheMessage();
+                        writeTheMessage(position);
                         return true;
                     }
                 });
@@ -225,10 +234,78 @@ public class CarrierAdapter extends BaseAdapter {
         });
     }
 
-    private void writeTheMessage() {
+    private void writeTheMessage(int position) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.create_new_massage, null);
+        TextInputEditText message = view.findViewById(R.id.message_xml);
+        dialog.setPositiveButton("Отправить", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                sendNewMessage(message.getText().toString(), position);
+            }
+        });
+        dialog.setOnDismissListener(DialogInterface::dismiss);
+        dialog.setView(view);
+        dialog.show();
+    }
+
+    private void sendNewMessage(String text, int position) {
+        Message message = new Message();
+        Calendar calendar = Calendar.getInstance();
+        message.setMessage(text);
+        message.setDate(calendar.getTimeInMillis());
+        message.setStatus("Не прочитано");
+        message.setName(mGroup.get(position).getOwner());
+        message.setFlight(mGroup.get(position).getStartCountry() + "(" + mGroup.get(position).getStartCity() + ") - " +
+                mGroup.get(position).getFinishCountry() + "(" + mGroup.get(position).getFinishCity() + ")");
+
+        List<Object> list = Arrays.asList(flight.getPassengers().keySet().toArray());
+        for (int i = 0; i <list.size(); i++) {
+            db.collection("Users/" + list.get(i) + "/Message")
+                    .document(String.valueOf(calendar.getTimeInMillis()))
+                    .set(message);
+        }
+
+        ToastMessage("Сообщение отправлено");
+
+
     }
 
     private void createAlertDialogChangeDescription() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+        View view = inflater.inflate(R.layout.change_descriptions, null);
+
+        TextInputEditText text = view.findViewById(R.id.description_xml);
+        dialog.setPositiveButton("Изменить", (dialog1, which) -> changeDescription(text.getText().toString()));
+        dialog.setOnDismissListener(DialogInterface::dismiss);
+        dialog.setView(view);
+        dialog.show();
+    }
+
+    private void changeDescription( String text) {
+        db.collection("Flights")
+                .document(flight.getName())
+                .update("note", text)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        try {
+                            throw new ToastMessage("Описание успешно изменено", mContext );
+                        } catch (ToastMessage toastMessage) {
+                            toastMessage.printStackTrace();
+                        }
+                        NavController navController = Navigation.findNavController((Activity) mContext, R.id.nav_host_carrier);
+                        navController.navigate(R.id.nav_carrier_flights);
+                    }
+                });
+    }
+    private void ToastMessage(String message){
+        try {
+            throw new ToastMessage(message, mContext);
+        } catch (ToastMessage toastMessage) {
+            toastMessage.printStackTrace();
+        }
     }
 
     private void findView(View convertView) {

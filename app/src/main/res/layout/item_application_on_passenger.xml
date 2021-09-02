@@ -5,18 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
+        android:id="@+id/name_xml"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/styleTextView"
         android:text="ФИО"/>
     <TextView
+        android:id="@+id/phone_xml"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/styleTextView"
         android:text="@string/phone_number"/>
     <TextView
+        android:id="@+id/status_xml"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,6 +31,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button
+            android:id="@+id/accept_xml"
             android:text="Принять"
             style="@style/styleButton"
             android:layout_marginHorizontal="5dp"
@@ -35,6 +39,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
         <Button
+            android:id="@+id/cancel_xml"
             android:text="Отменить"
             style="@style/styleButton"
             android:layout_marginHorizontal="5dp"
@@ -43,6 +48,7 @@
             android:layout_height="wrap_content"/>
     </LinearLayout>
     <Button
+        android:id="@+id/info_xml"
         android:layout_marginHorizontal="50dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

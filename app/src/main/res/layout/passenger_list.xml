@@ -25,10 +25,14 @@
             android:layout_height="wrap_content"
             tools:ignore="RtlCompat" />
     </LinearLayout>
+
     <ListView
-        android:layout_below="@+id/linear"
+        android:divider="@color/prozory"
+        android:dividerHeight="5dp"
+        android:id="@+id/passenger_list_xml"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linear" />
 
 
 

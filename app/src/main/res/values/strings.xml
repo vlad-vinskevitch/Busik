@@ -52,9 +52,9 @@
     <string name="enter_text_massage">Введите текст сообщения</string>
     <string name="send">Отправить</string>
     <string name="poloski">-- </string>
-    <string name="departure">-- Отправление</string>
-    <string name="Arrival">-- Прибытие</string>
-    <string name="status">-- Статус</string>
+    <string name="departure">-- Отправление :</string>
+    <string name="Arrival">-- Прибытие :</string>
+    <string name="status">-- Статус :</string>
     <string name="details">Подробности :</string>
 
 

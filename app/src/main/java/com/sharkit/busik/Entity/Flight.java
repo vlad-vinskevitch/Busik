@@ -1,18 +1,19 @@
 package com.sharkit.busik.Entity;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Flight {
     private String startCountry, finishCountry, startCity, finishCity, note, status, owner, name;
     private long startDate, finishDate;
     private float  priceCargo, pricePassenger;
-    private ArrayList<String> passengers;
+    private Map<String, Passenger> passengers;
 
-    public ArrayList<String> getPassengers() {
+    public Map<String, Passenger> getPassengers() {
         return passengers;
     }
 
-    public void setPassengers(ArrayList<String> passengers) {
+    public void setPassengers(Map<String, Passenger> passengers) {
         this.passengers = passengers;
     }
 

@@ -31,7 +31,12 @@
         tools:layout="@layout/carrier_add_flights" />
 
     <fragment
-        android:id="@+id/nav_carrier_profile"
-        android:name="com.sharkit.busik.ui.Carrier.CarrierProfile"
-        tools:layout="@layout/profile_carrier" />
+        android:id="@+id/nav_profile"
+        android:name="com.sharkit.busik.ui.Carrier.Profile"
+        tools:layout="@layout/profile" />
+
+    <fragment
+        android:id="@+id/nav_carrier_passengers"
+        android:name="com.sharkit.busik.ui.Carrier.CarrierPassenger"
+        tools:layout="@layout/passenger_list" />
 </navigation>

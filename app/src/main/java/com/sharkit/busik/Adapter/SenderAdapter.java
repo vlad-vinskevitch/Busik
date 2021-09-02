@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -21,19 +20,21 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.sharkit.busik.Entity.Flight;
+import com.sharkit.busik.Entity.Passenger;
 import com.sharkit.busik.Entity.Review;
 import com.sharkit.busik.Entity.StaticUser;
+import com.sharkit.busik.Entity.User;
 import com.sharkit.busik.Exception.ToastMessage;
 import com.sharkit.busik.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Map;
 
 public class SenderAdapter extends BaseAdapter {
     private Context mContext;
@@ -41,8 +42,10 @@ public class SenderAdapter extends BaseAdapter {
     private TextView direction, priceCargo, pricePassenger, startDate, finishDate, status, note;
     private ImageView dropdownMenu;
     private Flight flight;
+    private Review review;
+    private User user;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private LinearLayout linear_flight, linear_cargo, linear_passenger, linear_departure,linear_arrival,linear_status,linear_details, linear;
+    private LinearLayout linear_flight, linear_cargo, linear_passenger, linear_departure,linear_arrival,linear_status,linear_details, linear_item;
 
     public SenderAdapter(Context mContext, ArrayList<Flight> mGroup) {
         this.mContext = mContext;
@@ -72,6 +75,7 @@ public class SenderAdapter extends BaseAdapter {
         }
         findView(convertView);
         writeToField(position);
+        Adaptive();
 
 
         dropdownMenu.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
@@ -121,47 +125,75 @@ public class SenderAdapter extends BaseAdapter {
         note.setText(note.getText() + " " + mGroup.get(position).getNote());
     }
 
-    public void Adaptive(){
+    public void Adaptive (){
 
         DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
         int h = metrics.heightPixels;
         int w = metrics.widthPixels;
-        Log.d("qwerty", "Adaptive: ");
+        Log.d("qwerty", "");
 
         LinearLayout.LayoutParams linear_params = new LinearLayout.LayoutParams(-1,-2);
         linear_params.setMargins(0,0,0,0);
 
-        if(h < 1800){
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-1,h);
-            linear.setLayoutParams(params);
+        linear_flight.setLayoutParams(linear_params);
+        linear_cargo.setLayoutParams(linear_params);
+        linear_passenger.setLayoutParams(linear_params);
+        linear_passenger.setLayoutParams(linear_params);
+        linear_details.setLayoutParams(linear_params);
+        linear_status.setLayoutParams(linear_params);
+        linear_arrival.setLayoutParams(linear_params);
+        linear_departure.setLayoutParams(linear_params);
+
+        direction.setPadding(0,0,0,0);
+        pricePassenger.setPadding(0,0,0,0);
+        priceCargo.setPadding(0,0,0,0);
+        startDate.setPadding(0,0,0,0);
+        finishDate.setPadding(0,0,0,0);
+        status.setPadding(0,0,0,0);
+
+        linear_flight.setPadding(10,0,0,0);
+        linear_cargo.setPadding(10,0,0,0);
+        linear_passenger.setPadding(10,0,0,0);
+        linear_passenger.setPadding(10,0,0,0);
+        linear_details.setPadding(10,0,0,0);
+        linear_status.setPadding(10,0,0,0);
+        linear_arrival.setPadding(10,0,0,0);
+        linear_departure.setPadding(10,0,0,0);
+        linear_details.setPadding(10,0,0,0);
+        linear_item.setPadding(10,10,0,0);
+
+
+
+
+
+        if(h > 1800){
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-1,(int)(h/4.6));
+            params.setMarginEnd(20);
+            params.setMarginStart(20);
+            params.setMargins(0,10,0,10);
+            linear_item.setLayoutParams(params);
             direction.setTextSize(14);
             priceCargo.setTextSize(14);
             pricePassenger.setTextSize(14);
             startDate.setTextSize(14);
             finishDate.setTextSize(14);
             status.setTextSize(14);
+            note.setTextSize(14);
+        }else {
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-1,(int)(h/3.9));
+            params.setMargins(0,10,0,0);
+            params.setMarginEnd(20);
+            params.setMarginStart(20);
+            linear_item.setLayoutParams(params);
+            direction.setTextSize(12);
+            priceCargo.setTextSize(12);
+            pricePassenger.setTextSize(12);
+            startDate.setTextSize(12);
+            finishDate.setTextSize(12);
+            status.setTextSize(12);
+            note.setTextSize(12);
 
-        }else{
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-1,h);
-            linear.setLayoutParams(params);
-            linear.setLayoutParams(params);
-            direction.setTextSize(20);
-            priceCargo.setTextSize(20);
-            pricePassenger.setTextSize(20);
-            startDate.setTextSize(14);
-            finishDate.setTextSize(14);
-            status.setTextSize(14);
         }
-
-//        direction_xml = view.findViewById(R.id.direction_xml);
-//        price_cargo_xml = view.findViewById(R.id.price_cargo_xml);
-//        price_passenger_xml = view.findViewById(R.id.price_passenger_xml);
-//        start_date_xml = view.findViewById(R.id.start_date_xml);
-//        finish_date_xml = view.findViewById(R.id.finish_date_xml);
-//        status_xml = view.findViewById(R.id.status_xml);
-//        note_xml = view.findViewById(R.id.note_xml);
-
-
 
     }
 
@@ -197,9 +229,9 @@ public class SenderAdapter extends BaseAdapter {
             }
             return;
         }
-        for (int i = 0; i < flight.getPassengers().size(); i++){
 
-            if (!flight.getPassengers().get(i).equals(StaticUser.getEmail())){
+
+            if (!flight.getPassengers().containsKey(StaticUser.getEmail())){
                 try {
                     throw new ToastMessage("Вы должны быть пассажиром даного рейса", mContext);
                 } catch (ToastMessage toastMessage) {
@@ -207,7 +239,7 @@ public class SenderAdapter extends BaseAdapter {
                 }
                 return;
             }
-        }
+
 
         if (flight.getStartDate() > calendar.getTimeInMillis()){
             try {
@@ -239,6 +271,14 @@ public class SenderAdapter extends BaseAdapter {
                     }
                     return;
                 }
+                if (flight.getPassengers().get(StaticUser.getEmail()).getReview().equals("true")){
+                    try {
+                        throw new ToastMessage("Вы уже оставили отзыв", mContext);
+                    } catch (ToastMessage toastMessage) {
+                        toastMessage.printStackTrace();
+                    }
+                    return;
+                }
                 createReview(text.getText().toString(), ratingBar.getRating(), position, dialog);
             }
         });
@@ -257,17 +297,44 @@ public class SenderAdapter extends BaseAdapter {
         review.setOwner(StaticUser.getName() + " " + StaticUser.getLast_name());
         review.setFlight(mGroup.get(position).getStartCountry() + "(" + mGroup.get(position).getStartCity() + ") - " +
                 mGroup.get(position).getFinishCountry() + "(" + mGroup.get(position).getFinishCity() + ")");
-        db.collection("Reviews")
-                .add(review)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+
+        db.collection("Users")
+                .whereEqualTo("email", mGroup.get(position).getOwner())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        try {
-                            throw new ToastMessage("Отзыв оставлен", mContext);
-                        } catch (ToastMessage toastMessage) {
-                            toastMessage.printStackTrace();
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
+                            user = queryDocumentSnapshot.toObject(User.class);
                         }
-                        dialog.dismiss();
+
+                        db.collection("Users")
+                                .document(user.getEmail())
+                                .update("rating", user.getRating() + ratingBarRating);
+
+                        Map<String, Passenger> map = flight.getPassengers();
+                        Passenger passenger = flight.getPassengers().get(StaticUser.getEmail());
+                        passenger.setReview("true");
+                        map.put(StaticUser.getEmail(), passenger);
+
+                        db.collection("Flights")
+                                .document(flight.getName())
+                                .update("passengers", map);
+
+                        db.collection("Reviews")
+                                .document(String.valueOf(review.getDate()))
+                                .set(review)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        try {
+                                            throw new ToastMessage("Отзыв оставлен", mContext);
+                                        } catch (ToastMessage toastMessage) {
+                                            toastMessage.printStackTrace();
+                                        }
+                                        dialog.dismiss();
+                                    }
+                                });
                     }
                 });
     }
@@ -287,9 +354,11 @@ public class SenderAdapter extends BaseAdapter {
                         for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
                             flight = queryDocumentSnapshot.toObject(Flight.class);
                         }
-                        for (int i = 0; i < flight.getPassengers().size(); i++) {
-                            if (flight.getPassengers().get(i).equals(StaticUser.getEmail())) {
-                                flight.getPassengers().remove(i);
+                            if (flight.getPassengers().containsKey(StaticUser.getEmail())) {
+                                if (flight.getPassengers().get(StaticUser.getEmail()).getReview().equals("true")) {
+                                    deleteReview(position);
+                                }
+                                flight.getPassengers().remove(StaticUser.getEmail());
                                 db.collection("Flights")
                                         .document(flight.getName())
                                         .update("passengers", flight.getPassengers());
@@ -300,12 +369,50 @@ public class SenderAdapter extends BaseAdapter {
                                 }
                                 return;
                             }
-                        }
+
+
+
                         try {
                             throw new ToastMessage("Вы не пассажир этого рейса", mContext);
                         } catch (ToastMessage toastMessage) {
                             toastMessage.printStackTrace();
                         }
+                    }
+                });
+    }
+
+    private void deleteReview(int position) {
+        db.collection("Reviews")
+                .whereEqualTo("flight", mGroup.get(position).getStartCountry() + "(" + mGroup.get(position).getStartCity() + ") - " +
+                        mGroup.get(position).getFinishCountry() + "(" + mGroup.get(position).getFinishCity() + ")")
+                .whereEqualTo("owner", StaticUser.getName() + " " + StaticUser.getLast_name())
+                .whereEqualTo("recipient", mGroup.get(position).getOwner())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
+                            review = queryDocumentSnapshot.toObject(Review.class);
+                        }
+                        db.collection("Users")
+                                .whereEqualTo("email", mGroup.get(position).getOwner())
+                                .get()
+                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                          @Override
+                                                          public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                                              for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
+                                                                  user = queryDocumentSnapshot.toObject(User.class);
+                                                              }
+
+                                                              db.collection("Users")
+                                                                      .document(user.getEmail())
+                                                                      .update("rating", user.getRating() - review.getRating());
+                                                          }
+                                                      });
+
+                        db.collection("Reviews")
+                                .document(String.valueOf(review.getDate()))
+                                .delete();
                     }
                 });
     }
@@ -333,17 +440,20 @@ public class SenderAdapter extends BaseAdapter {
 
     private void addPassenger() {
 
-                for (int i = 0; i < flight.getPassengers().size(); i++){
-                    if (flight.getPassengers().get(i).equals(StaticUser.getEmail())){
-                        try {
-                            throw new ToastMessage("Пассажир уже зарегестрируван на рейс",mContext);
-                        } catch (ToastMessage toastMessage) {
-                            toastMessage.printStackTrace();
-                        }
-                        return;
-                    }
-                }
-                flight.getPassengers().add(StaticUser.getEmail());
+
+        if (flight.getPassengers().containsKey(StaticUser.getEmail())){
+            try {
+                throw new ToastMessage("Пассажир уже зарегестрируван на рейс",mContext);
+            } catch (ToastMessage toastMessage) {
+                toastMessage.printStackTrace();
+            }
+            return;
+        }
+                Passenger passenger = new Passenger();
+                passenger.setProfile(StaticUser.getEmail());
+                passenger.setReview("false");
+                passenger.setStatus("Ожидает решения");
+                flight.getPassengers().put(StaticUser.getEmail(), passenger);
 
                 db.collection("Flights")
                         .document(flight.getName())
@@ -366,7 +476,7 @@ public class SenderAdapter extends BaseAdapter {
         status = convertView.findViewById(R.id.status_xml);
         note = convertView.findViewById(R.id.note_xml);
 
-        linear = convertView.findViewById(R.id.linear);
+        linear_item = convertView.findViewById(R.id.linear_item);
         linear_flight = convertView.findViewById(R.id.linear_flight);
         linear_cargo = convertView.findViewById(R.id.linear_cargo);
         linear_passenger = convertView.findViewById(R.id.linear_passenger);

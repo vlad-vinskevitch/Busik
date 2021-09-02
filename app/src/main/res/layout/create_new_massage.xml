@@ -25,15 +25,10 @@
         android:hint="@string/enter_text_massage"
         android:layout_height="wrap_content">
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/message_xml"
             android:inputType="textMultiLine"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/styleEditText"/>
     </com.google.android.material.textfield.TextInputLayout>
-    <Button
-        android:layout_marginHorizontal="60dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/send"
-        style="@style/styleButton"/>
 </LinearLayout>
