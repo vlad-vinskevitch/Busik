@@ -35,15 +35,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/styleTextView"
-        android:text="@string/flights"/>
+        android:text="Рейс"/>
     <TextView
         android:id="@+id/rating_xml"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/styleTextView"
-        android:text="@string/rating"/>
+        android:text="рейтинг"/>
     <TextView
+        android:text="Текст відгуку"
+        android:gravity="center"
+        style="@style/styleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
