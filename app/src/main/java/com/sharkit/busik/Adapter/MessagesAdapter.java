@@ -2,6 +2,7 @@ package com.sharkit.busik.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +46,37 @@ public class MessagesAdapter extends BaseAdapter {
         }
         findView(convertView);
         writeToField(position);
+        Adaptive();
         return convertView;
+    }
+    private void Adaptive(){
+        DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
+        int h  = metrics.heightPixels;
+        int w = metrics.widthPixels;
+
+        name.setPadding(60,0,0,0);
+        flight.setPadding(0,0,60,0);
+        status.setPadding(60,0,0,0);
+        date.setPadding(0,0,60,0);
+        text.setPadding(10,0,10,0);
+
+        if(h > 1800){
+            text.setPadding(20,0,20,0);
+            name.setTextSize(14);
+            flight.setTextSize(14);
+            text.setTextSize(14);
+            status.setTextSize(14);
+            date.setTextSize(14);
+        }else {
+            text.setPadding(10,0,10,0);
+            name.setTextSize(11);
+            flight.setTextSize(11);
+            text.setTextSize(11);
+            status.setTextSize(11);
+            date.setTextSize(11);
+        }
+
+
     }
 
     @SuppressLint("SimpleDateFormat")
