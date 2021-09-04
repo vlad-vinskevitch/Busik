@@ -27,6 +27,8 @@
             tools:ignore="RtlCompat" />
     </LinearLayout>
     <ListView
+        android:dividerHeight="5dp"
+        android:divider="@color/prozory"
         android:id="@+id/list_reviews_xml"
         android:layout_below="@+id/linear"
         android:layout_width="wrap_content"

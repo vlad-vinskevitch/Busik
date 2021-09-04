@@ -44,6 +44,7 @@
         style="@style/styleTextView"
         android:text="рейтинг"/>
     <TextView
+        android:id="@+id/text_reviews"
         android:text="Текст відгуку"
         android:gravity="center"
         style="@style/styleTextView"
