@@ -3,41 +3,69 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/name_xml"
-        android:gravity="center"
-        android:text="ФИО"
-        style="@style/styleTextView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:id="@+id/phone_xml"
-        android:gravity="center"
-        android:text="@string/phone_number"
-        style="@style/styleTextView"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/name_xml"
+            android:gravity="end"
+            android:text="ФИО"
+            style="@style/styleTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/phone_xml"
+            android:gravity="start"
+            android:text="@string/phone_number"
+            style="@style/styleTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:id="@+id/country_xml"
-        android:gravity="center"
-        android:text="@string/country"
-        style="@style/styleTextView"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/country_xml"
+            android:gravity="end"
+            android:text="@string/country"
+            style="@style/styleTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/city_xml"
+            android:gravity="start"
+            android:text="@string/city"
+            style="@style/styleTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:id="@+id/city_xml"
-        android:gravity="center"
-        android:text="@string/city"
-        style="@style/styleTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:id="@+id/rating_xml"
-        android:gravity="center"
-        android:text="@string/rating"
-        style="@style/styleTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_weight="1"
+            android:gravity="end"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/styleTextView"
+            android:text="@string/rating"/>
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/rating_xml"
+            android:gravity="start"
+            android:text="@string/rating"
+            style="@style/styleTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
     <ListView
         android:id="@+id/list_reviews_xml"
         android:layout_width="match_parent"

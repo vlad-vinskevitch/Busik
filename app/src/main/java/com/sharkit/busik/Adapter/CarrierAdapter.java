@@ -122,6 +122,7 @@ public class CarrierAdapter extends BaseAdapter {
         startDate.setPadding(0,0,0,0);
         finishDate.setPadding(0,0,0,0);
         status.setPadding(0,0,0,0);
+        note.setPadding(0,0,0,0);
 
         linear_flight.setPadding(5,0,0,0);
         linear_cargo.setPadding(5,0,0,0);
