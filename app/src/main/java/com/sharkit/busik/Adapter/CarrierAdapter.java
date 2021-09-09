@@ -93,14 +93,6 @@ public class CarrierAdapter extends BaseAdapter implements View.OnClickListener 
         note.setText(note.getText() + " " + mGroup.get(position).getNote());
 
         dropdownMenuListener(position);
-
-        note.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastMessage(position+"");
-            }
-        });
-
         return convertView;
     }
 

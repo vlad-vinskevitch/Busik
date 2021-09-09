@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation_admin"
+    app:startDestination="@id/nav_admin_main">
+
+    <fragment
+        android:id="@+id/nav_admin_main"
+        android:name="com.sharkit.busik.ui.Admin.AdminMain"
+        tools:layout="@layout/admin_main" />
+    <fragment
+        android:id="@+id/nav_admin_countries"
+        android:name="com.sharkit.busik.ui.Admin.AdminCountries"
+        tools:layout="@layout/admin_countries" />
+    <fragment
+        android:id="@+id/nav_admin_cities"
+        android:name="com.sharkit.busik.ui.Admin.AdminCities"
+        tools:layout="@layout/admin_cities" />
+    <fragment
+        android:id="@+id/nav_admin_carriers"
+        android:name="com.sharkit.busik.ui.Admin.AdminCarriers"
+        tools:layout="@layout/admin_carriers" />
+    <fragment
+        android:id="@+id/nav_admin_senders"
+        android:name="com.sharkit.busik.ui.Admin.AdminSenders"
+        tools:layout="@layout/admin_senders" />
+</navigation>
