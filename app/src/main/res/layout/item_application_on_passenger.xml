@@ -1,23 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_marginHorizontal="5dp"
+    android:padding="10dp"
+    style="@style/styleLinearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/name_xml"
+    <LinearLayout
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/styleTextView"
-        android:text="ФИО"/>
-    <TextView
-        android:id="@+id/phone_xml"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/styleTextView"
-        android:text="@string/phone_number"/>
+        android:orientation="horizontal">
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/name_xml"
+            android:gravity="start"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/styleTextView"
+            android:text="ФИО"/>
+        <TextView
+            android:id="@+id/phone_xml"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/styleTextView"
+            android:text="@string/phone_number"/>
+
+
+
+    </LinearLayout>
+
     <TextView
         android:id="@+id/status_xml"
         android:gravity="center"
@@ -25,36 +37,47 @@
         android:layout_height="wrap_content"
         style="@style/styleTextView"
         android:text="status"/>
+
+
     <LinearLayout
-        android:layout_marginVertical="10dp"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/accept_xml"
-            android:text="Принять"
-            style="@style/styleButton"
-            android:layout_marginHorizontal="5dp"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
         <Button
             android:id="@+id/cancel_xml"
             android:text="Отменить"
             style="@style/styleButton"
             android:layout_marginHorizontal="5dp"
             android:layout_weight="1"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/info_xml"
+            android:layout_marginHorizontal="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/styleButton"
+            android:text="Відомості"/>
+        <Button
+            android:id="@+id/accept_xml"
+            android:text="Принять"
+            style="@style/styleButton"
+            android:layout_marginHorizontal="5dp"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+
+
+
+        </LinearLayout>
+
+
+
+
     </LinearLayout>
-    <Button
-        android:id="@+id/info_xml"
-        android:layout_marginHorizontal="50dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/styleButton"
-        android:text="Відомості"/>
 
 
 
-</LinearLayout>

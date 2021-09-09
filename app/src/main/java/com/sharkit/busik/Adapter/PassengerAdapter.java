@@ -4,11 +4,13 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.navigation.NavController;
@@ -62,11 +64,43 @@ public class PassengerAdapter extends BaseAdapter {
         findView(convertView);
         writeField(position);
         onClick(position);
+        Adaptive();
 
         return convertView;
     }
+    public void Adaptive(){
+        DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
+        int h = metrics.heightPixels;
+        int w = metrics.widthPixels;
+
+        if(h  > 1800){
+            name.setTextSize(14);
+            phone.setTextSize(14);
+            status.setTextSize(14);
+
+            LinearLayout.LayoutParams button_params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,(int)(h / 17), 1f );
+            button_params.setMargins(10,10,10,5);
+            accept.setLayoutParams(button_params);
+            cancel.setLayoutParams(button_params);
+            info.setLayoutParams(button_params);
+        }else {
+            name.setTextSize(11);
+            phone.setTextSize(11);
+            status.setTextSize(11);
+
+            LinearLayout.LayoutParams button_params = new LinearLayout.LayoutParams(-2,(int)(h / 16.2), 1f);
+            button_params.setMargins(10,10,10,5);
+            accept.setLayoutParams(button_params);
+            cancel.setLayoutParams(button_params);
+            info.setLayoutParams(button_params);
+        }
+
+
+
+    }
 
     private void findView(View convertView) {
+
         name = convertView.findViewById(R.id.name_xml);
         phone = convertView.findViewById(R.id.phone_xml);
         status = convertView.findViewById(R.id.status_xml);

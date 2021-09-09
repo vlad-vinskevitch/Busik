@@ -137,13 +137,27 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/rating_xml"
-                android:layout_margin="5dp"
-                style="@style/styleTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/rating"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_margin="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/styleTextView"
+                    android:text="Ваш рейтинг - "/>
+                <TextView
+                    android:id="@+id/rating_xml"
+                    android:layout_margin="5dp"
+                    style="@style/styleTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rating"/>
+
+            </LinearLayout>
+
+
 
     <Button
         android:id="@+id/change_pass_xml"

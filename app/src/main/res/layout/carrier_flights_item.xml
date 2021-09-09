@@ -1,37 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:padding="5dp"
-    android:layout_marginVertical="10dp"
-    android:layout_marginHorizontal="5dp"
-    style="@style/styleLinearLayout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linear_item"
+    style="@style/styleLinearLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="5dp"
+    android:layout_marginVertical="10dp"
+    android:orientation="vertical"
+    android:padding="5dp">
 
     <LinearLayout
         android:id="@+id/linear_flight"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
         <TextView
-            android:textAlignment="textStart"
             android:id="@+id/direction_xml"
             style="@style/styleTextView"
-            android:layout_gravity="center"
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
             android:text=""
+            android:textAlignment="textStart"
             tools:ignore="RtlCompat" />
+
         <ImageView
             android:id="@+id/dropdown_menu_xml"
-            app:tint="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:src="@drawable/icon_item_flights"/>
+            android:src="@drawable/icon_item_flights"
+            app:tint="@color/black" />
     </LinearLayout>
 
     <LinearLayout
@@ -39,78 +41,87 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
-            android:padding="0dp"
             style="@style/styleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/poloski"/>
+            android:padding="0dp"
+            android:text="@string/poloski" />
 
         <TextView
-            android:layout_weight="1"
             android:id="@+id/price_cargo_xml"
             style="@style/styleTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text=""/>
+            android:layout_weight="1"
+            android:text="" />
 
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/linear_passenger"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
-            android:padding="0dp"
             style="@style/styleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/poloski"/>
+            android:padding="0dp"
+            android:text="@string/poloski" />
 
         <TextView
             android:id="@+id/price_passenger_xml"
             style="@style/styleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""/>
+            android:text="" />
 
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/linear_departure"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
-            android:padding="0dp"
             style="@style/styleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/departure"/>
+            android:padding="0dp"
+            android:text="@string/departure" />
+
         <TextView
             android:id="@+id/start_date_xml"
             style="@style/styleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""/>
+            android:text="" />
 
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/linear_arrival"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
-            android:padding="0dp"
+            style="@style/styleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/styleTextView"
-            android:text="@string/Arrival"/>
+            android:padding="0dp"
+            android:text="@string/Arrival" />
+
         <TextView
             android:id="@+id/finish_date_xml"
             style="@style/styleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""/>
+            android:text="" />
 
     </LinearLayout>
 
@@ -119,43 +130,44 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
-            android:padding="0dp"
+            style="@style/styleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/styleTextView"
-            android:text="@string/status"/>
+            android:padding="0dp"
+            android:text="@string/status" />
 
         <TextView
             android:id="@+id/status_xml"
             style="@style/styleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""/>
+            android:text="" />
 
 
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/linear_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
-            android:padding="0dp"
+            style="@style/styleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/styleTextView"
-            android:text="@string/details"/>
+            android:padding="0dp"
+            android:text="@string/details" />
+
         <TextView
             android:id="@+id/note_xml"
             style="@style/styleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""/>
+            android:text="" />
     </LinearLayout>
-
-
-
 
 
 </LinearLayout>

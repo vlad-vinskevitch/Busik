@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -42,6 +45,7 @@ public class SenderAdapter extends BaseAdapter {
     private Review review;
     private User user;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private LinearLayout linear_flight, linear_cargo, linear_passenger, linear_departure,linear_arrival,linear_status,linear_details, linear_item;
 
     public SenderAdapter(Context mContext, ArrayList<Flight> mGroup) {
         this.mContext = mContext;
@@ -71,6 +75,7 @@ public class SenderAdapter extends BaseAdapter {
         }
         findView(convertView);
         writeToField(position);
+        Adaptive();
 
 
         dropdownMenu.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
@@ -118,6 +123,78 @@ public class SenderAdapter extends BaseAdapter {
         startDate.setText(simpleDateFormat.format(mGroup.get(position).getStartDate()));
         finishDate.setText(simpleDateFormat.format(mGroup.get(position).getFinishDate()));
         note.setText(note.getText() + " " + mGroup.get(position).getNote());
+    }
+
+    public void Adaptive (){
+
+        DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
+        int h = metrics.heightPixels;
+        int w = metrics.widthPixels;
+        Log.d("qwerty", "");
+
+        LinearLayout.LayoutParams linear_params = new LinearLayout.LayoutParams(-1,-2);
+        linear_params.setMargins(0,0,0,0);
+
+        linear_flight.setLayoutParams(linear_params);
+        linear_cargo.setLayoutParams(linear_params);
+        linear_passenger.setLayoutParams(linear_params);
+        linear_passenger.setLayoutParams(linear_params);
+        linear_details.setLayoutParams(linear_params);
+        linear_status.setLayoutParams(linear_params);
+        linear_arrival.setLayoutParams(linear_params);
+        linear_departure.setLayoutParams(linear_params);
+
+        direction.setPadding(0,0,0,0);
+        pricePassenger.setPadding(0,0,0,0);
+        priceCargo.setPadding(0,0,0,0);
+        startDate.setPadding(0,0,0,0);
+        finishDate.setPadding(0,0,0,0);
+        status.setPadding(0,0,0,0);
+
+        linear_flight.setPadding(10,0,0,0);
+        linear_cargo.setPadding(10,0,0,0);
+        linear_passenger.setPadding(10,0,0,0);
+        linear_passenger.setPadding(10,0,0,0);
+        linear_details.setPadding(10,0,0,0);
+        linear_status.setPadding(10,0,0,0);
+        linear_arrival.setPadding(10,0,0,0);
+        linear_departure.setPadding(10,0,0,0);
+        linear_details.setPadding(10,0,0,0);
+        linear_item.setPadding(10,10,0,0);
+
+
+
+
+
+        if(h > 1800){
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-1,(int)(h/4.6));
+            params.setMarginEnd(20);
+            params.setMarginStart(20);
+            params.setMargins(0,10,0,10);
+            linear_item.setLayoutParams(params);
+            direction.setTextSize(14);
+            priceCargo.setTextSize(14);
+            pricePassenger.setTextSize(14);
+            startDate.setTextSize(14);
+            finishDate.setTextSize(14);
+            status.setTextSize(14);
+            note.setTextSize(14);
+        }else {
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-1,(int)(h/3.9));
+            params.setMargins(0,10,0,0);
+            params.setMarginEnd(20);
+            params.setMarginStart(20);
+            linear_item.setLayoutParams(params);
+            direction.setTextSize(12);
+            priceCargo.setTextSize(12);
+            pricePassenger.setTextSize(12);
+            startDate.setTextSize(12);
+            finishDate.setTextSize(12);
+            status.setTextSize(12);
+            note.setTextSize(12);
+
+        }
+
     }
 
     private void leaveReview(int position) {
@@ -396,6 +473,23 @@ public class SenderAdapter extends BaseAdapter {
         pricePassenger = convertView.findViewById(R.id.price_passenger_xml);
         startDate = convertView.findViewById(R.id.start_date_xml);
         finishDate = convertView.findViewById(R.id.finish_date_xml);
+        status = convertView.findViewById(R.id.status_xml);
+        note = convertView.findViewById(R.id.note_xml);
+
+        linear_item = convertView.findViewById(R.id.linear_item);
+        linear_flight = convertView.findViewById(R.id.linear_flight);
+        linear_cargo = convertView.findViewById(R.id.linear_cargo);
+        linear_passenger = convertView.findViewById(R.id.linear_passenger);
+        linear_departure = convertView.findViewById(R.id.linear_departure);
+        linear_arrival = convertView.findViewById(R.id.linear_arrival);
+        linear_status = convertView.findViewById(R.id.linear_status);
+        linear_details = convertView.findViewById(R.id.linear_details);
+
+        direction = convertView.findViewById(R.id.direction_xml);
+        priceCargo = convertView.findViewById(R.id.price_cargo_xml);
+        pricePassenger = convertView.findViewById(R.id.price_passenger_xml);
+        startDate = convertView.findViewById(R.id.start_date_xml);
+        finishDate =convertView.findViewById(R.id.finish_date_xml);
         status = convertView.findViewById(R.id.status_xml);
         note = convertView.findViewById(R.id.note_xml);
     }

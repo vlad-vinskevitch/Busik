@@ -12,12 +12,6 @@
         android:layout_height="wrap_content"
         android:text="@string/massage_for_passag"/>
 
-    <TextView
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/styleTextView"
-        android:text="@string/last_massage"/>
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_marginHorizontal="10dp"

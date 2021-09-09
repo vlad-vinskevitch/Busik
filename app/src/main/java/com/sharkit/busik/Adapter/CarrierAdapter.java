@@ -9,12 +9,14 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.navigation.NavController;
@@ -38,7 +40,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
-public class CarrierAdapter extends BaseAdapter {
+public class CarrierAdapter extends BaseAdapter implements View.OnClickListener {
     private ArrayList<Flight> mGroup;
     private Context mContext;
     private TextView direction, priceCargo, pricePassenger, startDate, finishDate, status, note;
@@ -76,7 +78,7 @@ public class CarrierAdapter extends BaseAdapter {
         }
         findView(convertView);
 
-        setAdaptive();
+//        setAdaptive();
 
 
         @SuppressLint("SimpleDateFormat")
@@ -92,6 +94,12 @@ public class CarrierAdapter extends BaseAdapter {
 
         dropdownMenuListener(position);
 
+        note.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastMessage(position+"");
+            }
+        });
 
         return convertView;
     }
@@ -102,7 +110,6 @@ public class CarrierAdapter extends BaseAdapter {
         DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
         int h = metrics.heightPixels;
         int w = metrics.widthPixels;
-        Log.d("qwerty", "");
 
         LinearLayout.LayoutParams linear_params = new LinearLayout.LayoutParams(-1,-2);
         linear_params.setMargins(0,0,0,0);
@@ -122,15 +129,18 @@ public class CarrierAdapter extends BaseAdapter {
         startDate.setPadding(0,0,0,0);
         finishDate.setPadding(0,0,0,0);
         status.setPadding(0,0,0,0);
+        note.setPadding(0,0,0,0);
 
-        linear_flight.setPadding(0,0,0,0);
-        linear_cargo.setPadding(0,0,0,0);
-        linear_passenger.setPadding(0,0,0,0);
-        linear_passenger.setPadding(0,0,0,0);
-        linear_details.setPadding(0,0,0,0);
-        linear_status.setPadding(0,0,0,0);
-        linear_arrival.setPadding(0,0,0,0);
-        linear_departure.setPadding(0,0,0,0);
+        linear_flight.setPadding(5,0,0,0);
+        linear_cargo.setPadding(5,0,0,0);
+        linear_passenger.setPadding(5,0,0,0);
+        linear_passenger.setPadding(5,0,0,0);
+        linear_details.setPadding(5,0,0,0);
+        linear_status.setPadding(5,0,0,0);
+        linear_arrival.setPadding(5,0,0,0);
+        linear_departure.setPadding(5,0,0,0);
+        linear_details.setPadding(5,0,0,0);
+
 
 
 
@@ -146,18 +156,21 @@ public class CarrierAdapter extends BaseAdapter {
             startDate.setTextSize(14);
             finishDate.setTextSize(14);
             status.setTextSize(14);
+            note.setTextSize(14);
         }else {
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-1,(int)(h/4.25));
-            params.setMargins(0,10,0,10);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-1,(int)(h/3.9));
+            params.setMargins(0,10,0,0);
             params.setMarginEnd(20);
             params.setMarginStart(20);
             linear_item.setLayoutParams(params);
-            direction.setTextSize(11);
-            priceCargo.setTextSize(11);
-            pricePassenger.setTextSize(11);
-            startDate.setTextSize(11);
-            finishDate.setTextSize(11);
-            status.setTextSize(11);
+            direction.setTextSize(12);
+            priceCargo.setTextSize(12);
+            pricePassenger.setTextSize(12);
+            startDate.setTextSize(12);
+            finishDate.setTextSize(12);
+            status.setTextSize(12);
+            note.setTextSize(12);
+
 
         }
 
@@ -166,62 +179,97 @@ public class CarrierAdapter extends BaseAdapter {
     private void dropdownMenuListener(int position) {
 
         NavController navController = Navigation.findNavController((Activity) mContext, R.id.nav_host_carrier);
+        db.collection("Flights")
+                .whereEqualTo("owner", StaticUser.getEmail())
+                .whereEqualTo("startCountry", mGroup.get(position).getStartCountry())
+                .whereEqualTo("finishCountry", mGroup.get(position).getFinishCountry())
+                .whereEqualTo("startCity", mGroup.get(position).getStartCity())
+                .whereEqualTo("finishCity", mGroup.get(position).getFinishCity())
+                .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
+                    flight = queryDocumentSnapshot.toObject(Flight.class);
+                }
+            }
+        });
+        dropdownMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu menu =new PopupMenu(mContext, v);
+                MenuInflater menuInflater = menu.getMenuInflater();
+                menuInflater.inflate(R.menu.change_flight,menu.getMenu());
+                menu.show();
+                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @SuppressLint("NonConstantResourceId")
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()){
+
+                            case R.id.close_xml:
+                                db.collection("Flights")
+                                        .document(flight.getName())
+                                        .update("status", "complete");
+                                break;
+                            case R.id.passenger_xml:
+                                ElseVariable.setNameFlight(flight.getName());
+                                navController.navigate(R.id.nav_carrier_passengers);
+                                break;
+                            case R.id.change_description_xml:
+                                createAlertDialogChangeDescription();
+                                break;
+                            case R.id.write_message_xml:
+                                writeTheMessage(position);
+                                break;
+                            case R.id.delete_xml:
+                                db.collection("Flights")
+                                        .document(flight.getName())
+                                        .delete();
+                                navController.navigate(R.id.nav_carrier_flights);
+                                break;
+                        }
+                        return true;
+                    }
+                });
+            }
+        });
+
 
         dropdownMenu.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
             @Override
             public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-                db.collection("Flights")
-                        .whereEqualTo("owner", StaticUser.getEmail())
-                        .whereEqualTo("startCountry", mGroup.get(position).getStartCountry())
-                        .whereEqualTo("finishCountry", mGroup.get(position).getFinishCountry())
-                        .whereEqualTo("startCity", mGroup.get(position).getStartCity())
-                        .whereEqualTo("finishCity", mGroup.get(position).getFinishCity())
-                        .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
-                            flight = queryDocumentSnapshot.toObject(Flight.class);
-                        }
-                    }
-                });
+
                 menu.add("Завершить").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                    db.collection("Flights")
-                            .document(flight.getName())
-                            .update("status", "complete");
+
                         return true;
                     }
+
                 });
                 menu.add("Пассажиры").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        ElseVariable.setNameFlight(flight.getName());
-                        navController.navigate(R.id.nav_carrier_passengers);
                         return true;
                     }
                 });
                 menu.add("Изменить описание").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        createAlertDialogChangeDescription();
+
                         return true;
                     }
                 });
                 menu.add("Написать сообщение").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        writeTheMessage(position);
                         return true;
                     }
                 });
                 menu.add("Удалить").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        db.collection("Flights")
-                                .document(flight.getName())
-                                .delete();
-                        navController.navigate(R.id.nav_carrier_flights);
+
                         return true;
                     }
                 });
@@ -319,6 +367,12 @@ public class CarrierAdapter extends BaseAdapter {
         linear_arrival = convertView.findViewById(R.id.linear_arrival);
         linear_status = convertView.findViewById(R.id.linear_status);
         linear_details = convertView.findViewById(R.id.linear_details);
+
+    }
+
+
+    @Override
+    public void onClick(View v) {
 
     }
 }

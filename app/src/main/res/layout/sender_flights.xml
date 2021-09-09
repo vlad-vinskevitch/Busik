@@ -41,6 +41,9 @@
         />
 
     <ListView
+        android:layout_marginHorizontal="10dp"
+        android:divider="@color/prozory"
+        android:dividerHeight="5dp"
         android:id="@+id/list_xml"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

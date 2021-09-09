@@ -44,7 +44,7 @@ public class CarrierFlights extends Fragment {
         Calendar calendar = Calendar.getInstance();
         db.collection("Flights")
                 .whereEqualTo("owner", StaticUser.getEmail())
-                .whereGreaterThan("finishDate", calendar.getTimeInMillis()+8640000)
+//                .whereGreaterThan("finishDate", calendar.getTimeInMillis()+8640000)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
