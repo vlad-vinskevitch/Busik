@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="deploymentTargetDropDown">
@@ -8,11 +7,11 @@
         <deviceKey>
           <Key>
             <type value="VIRTUAL_DEVICE_PATH" />
-            <value value="C:\Users\rosto\.android\avd\Nexus_4_API_27.avd" />
+            <value value="C:\Users\rosto\.android\avd\Pixel_3_XL_API_30.avd" />
           </Key>
         </deviceKey>
       </Target>
     </runningDeviceTargetSelectedWithDropDown>
-    <timeTargetWasSelectedWithDropDown value="2021-09-05T11:39:59.372599300Z" />
+    <timeTargetWasSelectedWithDropDown value="2021-09-10T13:06:02.504032900Z" />
   </component>
 </project>

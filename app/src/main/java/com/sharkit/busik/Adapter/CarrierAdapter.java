@@ -78,7 +78,7 @@ public class CarrierAdapter extends BaseAdapter implements View.OnClickListener 
         }
         findView(convertView);
 
-//        setAdaptive();
+        setAdaptive();
 
 
         @SuppressLint("SimpleDateFormat")
@@ -136,12 +136,18 @@ public class CarrierAdapter extends BaseAdapter implements View.OnClickListener 
 
 
 
+
         if(h > 1800){
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-1,(int)(h/4.6));
-            params.setMarginEnd(20);
-            params.setMarginStart(20);
-            params.setMargins(0,10,0,10);
-            linear_item.setLayoutParams(params);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+//            params.setMarginEnd(20);
+//            params.setMarginStart(20);
+//            params.setMargins(0,10,0,10);
+
+            LinearLayout.LayoutParams params_drop = new LinearLayout.LayoutParams(150,150);
+            params_drop.setMargins(0,10,20,0);
+            dropdownMenu.setLayoutParams(params_drop);
+
+
             direction.setTextSize(14);
             priceCargo.setTextSize(14);
             pricePassenger.setTextSize(14);
