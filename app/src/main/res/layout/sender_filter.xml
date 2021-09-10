@@ -86,11 +86,13 @@
             android:layout_weight="1"
             android:hint="@string/from_country">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                style="@style/styleEditText"
                 android:selectAllOnFocus="true"
                 android:id="@+id/start_country_xml"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -98,12 +100,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="@string/in_country">
-
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                style="@style/styleEditText"
                 android:selectAllOnFocus="true"
                 android:id="@+id/finish_country_xml"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -121,9 +124,16 @@
             android:layout_weight="1"
             android:hint="@string/from_city">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                style="@style/styleEditText"
                 android:selectAllOnFocus="true"
                 android:id="@+id/start_city_xml"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.textfield.TextInputEditText
+
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -134,11 +144,13 @@
             android:layout_weight="1"
             android:hint="@string/in_city">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                style="@style/styleEditText"
                 android:selectAllOnFocus="true"
                 android:id="@+id/finish_city_xml"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
 

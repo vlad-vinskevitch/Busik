@@ -27,16 +27,13 @@
                 android:hint="Откуда(страна)"
                 app:hintAnimationEnabled="true">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    style="@style/styleEditText"
                     android:id="@+id/start_country_xml"
+                    android:inputType="text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textAutoComplete"/>
+                    android:layout_height="wrap_content" />
 
-<!--                <AutoCompleteTextView-->
-<!--                    android:id="@+id/autocomplete_country"-->
-<!--                    android:layout_width="fill_parent"-->
-<!--                    android:layout_height="wrap_content" />-->
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -45,11 +42,13 @@
                 app:hintAnimationEnabled="true"
                 android:hint="Куда(страна)">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    style="@style/styleEditText"
                     android:id="@+id/finish_country_xml"
                     android:inputType="text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -57,11 +56,13 @@
                 android:layout_height="wrap_content"
                 app:hintAnimationEnabled="true"
                 android:hint="Откуда(город)">
-                <com.google.android.material.textfield.TextInputEditText
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    style="@style/styleEditText"
                     android:id="@+id/start_city_xml"
                     android:inputType="text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -70,11 +71,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    style="@style/styleEditText"
                     android:id="@+id/finish_city_xml"
                     android:inputType="text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
