@@ -70,11 +70,13 @@
                 app:hintEnabled="true"
                 app:hintAnimationEnabled="true"
                 android:hint="@string/country">
-                <com.google.android.material.textfield.TextInputEditText
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    style="@style/styleEditText"
                     android:id="@+id/country_xml"
                     android:inputType="text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
@@ -83,11 +85,13 @@
                 app:hintEnabled="true"
                 app:hintAnimationEnabled="true"
                 android:hint="@string/city">
-                <com.google.android.material.textfield.TextInputEditText
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    style="@style/styleEditText"
                     android:id="@+id/city_xml"
                     android:inputType="text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout

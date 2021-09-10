@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.RadioButton;
 
@@ -27,7 +28,8 @@ import com.sharkit.busik.Validation.ValidationRegistration;
 import java.util.ArrayList;
 
 public class Registration extends Fragment {
-    private TextInputEditText name, last_name, country, city, phone, email, password, accept_pass;
+    private TextInputEditText name, last_name, phone, email, password, accept_pass;
+    private AutoCompleteTextView country, city;
     private RadioButton sender, transport;
     private Button registration;
 

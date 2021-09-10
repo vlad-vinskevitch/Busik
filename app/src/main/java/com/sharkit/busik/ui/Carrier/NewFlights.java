@@ -39,8 +39,9 @@ import java.util.HashMap;
 public class NewFlights extends Fragment {
     private AutoCompleteTextView textView;
 
-    private TextInputEditText startCountry, finishCountry, startCity, finishCity, priceCargo, pricePassenger, note, startDate, finishDate;
+    private TextInputEditText  priceCargo, pricePassenger, note, startDate, finishDate;
     private Button create;
+    private AutoCompleteTextView startCountry, finishCountry, startCity, finishCity;
     private int year, month, day;
     private final Flight flight = new Flight();
     @Nullable

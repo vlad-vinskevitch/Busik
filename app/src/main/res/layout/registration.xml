@@ -82,13 +82,14 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/country"
                 app:hintAnimationEnabled="true">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/country_xml"
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     style="@style/styleEditText"
+                    android:id="@+id/country_xml"
+                    android:inputType="text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
+                    android:layout_height="wrap_content" />
+
+
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -97,13 +98,12 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/city"
                 app:hintAnimationEnabled="true">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/city_xml"
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     style="@style/styleEditText"
+                    android:id="@+id/city_xml"
+                    android:inputType="text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
+                    android:layout_height="wrap_content" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
