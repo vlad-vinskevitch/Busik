@@ -57,6 +57,7 @@
     <string name="status">-- Статус :</string>
     <string name="details">Подробности :</string>
     <string name="some_text">На вашу почту будет отправлено письмо с сылкой на востановление пароля</string>
+    <string name="add">Добавить</string>
 
 
     <string-array name="countries_array">
