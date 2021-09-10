@@ -2,6 +2,7 @@ package com.sharkit.busik.Validation;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.widget.AutoCompleteTextView;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.sharkit.busik.Exception.ToastMessage;
@@ -10,10 +11,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ValidationRegistration {
-    private TextInputEditText name, last_name, country, city, password, phone, email, accept_pass;
+    private TextInputEditText name, last_name,  password, phone, email, accept_pass;
+    private AutoCompleteTextView country, city;
     private Context context;
 
-    public ValidationRegistration(TextInputEditText name, TextInputEditText last_name, TextInputEditText country, TextInputEditText city,
+    public ValidationRegistration(TextInputEditText name, TextInputEditText last_name, AutoCompleteTextView country, AutoCompleteTextView city,
                                   TextInputEditText password, TextInputEditText phone, TextInputEditText email, TextInputEditText accept_pass, Context context) {
         this.accept_pass = accept_pass;
         this.name = name;

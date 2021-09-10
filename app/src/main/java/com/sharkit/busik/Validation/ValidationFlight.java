@@ -2,6 +2,7 @@ package com.sharkit.busik.Validation;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -12,11 +13,12 @@ import java.util.regex.Pattern;
 
 public class ValidationFlight {
 
-    private TextInputEditText startCountry, finishCountry, startCity, finishCity, priceCargo, pricePassenger, startDate, finishDate;;
+    private TextInputEditText  priceCargo, pricePassenger, startDate, finishDate;;
     private Context getContext;
+    private AutoCompleteTextView startCountry, finishCountry, startCity, finishCity;
 
-    public ValidationFlight(TextInputEditText startCountry, TextInputEditText finishCountry, TextInputEditText startCity,
-                            TextInputEditText finishCity, TextInputEditText startDate, TextInputEditText finishDate, TextInputEditText priceCargo, TextInputEditText pricePassenger, Context getContext) {
+    public ValidationFlight(AutoCompleteTextView startCountry, AutoCompleteTextView finishCountry, AutoCompleteTextView startCity,
+                            AutoCompleteTextView finishCity, TextInputEditText startDate, TextInputEditText finishDate, TextInputEditText priceCargo, TextInputEditText pricePassenger, Context getContext) {
         this.startCountry = startCountry;
         this.finishCountry = finishCountry;
         this.startCity = startCity;

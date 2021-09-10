@@ -7,15 +7,12 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -42,8 +39,8 @@ import com.sharkit.busik.Validation.ValidationRegistration;
 
 public class CarrierSetting extends Fragment {
     private TextInputLayout pass;
-    private TextInputEditText name, last_name, country,
-            city, phone, email, password;
+    private TextInputEditText name, last_name,phone, email, password;
+    private AutoCompleteTextView country, city;
     private TextView rating;
     private Button save, changePass;
     private String mail;
@@ -64,8 +61,8 @@ public class CarrierSetting extends Fragment {
     private void saveVisible() {
         editChange(name, StaticUser.getName());
         editChange(last_name, StaticUser.getLast_name());
-        editChange(country, StaticUser.getCountry());
-        editChange(city, StaticUser.getCity());
+        editChangeAutoComplete(country, StaticUser.getCountry());
+        editChangeAutoComplete(city, StaticUser.getCity());
         editChange(phone, StaticUser.getPhone());
         emailChange(email, StaticUser.getEmail());
     }
@@ -120,6 +117,28 @@ public class CarrierSetting extends Fragment {
             }
         });
     }
+
+    private void editChangeAutoComplete(AutoCompleteTextView input, String user) {
+        input.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!s.toString().equals(user)){
+                    save.setVisibility(View.VISIBLE);
+                }else if (isNotChange()){
+                    save.setVisibility(View.GONE);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+    }
+
+
 
     private void onClick() {
         registration = new ValidationRegistration(name,
