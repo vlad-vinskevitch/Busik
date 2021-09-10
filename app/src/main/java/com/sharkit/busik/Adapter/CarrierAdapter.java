@@ -156,11 +156,10 @@ public class CarrierAdapter extends BaseAdapter implements View.OnClickListener 
             status.setTextSize(14);
             note.setTextSize(14);
         }else {
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-1,(int)(h/3.9));
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(70,70,1f);
             params.setMargins(0,10,0,0);
-            params.setMarginEnd(20);
-            params.setMarginStart(20);
-            linear_item.setLayoutParams(params);
+            dropdownMenu.setLayoutParams(params);
+
             direction.setTextSize(12);
             priceCargo.setTextSize(12);
             pricePassenger.setTextSize(12);

@@ -34,7 +34,7 @@ public class AdminSenders extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         users = new ArrayList<>();
         db.collection("Users")
-                .whereEqualTo("role", "Carrier")
+                .whereEqualTo("role", "Sender")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){

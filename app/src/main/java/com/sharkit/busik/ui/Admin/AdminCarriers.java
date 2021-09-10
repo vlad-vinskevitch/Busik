@@ -27,7 +27,16 @@ public class AdminCarriers extends Fragment {
         View root = inflater.inflate(R.layout.admin_carriers,container, false);
         findView(root);
         getAllData();
+        findUserFromCountry();
+        findUserFromCity();
         return root;
+    }
+
+    private void findUserFromCountry() {
+
+    }
+
+    private void findUserFromCity() {
     }
 
     private void getAllData() {

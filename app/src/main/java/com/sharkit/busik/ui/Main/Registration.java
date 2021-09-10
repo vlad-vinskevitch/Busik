@@ -24,6 +24,8 @@ import com.sharkit.busik.R;
 import com.sharkit.busik.Validation.Configuration;
 import com.sharkit.busik.Validation.ValidationRegistration;
 
+import java.util.ArrayList;
+
 public class Registration extends Fragment {
     private TextInputEditText name, last_name, country, city, phone, email, password, accept_pass;
     private RadioButton sender, transport;
@@ -98,6 +100,11 @@ public class Registration extends Fragment {
         else
         {s = "Carrier";}
 
+
+
+
+        user.setTagCity(generateKey(city.getText().toString().trim()));
+        user.setTagCountry(generateKey(country.getText().toString().trim()));
         user.setName(name.getText().toString().trim());
         user.setLast_name(last_name.getText().toString().trim());
         user.setCountry(country.getText().toString().trim());
@@ -121,5 +128,22 @@ public class Registration extends Fragment {
         password = root.findViewById(R.id.password_xml);
         accept_pass = root.findViewById(R.id.accept_pass_xml);
         registration = root.findViewById(R.id.registration_xml);
+    }
+    private ArrayList generateKey(String inputText) {
+        String inputString = inputText.toLowerCase();
+        String [] tagArray = inputString.split(" ");
+        ArrayList<String> tags = new ArrayList<>();
+
+        for (String word : tagArray){
+            String a = "";
+            char [] b = inputString.toCharArray();
+
+            for (int i = 0; i < b.length; i++){
+                a += b[i];
+                tags.add(a);
+            }
+            inputString = inputString.replace(word, "").trim();
+        }
+        return  tags;
     }
 }

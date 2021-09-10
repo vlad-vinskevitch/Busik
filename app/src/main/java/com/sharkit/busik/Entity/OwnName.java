@@ -1,14 +1,18 @@
 package com.sharkit.busik.Entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OwnName {
     private String ownName;
-    private List<String> listName;
+    private ArrayList<String> listName;
 
-    public OwnName(String ownName, List<String> listName) {
+    public OwnName(String ownName, ArrayList<String> listName) {
         this.ownName = ownName;
         this.listName = listName;
+    }
+
+    public OwnName() {
     }
 
     public String getOwnName() {
@@ -19,12 +23,11 @@ public class OwnName {
         this.ownName = ownName;
     }
 
-
-    public List<String> getListName() {
+    public ArrayList<String> getListName() {
         return listName;
     }
 
-    public void setListName(List<String> listName) {
+    public void setListName(ArrayList<String> listName) {
         this.listName = listName;
     }
 }
