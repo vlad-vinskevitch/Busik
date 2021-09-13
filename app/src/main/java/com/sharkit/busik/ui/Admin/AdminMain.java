@@ -1,6 +1,7 @@
 package com.sharkit.busik.ui.Admin;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +14,14 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.sharkit.busik.Admin;
+import com.sharkit.busik.MainActivity;
 import com.sharkit.busik.R;
+import com.sharkit.busik.ui.Main.Main;
 
 public class AdminMain extends Fragment implements View.OnClickListener {
-    private Button carrier, sender, countries, cities;
+    private Button carrier, sender, countries, cities, exit;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -27,6 +32,7 @@ public class AdminMain extends Fragment implements View.OnClickListener {
     }
 
     private void onClickListener() {
+        exit.setOnClickListener(this);
         carrier.setOnClickListener(this);
         sender.setOnClickListener(this);
         countries.setOnClickListener(this);
@@ -34,6 +40,7 @@ public class AdminMain extends Fragment implements View.OnClickListener {
     }
 
     private void findView(View root) {
+        exit = root.findViewById(R.id.exit_xml);
         carrier = root.findViewById(R.id.carrier_xml);
         sender = root.findViewById(R.id.sender_xml);
         countries = root.findViewById(R.id.country_xml);
@@ -57,6 +64,9 @@ public class AdminMain extends Fragment implements View.OnClickListener {
             case R.id.city_xml:
                 navController.navigate(R.id.nav_admin_cities);
                 break;
+            case R.id.exit_xml:
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getActivity(), MainActivity.class));
         }
 
     }

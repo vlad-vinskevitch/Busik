@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -29,6 +30,7 @@ public class CarrierFlights extends Fragment {
     private Button add;
     private ListView listView;
     private ArrayList<Flight> flights;
+    private ImageView back;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -65,13 +67,15 @@ public class CarrierFlights extends Fragment {
     }
 
     private void onClick() {
+        NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_carrier);
         add.setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_carrier);
             navController.navigate(R.id.nav_carrier_add_flights);
         });
+        back.setOnClickListener(v -> navController.navigate(R.id.nav_carrier_main));
     }
 
     private void findView(View root) {
+        back = root.findViewById(R.id.back_xml);
         add = root.findViewById(R.id.add_flights_xml);
         listView = root.findViewById(R.id.list);
     }

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,7 @@ import com.sharkit.busik.R;
 
 public class SenderProfile extends Fragment implements View.OnClickListener {
     private LinearLayout flight, message, review, setting, exit, mainFlights;
+    private ImageView back;
 
     @Nullable
     @Override
@@ -34,6 +36,7 @@ public class SenderProfile extends Fragment implements View.OnClickListener {
     }
 
     private void findView(View root) {
+        back = root.findViewById(R.id.back_xml);
         mainFlights = root.findViewById(R.id.main_flights_xml);
         flight = root.findViewById(R.id.flight_xml);
         message = root.findViewById(R.id.message_xml);
@@ -42,6 +45,7 @@ public class SenderProfile extends Fragment implements View.OnClickListener {
         exit = root.findViewById(R.id.exit_xml);
     }
     private void onClick(){
+        back.setOnClickListener(this);
         mainFlights.setOnClickListener(this);
         flight.setOnClickListener(this);
         message.setOnClickListener(this);
@@ -57,6 +61,7 @@ public class SenderProfile extends Fragment implements View.OnClickListener {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         switch (v.getId()){
             case R.id.flight_xml:
+            case R.id.back_xml:
                 navController.navigate(R.id.nav_sender_main);
                 break;
             case R.id.main_flights_xml:

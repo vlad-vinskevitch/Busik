@@ -1,13 +1,14 @@
 package com.sharkit.busik.ui.Main;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,8 +33,7 @@ public class Registration extends Fragment {
     private AutoCompleteTextView country, city;
     private RadioButton sender, transport;
     private Button registration;
-
-    String tag = "TAG";
+    private Spinner spinner;
 
     @Nullable
     @Override
@@ -45,7 +45,10 @@ public class Registration extends Fragment {
     }
 
     private void onClick() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.spinner_dropdown_array, R.layout.support_simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
         registration.setOnClickListener(v -> {
+
             ValidationRegistration validationRegistration = new ValidationRegistration(
                     name,last_name, country,
                     city,password,phone,email,
@@ -97,14 +100,11 @@ public class Registration extends Fragment {
 
     private void writeUser(User user) {
         String s;
-        if (sender.isSelected())
-        {s = "Sender";}
-        else
-        {s = "Carrier";}
-
-
-
-
+        if (spinner.getSelectedItemPosition() == 0){
+            s = "Carrier";
+        }else {
+            s = "Sender";
+        }
         user.setTagCity(generateKey(city.getText().toString().trim()));
         user.setTagCountry(generateKey(country.getText().toString().trim()));
         user.setName(name.getText().toString().trim());
@@ -119,6 +119,7 @@ public class Registration extends Fragment {
     }
 
     private void findView(View root) {
+        spinner = root.findViewById(R.id.spinner_xml);
         sender = root.findViewById(R.id.sender_xml);
         transport = root.findViewById(R.id.carrier_xml);
         name = root.findViewById(R.id.name_xml);

@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
+            android:id="@+id/back_xml"
             app:tint="@color/black"
             android:src="@drawable/icon_arrow"
             android:layout_width="wrap_content"

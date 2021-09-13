@@ -21,29 +21,14 @@
             android:layout_height="match_parent"
             android:layout_marginHorizontal="20dp"
             android:orientation="vertical">
-
-            <RadioGroup
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Зарегистрирувать пользователя как:" />
+            <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    style="@style/styleRadioButton"
-                    android:id="@+id/carrier_xml"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:checked="true"
-                    android:text="@string/carrier" />
-
-                <RadioButton
-                    style="@style/styleRadioButton"
-                    android:id="@+id/sender_xml"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/sender" />
-            </RadioGroup>
+                android:id="@+id/spinner_xml"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 app:boxBackgroundMode="outline"

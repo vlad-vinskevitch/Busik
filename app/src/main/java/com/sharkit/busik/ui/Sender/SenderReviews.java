@@ -4,11 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -24,13 +26,24 @@ import java.util.ArrayList;
 public class SenderReviews extends Fragment {
     private ListView listReviews;
     private ArrayList<Review> reviews = new ArrayList<>();
+    private ImageView back;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.sender_reviews, container, false);
         findView(root);
         getReviewsFromDB();
+        onClick();
         return root;
+    }
+
+    private void onClick() {
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(getActivity(), R.id.nav_host_sender).navigate(R.id.nav_sender_profile);
+            }
+        });
     }
 
     private void getReviewsFromDB() {
@@ -55,6 +68,7 @@ public class SenderReviews extends Fragment {
     }
 
     private void findView(View root) {
+        back = root.findViewById(R.id.back_xml);
         listReviews = root.findViewById(R.id.list_reviews_xml);
     }
 }

@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -121,7 +122,7 @@ public class PassengerAdapter extends BaseAdapter {
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (passengers.get(StaticUser.getEmail()).getStatus().equals("Подтвержден")){
+                if (passengers.get(mGroup.get(position).getEmail()).getStatus().equals("Подтвержден")){
                     ToastMessage("Вы уже подтвердили даного пассажира");
                     return;
                 }
@@ -131,7 +132,8 @@ public class PassengerAdapter extends BaseAdapter {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (passengers.get(StaticUser.getEmail()).getStatus().equals("Отменен")){
+
+                if (passengers.get(mGroup.get(position).getEmail()).getStatus().equals("Отменен")){
                     ToastMessage("Вы уже сняли с посадки даного пассажира");
                     return;
                 }

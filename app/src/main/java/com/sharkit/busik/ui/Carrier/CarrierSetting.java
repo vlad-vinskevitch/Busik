@@ -2,6 +2,7 @@ package com.sharkit.busik.ui.Carrier;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.media.Ringtone;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -46,6 +48,7 @@ public class CarrierSetting extends Fragment {
     private TextView rating;
     private Button save, changePass;
     private String mail;
+    private ImageView back;
 
     private ValidationRegistration registration;
     private final User user = new User();
@@ -176,6 +179,7 @@ public class CarrierSetting extends Fragment {
                 writeToFirestore();
             }
         });
+        back.setOnClickListener(v -> Navigation.findNavController(getActivity(), R.id.nav_host_carrier).navigate(R.id.nav_carrier_main));
 
         changePass.setOnClickListener(v -> createAlertDialog());
     }
@@ -310,6 +314,7 @@ public class CarrierSetting extends Fragment {
     }
 
     private void findView(View root) {
+        back = root.findViewById(R.id.back_xml);
         changePass = root.findViewById(R.id.change_pass_xml);
         pass = root.findViewById(R.id.pass_layout_xml);
         name = root.findViewById(R.id.name_xml);

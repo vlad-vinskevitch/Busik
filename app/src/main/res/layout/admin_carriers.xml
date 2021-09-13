@@ -20,6 +20,7 @@
             app:hintAnimationEnabled="true">
 
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/country_xml"
                 style="@style/styleEditText"
                 android:inputType="text"
                 android:layout_width="match_parent"
@@ -36,11 +37,35 @@
             app:hintAnimationEnabled="true">
 
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/city_xml"
                 style="@style/styleEditText"
                 android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/linear2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Accept"
+        android:id="@+id/accept_xml"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Clear"
+            android:id="@+id/clear_xml"/>
+
 
 
     </LinearLayout>

@@ -5,11 +5,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -33,15 +35,20 @@ public class CarrierPassenger extends Fragment {
     private Flight flight;
     private ArrayList<User> users;
     private Map<String, Passenger> passengers;
+    private ImageView back;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.passenger_list, container, false);
         findView(root);
-        try {
-            getListFromDB();
-        }catch (IllegalArgumentException e){}
+        getListFromDB();
+        onClick();
         return root;
+    }
+
+    private void onClick() {
+        back.setOnClickListener(v -> Navigation.findNavController(getActivity(), R.id.nav_host_carrier).navigate(R.id.nav_carrier_flights));
+
     }
 
     private void getListFromDB() {
@@ -55,18 +62,22 @@ public class CarrierPassenger extends Fragment {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                          flight = documentSnapshot.toObject(Flight.class);
                          passengers = flight.getPassengers();
-                        db.collection("Users")
-                                .whereIn("email", Arrays.asList(flight.getPassengers().keySet().toArray()))
-                                .get()
-                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                    @Override
-                                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                        for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
-                                            users.add(queryDocumentSnapshot.toObject(User.class));
-                                        }
-                                        setAdapter();
-                                    }
-                                });
+                         try {
+                             db.collection("Users")
+                                     .whereIn("email", Arrays.asList(flight.getPassengers().keySet().toArray()))
+                                     .get()
+                                     .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                         @Override
+                                         public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                             for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
+                                                 users.add(queryDocumentSnapshot.toObject(User.class));
+                                             }
+                                             setAdapter();
+                                         }
+                                     });
+                         }catch (IllegalArgumentException e){
+
+                         }
                     }
 
                 });
@@ -79,6 +90,7 @@ public class CarrierPassenger extends Fragment {
     }
 
     private void findView(View root) {
+        back = root.findViewById(R.id.back_xml);
         listView = root.findViewById(R.id.passenger_list_xml);
     }
 }

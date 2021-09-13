@@ -9,12 +9,14 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -23,6 +25,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.sharkit.busik.Entity.ElseVariable;
 import com.sharkit.busik.Entity.Flight;
 import com.sharkit.busik.Entity.Passenger;
 import com.sharkit.busik.Entity.Review;
@@ -75,38 +78,38 @@ public class SenderAdapter extends BaseAdapter {
         }
         findView(convertView);
         writeToField(position);
-        Adaptive();
+        setAdaptive();
 
-
-        dropdownMenu.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+        dropdownMenu.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-                menu.add("Зарегистрируватся")
-                        .setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem item) {
-                                    getFlight(position);
-                                return true;
-                            }
-                        });
-                menu.add("Отменить посаку")
-                        .setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem item) {
+            public void onClick(View v) {
+                PopupMenu menu = new PopupMenu(mContext, v);
+                MenuInflater menuInflater = menu.getMenuInflater();
+                menuInflater.inflate(R.menu.drop_down_sender, menu.getMenu());
+                menu.show();
+                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @SuppressLint("NonConstantResourceId")
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+
+                            case R.id.registration_xml:
+                                getFlight(position);
+                                break;
+                            case R.id.cancel_xml:
                                 cancelBoarding(position);
-                                return true;
-                            }
-                        });
-                menu.add("Оставить отзыв")
-                        .setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem item) {
+                                break;
+                            case R.id.send_review_xml:
                                 leaveReview(position);
-                                return true;
-                            }
-                        });
-            }
-        });
+                                break;
+
+                        }
+                        return true;
+                    }
+                });
+            }});
+
+
         return convertView;
     }
 
@@ -117,15 +120,15 @@ public class SenderAdapter extends BaseAdapter {
         direction.setText(mGroup.get(position).getStartCountry() + "(" + mGroup.get(position).getStartCity() + ") - " +
                 mGroup.get(position).getFinishCountry() + "(" + mGroup.get(position).getFinishCity() + ")");
 
-        priceCargo.setText("- " + mGroup.get(position).getPriceCargo() + " $/kg");
-        pricePassenger.setText("- " + mGroup.get(position).getPricePassenger() + " $/пассажир");
-
+        priceCargo.setText(mGroup.get(position).getPriceCargo() + " $/kg");
+        pricePassenger.setText(mGroup.get(position).getPricePassenger() + " $/пассажир");
+        status.setText(mGroup.get(position).getStatus());
         startDate.setText(simpleDateFormat.format(mGroup.get(position).getStartDate()));
         finishDate.setText(simpleDateFormat.format(mGroup.get(position).getFinishDate()));
-        note.setText(note.getText() + " " + mGroup.get(position).getNote());
+        note.setText( mGroup.get(position).getNote());
     }
 
-    public void Adaptive (){
+    public void setAdaptive (){
 
         DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
         int h = metrics.heightPixels;
@@ -171,7 +174,7 @@ public class SenderAdapter extends BaseAdapter {
             params.setMarginEnd(20);
             params.setMarginStart(20);
             params.setMargins(0,10,0,10);
-            linear_item.setLayoutParams(params);
+//            linear_item.setLayoutParams(params);
             direction.setTextSize(14);
             priceCargo.setTextSize(14);
             pricePassenger.setTextSize(14);
@@ -184,7 +187,7 @@ public class SenderAdapter extends BaseAdapter {
             params.setMargins(0,10,0,0);
             params.setMarginEnd(20);
             params.setMarginStart(20);
-            linear_item.setLayoutParams(params);
+//            linear_item.setLayoutParams(params);
             direction.setTextSize(12);
             priceCargo.setTextSize(12);
             pricePassenger.setTextSize(12);

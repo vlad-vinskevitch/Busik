@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -45,29 +46,32 @@ public class SenderMain extends Fragment implements View.OnClickListener {
     private ImageView profile, filter;
 
     private TextInputEditText minPricePassenger, maxPricePassenger, maxPriceCargo, minPriceCargo,
-    startCountry, finishCountry, startCity, finishCity, startDateDo, startDateAfter, finishDateDo, finishDateAfter;
+            startDateDo, startDateAfter, finishDateDo, finishDateAfter;
+    private AutoCompleteTextView startCountry,finishCountry, startCity, finishCity;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private ListView listView;
     private ArrayList<Flight> flights;
+    private Calendar calendar = Calendar.getInstance();
 
 
     private int year, month, day;
     private CollectionReference collectionReference = db.collection("Flights");
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.sender_main, container, false);
         findView(root);
         onClick();
-        setAllList();
+        setAllList(collectionReference);
         return root;
     }
 
-    private void setAllList() {
+    private void setAllList(Query query) {
         flights = new ArrayList<>();
-        Calendar calendar = Calendar.getInstance();
-        collectionReference.whereGreaterThan("finishDate", calendar.getTimeInMillis()+8640000)
-                .get()
+                query
+//                        .whereGreaterThan("finishDate", calendar.getTimeInMillis()+8640000)
+                        .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -92,7 +96,7 @@ public class SenderMain extends Fragment implements View.OnClickListener {
     private void createAlertFilter() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        View view =inflater.inflate(R.layout.sender_filter, null);
+        View view = inflater.inflate(R.layout.sender_filter, null);
         findViewFilter(view);
 
 //            setTextToField();
@@ -169,28 +173,28 @@ public class SenderMain extends Fragment implements View.OnClickListener {
     private void setFilter(){
         Query query = collectionReference;
         if (!TextUtils.isEmpty(minPricePassenger.getText())){
-            query = getQueryWhereGreaterThan(query, "pricePassenger", Float.parseFloat(minPricePassenger.getText().toString()));
+            query = getQueryWhereGreaterThan(query, "pricePassenger", Float.parseFloat(minPricePassenger.getText().toString().trim()));
         }
         if (!TextUtils.isEmpty(maxPricePassenger.getText())){
-            query = getQueryWhereLessThen(query, "pricePassenger", Float.parseFloat(maxPricePassenger.getText().toString()));
+            query = getQueryWhereLessThen(query, "pricePassenger", Float.parseFloat(maxPricePassenger.getText().toString().trim()));
         }
         if (!TextUtils.isEmpty(minPriceCargo.getText())){
-            query = getQueryWhereGreaterThan(query, "priceCargo", Float.parseFloat(minPriceCargo.getText().toString()));
+            query = getQueryWhereGreaterThan(query, "priceCargo", Float.parseFloat(minPriceCargo.getText().toString().trim()));
         }
         if (!TextUtils.isEmpty(maxPriceCargo.getText())){
-            query = getQueryWhereLessThen(query, "priceCargo", Float.parseFloat(maxPriceCargo.getText().toString()));
+            query = getQueryWhereLessThen(query, "priceCargo", Float.parseFloat(maxPriceCargo.getText().toString().trim()));
         }
         if (!TextUtils.isEmpty(startCountry.getText())){
-            query = getQueryWhereEqualTo (query,"startCountry", startCountry.getText().toString());
+            query = getQueryWhereEqualTo (query,"startCountry", startCountry.getText().toString().trim());
         }
         if (!TextUtils.isEmpty(finishCountry.getText())){
-            query = getQueryWhereEqualTo(query,"finishCountry", finishCountry.getText().toString());
+            query = getQueryWhereEqualTo(query,"finishCountry", finishCountry.getText().toString().trim());
         }
         if (!TextUtils.isEmpty(startCity.getText())){
-            query = getQueryWhereEqualTo (query,"startCity", startCity.getText().toString());
+            query = getQueryWhereEqualTo (query,"startCity", startCity.getText().toString().trim());
         }
         if (!TextUtils.isEmpty(finishCity.getText())){
-            query = getQueryWhereEqualTo(query,"finishCity", finishCity.getText().toString());
+            query = getQueryWhereEqualTo(query,"finishCity", finishCity.getText().toString().trim());
         }
         if (!TextUtils.isEmpty(startDateDo.getText())){
             query = getQueryWhereGreater(query, "startDate", Filter.getStartDateDo());
@@ -204,20 +208,22 @@ public class SenderMain extends Fragment implements View.OnClickListener {
         if (!TextUtils.isEmpty(finishDateDo.getText())){
             query = getQueryWhereLess(query, "finishDate", Filter.getFinishDateDo());
         }
-        flights = new ArrayList<>();
-        Calendar calendar = Calendar.getInstance();
-        query.whereGreaterThan("finishDate", calendar.getTimeInMillis()+8640000)
-                .whereEqualTo("status", "Ожидает")
-                        .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                try {
-                    throw new ToastMessage(queryDocumentSnapshots.size()+"", getContext());
-                } catch (ToastMessage toastMessage) {
-                    toastMessage.printStackTrace();
-                }
-            }
-        });
+
+        setAllList(query);
+//        flights = new ArrayList<>();
+//        Calendar calendar = Calendar.getInstance();
+//        query.whereGreaterThan("finishDate", calendar.getTimeInMillis()+8640000);
+//                .whereEqualTo("status", "Ожидает")
+//                        .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//            @Override
+//            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                try {
+//                    throw new ToastMessage(queryDocumentSnapshots.size()+"", getContext());
+//                } catch (ToastMessage toastMessage) {
+//                    toastMessage.printStackTrace();
+//                }
+//            }
+//        });
 
     }
 
