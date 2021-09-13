@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -38,7 +39,6 @@ import java.util.HashMap;
 
 public class NewFlights extends Fragment {
     private AutoCompleteTextView textView;
-
     private TextInputEditText  priceCargo, pricePassenger, note, startDate, finishDate;
     private Button create;
     private AutoCompleteTextView startCountry, finishCountry, startCity, finishCity;

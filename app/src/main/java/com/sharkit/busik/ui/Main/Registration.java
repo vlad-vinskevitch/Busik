@@ -1,13 +1,14 @@
 package com.sharkit.busik.ui.Main;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,13 +26,14 @@ import com.sharkit.busik.R;
 import com.sharkit.busik.Validation.Configuration;
 import com.sharkit.busik.Validation.ValidationRegistration;
 
+import java.util.ArrayList;
+
 public class Registration extends Fragment {
     private TextInputEditText name, last_name, phone, email, password, accept_pass;
     private AutoCompleteTextView country, city;
     private RadioButton sender, transport;
     private Button registration;
-
-    String tag = "TAG";
+    private Spinner spinner;
 
     @Nullable
     @Override
@@ -43,7 +45,10 @@ public class Registration extends Fragment {
     }
 
     private void onClick() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.spinner_dropdown_array, R.layout.support_simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
         registration.setOnClickListener(v -> {
+
             ValidationRegistration validationRegistration = new ValidationRegistration(
                     name,last_name, country,
                     city,password,phone,email,
@@ -95,11 +100,13 @@ public class Registration extends Fragment {
 
     private void writeUser(User user) {
         String s;
-        if (sender.isSelected())
-        {s = "Sender";}
-        else
-        {s = "Carrier";}
-
+        if (spinner.getSelectedItemPosition() == 0){
+            s = "Carrier";
+        }else {
+            s = "Sender";
+        }
+        user.setTagCity(generateKey(city.getText().toString().trim()));
+        user.setTagCountry(generateKey(country.getText().toString().trim()));
         user.setName(name.getText().toString().trim());
         user.setLast_name(last_name.getText().toString().trim());
         user.setCountry(country.getText().toString().trim());
@@ -112,6 +119,7 @@ public class Registration extends Fragment {
     }
 
     private void findView(View root) {
+        spinner = root.findViewById(R.id.spinner_xml);
         sender = root.findViewById(R.id.sender_xml);
         transport = root.findViewById(R.id.carrier_xml);
         name = root.findViewById(R.id.name_xml);
@@ -123,5 +131,22 @@ public class Registration extends Fragment {
         password = root.findViewById(R.id.password_xml);
         accept_pass = root.findViewById(R.id.accept_pass_xml);
         registration = root.findViewById(R.id.registration_xml);
+    }
+    private ArrayList generateKey(String inputText) {
+        String inputString = inputText.toLowerCase();
+        String [] tagArray = inputString.split(" ");
+        ArrayList<String> tags = new ArrayList<>();
+
+        for (String word : tagArray){
+            String a = "";
+            char [] b = inputString.toCharArray();
+
+            for (int i = 0; i < b.length; i++){
+                a += b[i];
+                tags.add(a);
+            }
+            inputString = inputString.replace(word, "").trim();
+        }
+        return  tags;
     }
 }

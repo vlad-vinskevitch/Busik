@@ -2,6 +2,7 @@ package com.sharkit.busik.ui.Main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,7 +69,22 @@ public class Login extends Fragment {
 
     private void authorisation() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
+        if (TextUtils.isEmpty(email.getText())){
+            try {
+                throw new ToastMessage("Введите почту", getContext());
+            } catch (ToastMessage toastMessage) {
+                toastMessage.printStackTrace();
+            }
+            return;
+        }
+        if (TextUtils.isEmpty(email.getText())){
+            try {
+                throw new ToastMessage("Введите пароль", getContext());
+            } catch (ToastMessage toastMessage) {
+                toastMessage.printStackTrace();
+            }
+            return;
+        }
         mAuth.signInWithEmailAndPassword(email.getText().toString().trim(), password.getText().toString().trim())
                 .addOnSuccessListener(authResult -> {
                  signInCurrentUser(email.getText().toString().trim());

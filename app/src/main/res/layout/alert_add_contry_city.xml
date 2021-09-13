@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/own_name_xml"
         style="@style/styleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,6 +18,7 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/name_xml"
             style="@style/styleEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

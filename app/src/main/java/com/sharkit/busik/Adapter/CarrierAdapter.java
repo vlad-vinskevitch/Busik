@@ -6,7 +6,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -85,12 +84,12 @@ public class CarrierAdapter extends BaseAdapter implements View.OnClickListener 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
         direction.setText(mGroup.get(position).getStartCountry() + "(" + mGroup.get(position).getStartCity() + ") - " +
                 mGroup.get(position).getFinishCountry() + "(" + mGroup.get(position).getFinishCity() + ")");
-        priceCargo.setText("- " + mGroup.get(position).getPriceCargo() + " $/kg");
-        pricePassenger.setText("- " + mGroup.get(position).getPricePassenger() + " $/пассажир");
-
+        priceCargo.setText(mGroup.get(position).getPriceCargo() + " $/kg");
+        pricePassenger.setText(mGroup.get(position).getPricePassenger() + " $/пассажир");
+        status.setText(mGroup.get(position).getStatus());
         startDate.setText(simpleDateFormat.format(mGroup.get(position).getStartDate()));
         finishDate.setText(simpleDateFormat.format(mGroup.get(position).getFinishDate()));
-        note.setText(note.getText() + " " + mGroup.get(position).getNote());
+        note.setText( mGroup.get(position).getNote());
 
         dropdownMenuListener(position);
         return convertView;
@@ -195,7 +194,7 @@ public class CarrierAdapter extends BaseAdapter implements View.OnClickListener 
             public void onClick(View v) {
                 PopupMenu menu =new PopupMenu(mContext, v);
                 MenuInflater menuInflater = menu.getMenuInflater();
-                menuInflater.inflate(R.menu.change_flight,menu.getMenu());
+                menuInflater.inflate(R.menu.drop_down_carrier,menu.getMenu());
                 menu.show();
                 menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @SuppressLint("NonConstantResourceId")
@@ -206,7 +205,7 @@ public class CarrierAdapter extends BaseAdapter implements View.OnClickListener 
                             case R.id.close_xml:
                                 db.collection("Flights")
                                         .document(flight.getName())
-                                        .update("status", "complete");
+                                        .update("status", "Завершен");
                                 break;
                             case R.id.passenger_xml:
                                 ElseVariable.setNameFlight(flight.getName());
@@ -225,48 +224,6 @@ public class CarrierAdapter extends BaseAdapter implements View.OnClickListener 
                                 navController.navigate(R.id.nav_carrier_flights);
                                 break;
                         }
-                        return true;
-                    }
-                });
-            }
-        });
-
-
-        dropdownMenu.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
-            @Override
-            public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-
-                menu.add("Завершить").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-
-                        return true;
-                    }
-
-                });
-                menu.add("Пассажиры").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        return true;
-                    }
-                });
-                menu.add("Изменить описание").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-
-                        return true;
-                    }
-                });
-                menu.add("Написать сообщение").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        return true;
-                    }
-                });
-                menu.add("Удалить").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-
                         return true;
                     }
                 });

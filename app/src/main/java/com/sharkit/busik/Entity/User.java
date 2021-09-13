@@ -1,9 +1,29 @@
 package com.sharkit.busik.Entity;
 
+import java.util.ArrayList;
+
 public class User {
     private String role, name, last_name, country, city, phone, email, password;
     private float rating;
     private String flight;
+    private ArrayList<String> tagCountry;
+    private ArrayList<String> tagCity;
+
+    public ArrayList<String> getTagCountry() {
+        return tagCountry;
+    }
+
+    public void setTagCountry(ArrayList<String> tagCountry) {
+        this.tagCountry = tagCountry;
+    }
+
+    public ArrayList<String> getTagCity() {
+        return tagCity;
+    }
+
+    public void setTagCity(ArrayList<String> tagCity) {
+        this.tagCity = tagCity;
+    }
 
     public String getFlight() {
         return flight;

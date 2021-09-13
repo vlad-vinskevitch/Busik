@@ -2,6 +2,7 @@ package com.sharkit.busik.ui.Carrier;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.media.Ringtone;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -37,6 +39,8 @@ import com.sharkit.busik.R;
 import com.sharkit.busik.Validation.Configuration;
 import com.sharkit.busik.Validation.ValidationRegistration;
 
+import java.util.ArrayList;
+
 public class CarrierSetting extends Fragment {
     private TextInputLayout pass;
     private TextInputEditText name, last_name,phone, email, password;
@@ -44,6 +48,7 @@ public class CarrierSetting extends Fragment {
     private TextView rating;
     private Button save, changePass;
     private String mail;
+    private ImageView back;
 
     private ValidationRegistration registration;
     private final User user = new User();
@@ -174,6 +179,7 @@ public class CarrierSetting extends Fragment {
                 writeToFirestore();
             }
         });
+        back.setOnClickListener(v -> Navigation.findNavController(getActivity(), R.id.nav_host_carrier).navigate(R.id.nav_carrier_main));
 
         changePass.setOnClickListener(v -> createAlertDialog());
     }
@@ -233,12 +239,14 @@ public class CarrierSetting extends Fragment {
     }
 
     private void writeToObject() {
-        user.setEmail(email.getText().toString());
-        user.setName(name.getText().toString());
-        user.setLast_name(last_name.getText().toString());
-        user.setPhone(phone.getText().toString());
-        user.setCountry(country.getText().toString());
-        user.setCity(city.getText().toString());
+        user.setTagCountry(generateKey(country.getText().toString().trim()));
+        user.setTagCity(generateKey(city.getText().toString().trim()));
+        user.setEmail(email.getText().toString().trim());
+        user.setName(name.getText().toString().trim());
+        user.setLast_name(last_name.getText().toString().trim());
+        user.setPhone(phone.getText().toString().trim());
+        user.setCountry(country.getText().toString().trim());
+        user.setCity(city.getText().toString().trim());
         StaticUser.setName(user.getName());
         StaticUser.setLast_name(user.getLast_name());
         StaticUser.setEmail(user.getEmail());
@@ -287,8 +295,26 @@ public class CarrierSetting extends Fragment {
         user.setRole(StaticUser.getRole());
         user.setEmail(StaticUser.getEmail());
     }
+    private ArrayList generateKey(String inputText) {
+        String inputString = inputText.toLowerCase();
+        String [] tagArray = inputString.split(" ");
+        ArrayList<String> tags = new ArrayList<>();
+
+        for (String word : tagArray){
+            String a = "";
+            char [] b = inputString.toCharArray();
+
+            for (int i = 0; i < b.length; i++){
+                a += b[i];
+                tags.add(a);
+            }
+            inputString = inputString.replace(word, "").trim();
+        }
+        return  tags;
+    }
 
     private void findView(View root) {
+        back = root.findViewById(R.id.back_xml);
         changePass = root.findViewById(R.id.change_pass_xml);
         pass = root.findViewById(R.id.pass_layout_xml);
         name = root.findViewById(R.id.name_xml);
