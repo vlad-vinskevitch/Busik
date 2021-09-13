@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.LayoutDirection;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -43,7 +44,7 @@ public class SenderAdapter extends BaseAdapter {
     private Context mContext;
     private ArrayList<Flight> mGroup;
     private TextView direction, priceCargo, pricePassenger, startDate, finishDate, status, note;
-    private ImageView dropdownMenu;
+    private ImageView dropdownMenu, filter, profile;
     private Flight flight;
     private Review review;
     private User user;
@@ -133,7 +134,7 @@ public class SenderAdapter extends BaseAdapter {
         DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
         int h = metrics.heightPixels;
         int w = metrics.widthPixels;
-        Log.d("qwerty", "");
+
 
         LinearLayout.LayoutParams linear_params = new LinearLayout.LayoutParams(-1,-2);
         linear_params.setMargins(0,0,0,0);
@@ -170,11 +171,9 @@ public class SenderAdapter extends BaseAdapter {
 
 
         if(h > 1800){
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-1,(int)(h/4.6));
-            params.setMarginEnd(20);
-            params.setMarginStart(20);
-            params.setMargins(0,10,0,10);
-//            linear_item.setLayoutParams(params);
+            LinearLayout.LayoutParams params_drop = new LinearLayout.LayoutParams(150,150);
+            params_drop.setMargins(0,10,20,0);
+            dropdownMenu.setLayoutParams(params_drop);
             direction.setTextSize(14);
             priceCargo.setTextSize(14);
             pricePassenger.setTextSize(14);
@@ -183,11 +182,13 @@ public class SenderAdapter extends BaseAdapter {
             status.setTextSize(14);
             note.setTextSize(14);
         }else {
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-1,(int)(h/3.9));
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(70,70,1f);
             params.setMargins(0,10,0,0);
-            params.setMarginEnd(20);
-            params.setMarginStart(20);
-//            linear_item.setLayoutParams(params);
+
+
+
+
+            dropdownMenu.setLayoutParams(params);
             direction.setTextSize(12);
             priceCargo.setTextSize(12);
             pricePassenger.setTextSize(12);
@@ -495,5 +496,7 @@ public class SenderAdapter extends BaseAdapter {
         finishDate =convertView.findViewById(R.id.finish_date_xml);
         status = convertView.findViewById(R.id.status_xml);
         note = convertView.findViewById(R.id.note_xml);
+        filter = convertView.findViewById(R.id.filter_xml);
+        profile = convertView.findViewById(R.id.profile_xml);
     }
 }

@@ -63,6 +63,7 @@ public class SenderMain extends Fragment implements View.OnClickListener {
         View root = inflater.inflate(R.layout.sender_main, container, false);
         findView(root);
         onClick();
+        Adaptive();
         setAllList(collectionReference);
         return root;
     }
@@ -91,6 +92,18 @@ public class SenderMain extends Fragment implements View.OnClickListener {
     private void onClick() {
         profile.setOnClickListener(this);
         filter.setOnClickListener(this);
+    }
+    private void Adaptive(){
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int h = metrics.heightPixels;
+        int w = metrics.widthPixels;
+
+        if(h < 1800){
+            LinearLayout.LayoutParams params_icon = new LinearLayout.LayoutParams(90,90);
+            filter.setLayoutParams(params_icon);
+            profile.setLayoutParams(params_icon);
+        }
+
     }
 
     private void createAlertFilter() {
