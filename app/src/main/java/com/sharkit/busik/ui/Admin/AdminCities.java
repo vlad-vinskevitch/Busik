@@ -62,7 +62,7 @@ public class AdminCities extends Fragment implements View.OnClickListener {
     }
 
     private void setAdapter() {
-        AdminOwnNameAdapter adapter = new AdminOwnNameAdapter(getContext(), ownNames);
+        AdminOwnNameAdapter adapter = new AdminOwnNameAdapter(getContext(), ownNames, "Cities");
         listView.setAdapter(adapter);
     }
 
@@ -90,7 +90,6 @@ public class AdminCities extends Fragment implements View.OnClickListener {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_dropdown_item_1line, ownNames);
         name.setAdapter(adapter);
-
         dialog.setOnDismissListener(DialogInterface::dismiss);
         dialog.setPositiveButton("Добавить", new DialogInterface.OnClickListener() {
             @Override

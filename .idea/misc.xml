@@ -48,6 +48,7 @@
         <entry key="app/src/main/res/layout/activity_transport.xml" value="0.29483695652173914" />
         <entry key="app/src/main/res/layout/admin_carriers.xml" value="0.2749094202898551" />
         <entry key="app/src/main/res/layout/admin_senders.xml" value="0.17395833333333333" />
+        <entry key="app/src/main/res/layout/alert_add_contry_city.xml" value="0.3203125" />
         <entry key="app/src/main/res/layout/alert_change_email.xml" value="0.3203125" />
         <entry key="app/src/main/res/layout/calendar_picker.xml" value="0.3203125" />
         <entry key="app/src/main/res/layout/carrier_add_flights.xml" value="0.3203125" />

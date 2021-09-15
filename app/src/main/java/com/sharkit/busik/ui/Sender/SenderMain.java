@@ -24,7 +24,10 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -41,6 +44,7 @@ import com.sharkit.busik.R;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class SenderMain extends Fragment implements View.OnClickListener {
     private ImageView profile, filter;
@@ -79,6 +83,11 @@ public class SenderMain extends Fragment implements View.OnClickListener {
                             flights.add(queryDocumentSnapshot.toObject(Flight.class));
                         }
                         setAdapter();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("TAGA", e.getMessage());
                     }
                 });
     }
@@ -171,45 +180,82 @@ public class SenderMain extends Fragment implements View.OnClickListener {
     }
 
     private void setFilter(){
-        Query query = collectionReference;
+        Query queryPricePassenger = collectionReference;
         if (!TextUtils.isEmpty(minPricePassenger.getText())){
-            query = getQueryWhereGreaterThan(query, "pricePassenger", Float.parseFloat(minPricePassenger.getText().toString().trim()));
+            queryPricePassenger = getQueryWhereGreaterThan(queryPricePassenger, "pricePassenger", Float.parseFloat(minPricePassenger.getText().toString().trim()));
         }
         if (!TextUtils.isEmpty(maxPricePassenger.getText())){
-            query = getQueryWhereLessThen(query, "pricePassenger", Float.parseFloat(maxPricePassenger.getText().toString().trim()));
+            queryPricePassenger = getQueryWhereLessThen(queryPricePassenger, "pricePassenger", Float.parseFloat(maxPricePassenger.getText().toString().trim()));
         }
+        Task taskPrisePassenger = queryPricePassenger.get();
+        Query queryPriceCargo = collectionReference;
         if (!TextUtils.isEmpty(minPriceCargo.getText())){
-            query = getQueryWhereGreaterThan(query, "priceCargo", Float.parseFloat(minPriceCargo.getText().toString().trim()));
+            queryPriceCargo = getQueryWhereGreaterThan(queryPriceCargo, "priceCargo", Float.parseFloat(minPriceCargo.getText().toString().trim()));
         }
         if (!TextUtils.isEmpty(maxPriceCargo.getText())){
-            query = getQueryWhereLessThen(query, "priceCargo", Float.parseFloat(maxPriceCargo.getText().toString().trim()));
+            queryPriceCargo = getQueryWhereLessThen(queryPriceCargo, "priceCargo", Float.parseFloat(maxPriceCargo.getText().toString().trim()));
         }
+        Task taskPriceCargo = queryPriceCargo.get();
+        Query queryCountry = collectionReference;
         if (!TextUtils.isEmpty(startCountry.getText())){
-            query = getQueryWhereEqualTo (query,"startCountry", startCountry.getText().toString().trim());
+            queryCountry = getQueryWhereEqualTo (queryCountry,"startCountry", startCountry.getText().toString().trim());
         }
         if (!TextUtils.isEmpty(finishCountry.getText())){
-            query = getQueryWhereEqualTo(query,"finishCountry", finishCountry.getText().toString().trim());
+            queryCountry = getQueryWhereEqualTo(queryCountry,"finishCountry", finishCountry.getText().toString().trim());
         }
+        Task taskCountry = queryCountry.get();
+        Query queryCity = collectionReference;
         if (!TextUtils.isEmpty(startCity.getText())){
-            query = getQueryWhereEqualTo (query,"startCity", startCity.getText().toString().trim());
+            queryCity = getQueryWhereEqualTo (queryCity,"startCity", startCity.getText().toString().trim());
         }
         if (!TextUtils.isEmpty(finishCity.getText())){
-            query = getQueryWhereEqualTo(query,"finishCity", finishCity.getText().toString().trim());
+            queryCity = getQueryWhereEqualTo(queryCity,"finishCity", finishCity.getText().toString().trim());
+        }
+        Task taskCity = queryCity.get();
+        Query queryDateDo = collectionReference;
+        if (!TextUtils.isEmpty(startDateDo.getText())){
+            queryDateDo = getQueryWhereGreater(queryDateDo, "startDate", Filter.getStartDateDo());
         }
         if (!TextUtils.isEmpty(startDateDo.getText())){
-            query = getQueryWhereGreater(query, "startDate", Filter.getStartDateDo());
+            queryDateDo = getQueryWhereLess(queryDateDo, "finishDate", Filter.getFinishDateDo());
         }
-        if (!TextUtils.isEmpty(startDateDo.getText())){
-            query = getQueryWhereLess(query, "finishDate", Filter.getFinishDateDo());
+        Task taskDateDo = queryDateDo.get();
+        Query queryDateAfter = collectionReference;
+        if (!TextUtils.isEmpty(finishDateDo.getText())){
+            queryDateAfter = getQueryWhereGreater(queryDateAfter, "startDate", Filter.getStartDateDo());
         }
         if (!TextUtils.isEmpty(finishDateDo.getText())){
-            query = getQueryWhereGreater(query, "startDate", Filter.getStartDateDo());
+            queryDateAfter = getQueryWhereLess(queryDateAfter, "finishDate", Filter.getFinishDateDo());
         }
-        if (!TextUtils.isEmpty(finishDateDo.getText())){
-            query = getQueryWhereLess(query, "finishDate", Filter.getFinishDateDo());
-        }
+        Task taskDateAfter = queryDateAfter.get();
+        Task<List<QuerySnapshot>> allTasks = Tasks.whenAllSuccess(taskCity, taskCountry, taskDateDo, taskDateAfter,taskPriceCargo,taskPrisePassenger);
+        allTasks.addOnSuccessListener(new OnSuccessListener<List<QuerySnapshot>>() {
+            @Override
+            public void onSuccess(List<QuerySnapshot> querySnapshots) {
 
-        setAllList(query);
+
+                for (QuerySnapshot queryDocumentSnapshots :querySnapshots){
+                    flights = new ArrayList<>();
+                    for (QueryDocumentSnapshot queryDocumentSnapshot :queryDocumentSnapshots){
+                        flights.add(queryDocumentSnapshot.toObject(Flight.class));
+                    }
+                }
+                setAdapter();
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+//        setAllList(query);
 //        flights = new ArrayList<>();
 //        Calendar calendar = Calendar.getInstance();
 //        query.whereGreaterThan("finishDate", calendar.getTimeInMillis()+8640000);

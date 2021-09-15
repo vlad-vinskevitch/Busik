@@ -66,7 +66,7 @@ public class AdminCountries extends Fragment implements View.OnClickListener {
     }
 
     private void setAdapter() {
-        AdminOwnNameAdapter adapter = new AdminOwnNameAdapter(getContext(), ownNames);
+        AdminOwnNameAdapter adapter = new AdminOwnNameAdapter(getContext(), ownNames, "Countries");
         listView.setAdapter(adapter);
     }
 
@@ -109,33 +109,8 @@ public class AdminCountries extends Fragment implements View.OnClickListener {
         });
         dialog.setView(view);
         dialog.show();
-
-
-
-
     }
 
-//    private ArrayList<String> dropDownList(AutoCompleteTextView name) {
-//
-//        name.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//        });
-//        return list;
-//    }
 
     private void addNewOwnName(String s) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
