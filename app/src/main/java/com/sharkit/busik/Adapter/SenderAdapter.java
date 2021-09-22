@@ -1,6 +1,7 @@
 package com.sharkit.busik.Adapter;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,6 +20,8 @@ import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import androidx.navigation.Navigation;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
@@ -92,7 +95,6 @@ public class SenderAdapter extends BaseAdapter {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
-
                             case R.id.registration_xml:
                                 getFlight(position);
                                 break;
@@ -132,9 +134,6 @@ public class SenderAdapter extends BaseAdapter {
 
         DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
         int h = metrics.heightPixels;
-        int w = metrics.widthPixels;
-        Log.d("qwerty", "");
-
         LinearLayout.LayoutParams linear_params = new LinearLayout.LayoutParams(-1,-2);
         linear_params.setMargins(0,0,0,0);
 
@@ -352,6 +351,7 @@ public class SenderAdapter extends BaseAdapter {
                 .whereEqualTo("note",mGroup.get(position).getNote())
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @SuppressLint("RestrictedApi")
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
@@ -362,9 +362,14 @@ public class SenderAdapter extends BaseAdapter {
                                     deleteReview(position);
                                 }
                                 flight.getPassengers().remove(StaticUser.getEmail());
+                                flight.getEmailsPassengers().remove(StaticUser.getEmail());
                                 db.collection("Flights")
                                         .document(flight.getName())
-                                        .update("passengers", flight.getPassengers());
+                                        .update("passengers", flight.getPassengers(), "emailsPassengers", flight.getEmailsPassengers());
+                                if (Navigation.findNavController((Activity) mContext, R.id.nav_host_sender).getCurrentDestination()
+                                        .getDisplayName().equals("com.sharkit.busik:id/nav_main_flights")){
+                                    Navigation.findNavController((Activity) mContext, R.id.nav_host_sender).navigate(R.id.nav_main_flights);
+                                }
                                 try {
                                     throw new ToastMessage("Вы успешно сняты с посадки", mContext);
                                 } catch (ToastMessage toastMessage) {
@@ -457,10 +462,11 @@ public class SenderAdapter extends BaseAdapter {
                 passenger.setReview("false");
                 passenger.setStatus("Ожидает решения");
                 flight.getPassengers().put(StaticUser.getEmail(), passenger);
-
+                flight.getEmailsPassengers().add(StaticUser.getEmail());
                 db.collection("Flights")
                         .document(flight.getName())
-                        .update("passengers", flight.getPassengers());
+                        .update("passengers", flight.getPassengers(), "emailsPassengers", flight.getEmailsPassengers());
+
         try {
             throw new ToastMessage("Посадка выполнена", mContext);
         } catch (ToastMessage toastMessage) {

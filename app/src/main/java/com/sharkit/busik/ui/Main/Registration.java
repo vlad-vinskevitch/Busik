@@ -16,9 +16,13 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.sharkit.busik.Entity.OwnName;
 import com.sharkit.busik.Entity.User;
 import com.sharkit.busik.Exception.NoConnectInternet;
 import com.sharkit.busik.Exception.ToastMessage;
@@ -35,13 +39,38 @@ public class Registration extends Fragment {
     private Button registration;
     private Spinner spinner;
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.registration, container, false);
         findView(root);
         onClick();
+        getAutoCompleteText();
         return root;
+    }
+
+    private void getAutoCompleteText() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        ArrayList<String> cities = new ArrayList<>();
+        ArrayList<String> countries = new ArrayList<>();
+        db.collection("Countries")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
+                        countries.add(queryDocumentSnapshot.toObject(OwnName.class).getOwnName());
+                    }
+                    country.setAdapter(new ArrayAdapter<String>(getContext(),android.R.layout.simple_dropdown_item_1line, countries));
+
+                });
+        db.collection("Cities")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
+                        cities.add(queryDocumentSnapshot.toObject(OwnName.class).getOwnName());
+                    }
+                });
+        city.setAdapter(new ArrayAdapter<String>(getContext(),android.R.layout.simple_dropdown_item_1line, cities));
     }
 
     private void onClick() {

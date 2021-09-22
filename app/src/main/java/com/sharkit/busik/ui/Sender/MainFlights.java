@@ -2,6 +2,7 @@ package com.sharkit.busik.ui.Sender;
 
 import android.media.Ringtone;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +20,15 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.sharkit.busik.Adapter.SenderAdapter;
 import com.sharkit.busik.Entity.Flight;
+import com.sharkit.busik.Entity.Passenger;
 import com.sharkit.busik.Entity.StaticUser;
 import com.sharkit.busik.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainFlights extends Fragment {
     private ListView listView;
@@ -49,8 +55,10 @@ public class MainFlights extends Fragment {
 
     private void getFlights() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+
         db.collection("Flights")
-                .whereArrayContains("passengers", StaticUser.getEmail())
+
+                .whereArrayContains("emailsPassengers",StaticUser.getEmail())
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override

@@ -6,17 +6,16 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.SimpleAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,11 +33,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.sharkit.busik.Adapter.CarrierAdapter;
 import com.sharkit.busik.Adapter.SenderAdapter;
 import com.sharkit.busik.Entity.Filter;
 import com.sharkit.busik.Entity.Flight;
-import com.sharkit.busik.Exception.ToastMessage;
+import com.sharkit.busik.Entity.OwnName;
 import com.sharkit.busik.R;
 
 import java.text.SimpleDateFormat;
@@ -55,8 +53,8 @@ public class SenderMain extends Fragment implements View.OnClickListener {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private ListView listView;
     private ArrayList<Flight> flights;
-    private Calendar calendar = Calendar.getInstance();
-
+    private ArrayList<String> country;
+    private ArrayList<String> city;
 
     private int year, month, day;
     private CollectionReference collectionReference = db.collection("Flights");
@@ -67,29 +65,43 @@ public class SenderMain extends Fragment implements View.OnClickListener {
         View root = inflater.inflate(R.layout.sender_main, container, false);
         findView(root);
         onClick();
-        setAllList(collectionReference);
+        findCountriesAndCities();
+//        setFilter();
+        setAllList();
         return root;
     }
 
-    private void setAllList(Query query) {
-        flights = new ArrayList<>();
-                query
-//                        .whereGreaterThan("finishDate", calendar.getTimeInMillis()+8640000)
-                        .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (QueryDocumentSnapshot queryDocumentSnapshot :queryDocumentSnapshots){
-                            flights.add(queryDocumentSnapshot.toObject(Flight.class));
-                        }
-                        setAdapter();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("TAGA", e.getMessage());
+    private void findCountriesAndCities() {
+        country = new ArrayList<>();
+        city = new ArrayList<>();
+        db.collection("Countries")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (QueryDocumentSnapshot queryDocumentSnapshot :queryDocumentSnapshots){
+                        country.add(queryDocumentSnapshot.toObject(OwnName.class).getOwnName());
                     }
                 });
+        db.collection("Cities")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
+                        city.add(queryDocumentSnapshot.toObject(OwnName.class).getOwnName());
+                    }
+                });
+    }
+
+    private void setAllList() {
+        flights = new ArrayList<>();
+                collectionReference
+                        .whereEqualTo("status", "Ожидает")
+                        .whereGreaterThan("finishDate", Calendar.getInstance().getTimeInMillis())
+                        .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (QueryDocumentSnapshot queryDocumentSnapshot :queryDocumentSnapshots){
+                        flights.add(queryDocumentSnapshot.toObject(Flight.class));
+                    }
+                    setAdapter();
+                }).addOnFailureListener(e -> Log.d("TAGA", e.getMessage()));
     }
 
     private void setAdapter() {
@@ -103,14 +115,16 @@ public class SenderMain extends Fragment implements View.OnClickListener {
     }
 
     private void createAlertFilter() {
+        Filter.setFinishDateDo(0);
+        Filter.setFinishDateAfter(0);
+        Filter.setStartDateDo(0);
+        Filter.setStartDateAfter(0);
         AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View view = inflater.inflate(R.layout.sender_filter, null);
         findViewFilter(view);
-
-//            setTextToField();
-
         onDataChang();
+        onTextComplete();
         dialog.setPositiveButton("Применить", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -121,26 +135,14 @@ public class SenderMain extends Fragment implements View.OnClickListener {
         dialog.show();
     }
 
+    private void onTextComplete() {
+        ArrayAdapter adapterCity = new ArrayAdapter<String>(getContext(),android.R.layout.simple_dropdown_item_1line, city);
+        startCity.setAdapter(adapterCity);
+        finishCity.setAdapter(adapterCity);
 
-
-
-    @SuppressLint("SimpleDateFormat")
-    private void setTextToField() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        Calendar calendar = Calendar.getInstance();
-
-        minPriceCargo.setText(String.valueOf(Filter.getMinPriceCargo()));
-        maxPriceCargo.setText(String.valueOf(Filter.getMaxPriceCargo()));
-        minPricePassenger.setText(String.valueOf(Filter.getMinPricePassenger()));
-        maxPricePassenger.setText(String.valueOf(Filter.getMaxPricePassenger()));
-        startCountry.setText(Filter.getStartCountry());
-        finishCountry.setText(Filter.getFinishCountry());
-        startCity.setText(Filter.getStartCity());
-        finishCity.setText(Filter.getFinishCity());
-        startDateDo.setText(simpleDateFormat.format(Filter.getStartDateDo()));
-        finishDateDo.setText(simpleDateFormat.format(Filter.getFinishDateDo()));
-        startDateAfter.setText(simpleDateFormat.format(Filter.getStartDateAfter()));
-        finishDateAfter.setText(simpleDateFormat.format(Filter.getFinishDateAfter()));
+        ArrayAdapter adapterCountry = new ArrayAdapter<String>(getContext(),android.R.layout.simple_dropdown_item_1line, country);
+        startCountry.setAdapter(adapterCountry);
+        finishCountry.setAdapter(adapterCountry);
     }
 
     private void onDataChang() {
@@ -179,137 +181,114 @@ public class SenderMain extends Fragment implements View.OnClickListener {
 
     }
 
-    private void setFilter(){
-        Query queryPricePassenger = collectionReference;
-        if (!TextUtils.isEmpty(minPricePassenger.getText())){
-            queryPricePassenger = getQueryWhereGreaterThan(queryPricePassenger, "pricePassenger", Float.parseFloat(minPricePassenger.getText().toString().trim()));
-        }
-        if (!TextUtils.isEmpty(maxPricePassenger.getText())){
-            queryPricePassenger = getQueryWhereLessThen(queryPricePassenger, "pricePassenger", Float.parseFloat(maxPricePassenger.getText().toString().trim()));
-        }
-        Task taskPrisePassenger = queryPricePassenger.get();
-        Query queryPriceCargo = collectionReference;
-        if (!TextUtils.isEmpty(minPriceCargo.getText())){
-            queryPriceCargo = getQueryWhereGreaterThan(queryPriceCargo, "priceCargo", Float.parseFloat(minPriceCargo.getText().toString().trim()));
-        }
-        if (!TextUtils.isEmpty(maxPriceCargo.getText())){
-            queryPriceCargo = getQueryWhereLessThen(queryPriceCargo, "priceCargo", Float.parseFloat(maxPriceCargo.getText().toString().trim()));
-        }
-        Task taskPriceCargo = queryPriceCargo.get();
-        Query queryCountry = collectionReference;
-        if (!TextUtils.isEmpty(startCountry.getText())){
-            queryCountry = getQueryWhereEqualTo (queryCountry,"startCountry", startCountry.getText().toString().trim());
-        }
-        if (!TextUtils.isEmpty(finishCountry.getText())){
-            queryCountry = getQueryWhereEqualTo(queryCountry,"finishCountry", finishCountry.getText().toString().trim());
-        }
-        Task taskCountry = queryCountry.get();
-        Query queryCity = collectionReference;
-        if (!TextUtils.isEmpty(startCity.getText())){
-            queryCity = getQueryWhereEqualTo (queryCity,"startCity", startCity.getText().toString().trim());
-        }
-        if (!TextUtils.isEmpty(finishCity.getText())){
-            queryCity = getQueryWhereEqualTo(queryCity,"finishCity", finishCity.getText().toString().trim());
-        }
-        Task taskCity = queryCity.get();
-        Query queryDateDo = collectionReference;
-        if (!TextUtils.isEmpty(startDateDo.getText())){
-            queryDateDo = getQueryWhereGreater(queryDateDo, "startDate", Filter.getStartDateDo());
-        }
-        if (!TextUtils.isEmpty(startDateDo.getText())){
-            queryDateDo = getQueryWhereLess(queryDateDo, "finishDate", Filter.getFinishDateDo());
-        }
-        Task taskDateDo = queryDateDo.get();
-        Query queryDateAfter = collectionReference;
-        if (!TextUtils.isEmpty(finishDateDo.getText())){
-            queryDateAfter = getQueryWhereGreater(queryDateAfter, "startDate", Filter.getStartDateDo());
-        }
-        if (!TextUtils.isEmpty(finishDateDo.getText())){
-            queryDateAfter = getQueryWhereLess(queryDateAfter, "finishDate", Filter.getFinishDateDo());
-        }
-        Task taskDateAfter = queryDateAfter.get();
-        Task<List<QuerySnapshot>> allTasks = Tasks.whenAllSuccess(taskCity, taskCountry, taskDateDo, taskDateAfter,taskPriceCargo,taskPrisePassenger);
+    private void setFilter() {
+
+        Task<List<QuerySnapshot>> allTasks = Tasks.whenAllSuccess(
+                getTaskMinPrice("priceCargo", minPriceCargo),
+                getTaskMaxPrice("priceCargo", maxPriceCargo),
+                getTaskMinPrice("pricePassenger", minPricePassenger),
+                getTaskMaxPrice("pricePassenger", maxPricePassenger),
+                getTaskWhereEqualTo("startCountry", startCountry),
+                getTaskWhereEqualTo("finishCountry", finishCountry),
+                getTaskWhereEqualTo("startCity", startCity),
+                getTaskWhereEqualTo("finishCity", finishCity),
+                getTaskMinDate("startDate", startDateDo, Filter.getStartDateDo()),
+                getTaskMaxDate("startDate", startDateAfter, Filter.getStartDateAfter()),
+                getTaskMinDate("finishDate", finishDateDo, Filter.getFinishDateDo()),
+                getTaskMaxDate("finishDate", finishDateAfter, Filter.getFinishDateAfter())
+        );
         allTasks.addOnSuccessListener(new OnSuccessListener<List<QuerySnapshot>>() {
             @Override
             public void onSuccess(List<QuerySnapshot> querySnapshots) {
-
-
-                for (QuerySnapshot queryDocumentSnapshots :querySnapshots){
-                    flights = new ArrayList<>();
-                    for (QueryDocumentSnapshot queryDocumentSnapshot :queryDocumentSnapshots){
-                        flights.add(queryDocumentSnapshot.toObject(Flight.class));
+                ArrayList<String> names = new ArrayList<>();
+                for (QuerySnapshot queryDocumentSnapshots : querySnapshots) {
+                    if (queryDocumentSnapshots.size() == 0) {
+                        setAdapter();
+                        return;
                     }
+                    ArrayList<String> flightArrayList = new ArrayList<>();
+                    for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
+                        flightArrayList.add(queryDocumentSnapshot.toObject(Flight.class).getName());
+                        if (names.size() != 0 && !names.contains(queryDocumentSnapshot.toObject(Flight.class).getName())) {
+                            flightArrayList.remove(queryDocumentSnapshot.toObject(Flight.class).getName());
+                        }
+
+                    }
+                        if (flightArrayList.isEmpty()) {
+                            setAdapter();
+                            return;
+                        }
+                    if (names.size() != 0) {
+                        flightArrayList.retainAll(names);
+                    }
+                    names = flightArrayList;
                 }
-                setAdapter();
+                for (int i = 0; i < names.size(); i++) {
+                    Log.d("TAGA", names.get(i));
+                }
+                flights = new ArrayList<>();
+                collectionReference
+                        .whereIn("name", names)
+                        .whereEqualTo("status", "Ожидает")
+                        .whereGreaterThan("finishDate", Calendar.getInstance().getTimeInMillis())
+                        .get()
+                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                Log.d("TAGA", "flight size : " + flights.size());
+
+                                for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
+                                    flights.add(queryDocumentSnapshot.toObject(Flight.class));
+                                }
+
+                                setAdapter();
+                            }
+                        });
             }
         });
 
-
-
-
-
-
-
-
-
-
-
-
-//        setAllList(query);
-//        flights = new ArrayList<>();
-//        Calendar calendar = Calendar.getInstance();
-//        query.whereGreaterThan("finishDate", calendar.getTimeInMillis()+8640000);
-//                .whereEqualTo("status", "Ожидает")
-//                        .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//            @Override
-//            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-//                try {
-//                    throw new ToastMessage(queryDocumentSnapshots.size()+"", getContext());
-//                } catch (ToastMessage toastMessage) {
-//                    toastMessage.printStackTrace();
-//                }
-//            }
-//        });
-
     }
 
-    private Query getQueryWhereLess(Query query, String key, long value){
-        if (query == null){
-            return collectionReference.whereLessThanOrEqualTo(key, value);
-        }else {
-            return query.whereLessThanOrEqualTo(key, value);
-        }
-    }
-    private Query getQueryWhereLessThen(Query query, String key, float value){
-        if (query == null){
-            return collectionReference.whereLessThanOrEqualTo(key, value);
-        }else {
-            return query.whereLessThanOrEqualTo(key, value);
+    private Task getTaskMinPrice(String key, TextInputEditText edit) {
+        if (!TextUtils.isEmpty(edit.getText())) {
+            return collectionReference.whereGreaterThanOrEqualTo(key, Float.parseFloat(edit.getText().toString().trim())).get();
+        } else {
+            return collectionReference.get();
         }
     }
 
-    private Query getQueryWhereGreater(Query query, String key, long value){
-        if (query == null){
-            return collectionReference.whereGreaterThanOrEqualTo(key, value);
-        }else {
-            return query.whereGreaterThanOrEqualTo(key, value);
+    private Task getTaskMaxPrice(String key, TextInputEditText edit) {
+        if (!TextUtils.isEmpty(edit.getText())) {
+            return collectionReference.whereLessThanOrEqualTo(key, Float.parseFloat(edit.getText().toString().trim())).get();
+        } else {
+            return collectionReference.get();
         }
     }
 
-    private Query getQueryWhereGreaterThan(Query query, String key, float value){
-        if (query == null){
-            return collectionReference.whereGreaterThanOrEqualTo(key, value);
-        }else {
-            return query.whereGreaterThanOrEqualTo(key, value);
+    private Task getTaskWhereEqualTo(String key, AutoCompleteTextView edit) {
+        if (!TextUtils.isEmpty(edit.getText())) {
+            return collectionReference.whereEqualTo(key, edit.getText().toString().trim()).get();
+        } else {
+            return collectionReference.get();
         }
     }
-    private Query getQueryWhereEqualTo(Query query, String key, String value){
-        if(query == null){
-            return  collectionReference.whereEqualTo(key, value);
-        }else{
-            return  query.whereEqualTo(key, value);
+
+    private Task getTaskMinDate(String key, TextInputEditText edit, long date) {
+        if (!TextUtils.isEmpty(edit.getText())) {
+            return collectionReference.whereGreaterThanOrEqualTo(key, date).get();
+        } else {
+            return collectionReference.get();
         }
     }
+
+    private Task getTaskMaxDate(String key, TextInputEditText edit, long date) {
+        if (!TextUtils.isEmpty(edit.getText())) {
+            return collectionReference.whereLessThanOrEqualTo(key, date).get();
+        } else {
+            return collectionReference.get();
+        }
+    }
+
 
     private void findViewFilter(View view) {
         minPriceCargo = view.findViewById(R.id.min_price_cargo_xml);

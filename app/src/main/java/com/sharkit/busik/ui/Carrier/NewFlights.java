@@ -127,6 +127,7 @@ public class NewFlights extends Fragment {
     }
 
     private void writeToObject(Flight flight) {
+        flight.setEmailsPassengers(new ArrayList<>());
         flight.setStartCountry(startCountry.getText().toString().trim());
         flight.setFinishCountry(finishCountry.getText().toString().trim());
         flight.setStartCity(startCity.getText().toString().trim());

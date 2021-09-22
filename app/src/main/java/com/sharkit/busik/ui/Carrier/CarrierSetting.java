@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +32,8 @@ import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.sharkit.busik.Entity.OwnName;
 import com.sharkit.busik.Entity.StaticUser;
 import com.sharkit.busik.Entity.User;
 import com.sharkit.busik.Exception.NoConnectInternet;
@@ -60,7 +63,30 @@ public class CarrierSetting extends Fragment {
         writeInput();
         onClick();
         saveVisible();
+        getAutoCompleteText();
         return root;
+    }
+    private void getAutoCompleteText() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        ArrayList<String> cities = new ArrayList<>();
+        ArrayList<String> countries = new ArrayList<>();
+        db.collection("Countries")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
+                        countries.add(queryDocumentSnapshot.toObject(OwnName.class).getOwnName());
+                    }
+                    country.setAdapter(new ArrayAdapter<String>(getContext(),android.R.layout.simple_dropdown_item_1line, countries));
+
+                });
+        db.collection("Cities")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
+                        cities.add(queryDocumentSnapshot.toObject(OwnName.class).getOwnName());
+                    }
+                });
+        city.setAdapter(new ArrayAdapter<String>(getContext(),android.R.layout.simple_dropdown_item_1line, cities));
     }
 
     private void saveVisible() {

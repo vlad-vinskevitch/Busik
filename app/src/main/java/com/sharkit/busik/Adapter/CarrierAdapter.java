@@ -6,7 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.util.DisplayMetrics;
-import android.view.ContextMenu;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -45,7 +45,7 @@ public class CarrierAdapter extends BaseAdapter implements View.OnClickListener 
     private TextView direction, priceCargo, pricePassenger, startDate, finishDate, status, note;
     private ImageView dropdownMenu;
     private LinearLayout linear_item, linear_flight, linear_cargo, linear_passenger, linear_departure,linear_arrival,linear_status,linear_details;
-    private static Flight flight;
+//    private static Flight flight;
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public CarrierAdapter(ArrayList<Flight> mGroup, Context mContext) {
@@ -95,12 +95,10 @@ public class CarrierAdapter extends BaseAdapter implements View.OnClickListener 
         return convertView;
     }
 
-
     public void setAdaptive (){
 
         DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
         int h = metrics.heightPixels;
-        int w = metrics.widthPixels;
 
         LinearLayout.LayoutParams linear_params = new LinearLayout.LayoutParams(-1,-2);
         linear_params.setMargins(0,0,0,0);
@@ -175,20 +173,20 @@ public class CarrierAdapter extends BaseAdapter implements View.OnClickListener 
     private void dropdownMenuListener(int position) {
 
         NavController navController = Navigation.findNavController((Activity) mContext, R.id.nav_host_carrier);
-        db.collection("Flights")
-                .whereEqualTo("owner", StaticUser.getEmail())
-                .whereEqualTo("startCountry", mGroup.get(position).getStartCountry())
-                .whereEqualTo("finishCountry", mGroup.get(position).getFinishCountry())
-                .whereEqualTo("startCity", mGroup.get(position).getStartCity())
-                .whereEqualTo("finishCity", mGroup.get(position).getFinishCity())
-                .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
-                    flight = queryDocumentSnapshot.toObject(Flight.class);
-                }
-            }
-        });
+//        db.collection("Flights")
+//                .whereEqualTo("owner", StaticUser.getEmail())
+//                .whereEqualTo("startCountry", mGroup.get(position).getStartCountry())
+//                .whereEqualTo("finishCountry", mGroup.get(position).getFinishCountry())
+//                .whereEqualTo("startCity", mGroup.get(position).getStartCity())
+//                .whereEqualTo("finishCity", mGroup.get(position).getFinishCity())
+//                .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//            @Override
+//            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
+//                    flight = queryDocumentSnapshot.toObject(Flight.class);
+//                }
+//            }
+//        });
         dropdownMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -204,22 +202,23 @@ public class CarrierAdapter extends BaseAdapter implements View.OnClickListener 
 
                             case R.id.close_xml:
                                 db.collection("Flights")
-                                        .document(flight.getName())
+                                        .document(mGroup.get(position).getName())
                                         .update("status", "Завершен");
+                                navController.navigate(R.id.nav_carrier_flights);
                                 break;
                             case R.id.passenger_xml:
-                                ElseVariable.setNameFlight(flight.getName());
+                                ElseVariable.setNameFlight(mGroup.get(position).getName());
                                 navController.navigate(R.id.nav_carrier_passengers);
                                 break;
                             case R.id.change_description_xml:
-                                createAlertDialogChangeDescription();
+                                createAlertDialogChangeDescription(position);
                                 break;
                             case R.id.write_message_xml:
                                 writeTheMessage(position);
                                 break;
                             case R.id.delete_xml:
                                 db.collection("Flights")
-                                        .document(flight.getName())
+                                        .document(mGroup.get(position).getName())
                                         .delete();
                                 navController.navigate(R.id.nav_carrier_flights);
                                 break;
@@ -255,7 +254,7 @@ public class CarrierAdapter extends BaseAdapter implements View.OnClickListener 
         message.setFlight(mGroup.get(position).getStartCountry() + "(" + mGroup.get(position).getStartCity() + ") - " +
                 mGroup.get(position).getFinishCountry() + "(" + mGroup.get(position).getFinishCity() + ")");
 
-        List<Object> list = Arrays.asList(flight.getPassengers().keySet().toArray());
+        List<Object> list = Arrays.asList(mGroup.get(position).getPassengers().keySet().toArray());
         for (int i = 0; i <list.size(); i++) {
             db.collection("Users/" + list.get(i) + "/Message")
                     .document(String.valueOf(calendar.getTimeInMillis()))
@@ -267,21 +266,21 @@ public class CarrierAdapter extends BaseAdapter implements View.OnClickListener 
 
     }
 
-    private void createAlertDialogChangeDescription() {
+    private void createAlertDialogChangeDescription(int position) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.change_descriptions, null);
 
         TextInputEditText text = view.findViewById(R.id.description_xml);
-        dialog.setPositiveButton("Изменить", (dialog1, which) -> changeDescription(text.getText().toString()));
+        dialog.setPositiveButton("Изменить", (dialog1, which) -> changeDescription(text.getText().toString(), position));
         dialog.setOnDismissListener(DialogInterface::dismiss);
         dialog.setView(view);
         dialog.show();
     }
 
-    private void changeDescription( String text) {
+    private void changeDescription( String text, int position) {
         db.collection("Flights")
-                .document(flight.getName())
+                .document(mGroup.get(position).getName())
                 .update("note", text)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
