@@ -29,6 +29,7 @@
             tools:ignore="RtlCompat" />
 
         <ImageView
+            android:contentDescription="@string/menu"
             android:layout_weight="1"
             android:id="@+id/dropdown_menu_xml"
             android:layout_width="wrap_content"

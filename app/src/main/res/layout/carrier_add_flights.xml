@@ -19,12 +19,12 @@
                 android:textSize="24sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Создание рейса"/>
+                android:text="@string/create_flight"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Откуда(страна)"
+                android:hint="@string/where_from_country"
                 app:hintAnimationEnabled="true">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:hintAnimationEnabled="true"
-                android:hint="Куда(страна)">
+                android:hint="@string/where_country">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     style="@style/styleEditText"
@@ -55,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:hintAnimationEnabled="true"
-                android:hint="Откуда(город)">
+                android:hint="@string/where_from_city">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     style="@style/styleEditText"
@@ -67,7 +67,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 app:hintAnimationEnabled="true"
-                android:hint="Куда(город)"
+                android:hint="@string/where_city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -80,7 +80,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:hint="Цена за кг груза ($)"
+                android:hint="@string/price_kg"
                 app:hintAnimationEnabled="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -93,7 +93,7 @@
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
                 app:hintAnimationEnabled="true"
-                android:hint="Цена за пасажира "
+                android:hint="@string/price_passenger"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -107,7 +107,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 app:hintAnimationEnabled="true"
-                android:hint="Start date"
+                android:hint="@string/start_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -121,7 +121,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 app:hintAnimationEnabled="true"
-                android:hint="finish date"
+                android:hint="@string/finish_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -135,7 +135,7 @@
             <com.google.android.material.textfield.TextInputLayout
 
                 app:hintAnimationEnabled="true"
-                android:hint="Подробности/Комментарий"
+                android:hint="@string/comments"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -153,7 +153,7 @@
                 style="@style/styleButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Создать"/>
+                android:text="@string/create"/>
 
 
         </LinearLayout>

@@ -10,7 +10,6 @@
             android:layout_weight="1"
             android:id="@+id/name_xml"
             android:gravity="end"
-            android:text="ФИО"
             style="@style/styleTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
@@ -18,7 +17,6 @@
             android:layout_weight="1"
             android:id="@+id/phone_xml"
             android:gravity="start"
-            android:text="@string/phone_number"
             style="@style/styleTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
@@ -31,7 +29,6 @@
             android:layout_weight="1"
             android:id="@+id/country_xml"
             android:gravity="end"
-            android:text="@string/country"
             style="@style/styleTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
@@ -39,7 +36,6 @@
             android:layout_weight="1"
             android:id="@+id/city_xml"
             android:gravity="start"
-            android:text="@string/city"
             style="@style/styleTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
@@ -52,13 +48,11 @@
             android:gravity="end"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            style="@style/styleTextView"
-            android:text="@string/rating"/>
+            style="@style/styleTextView" />
         <TextView
             android:layout_weight="1"
             android:id="@+id/rating_xml"
             android:gravity="start"
-            android:text="@string/rating"
             style="@style/styleTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>

@@ -58,7 +58,25 @@
     <string name="details">Подробности :</string>
     <string name="some_text">На вашу почту будет отправлено письмо с сылкой на востановление пароля</string>
     <string name="add">Добавить</string>
-
+    <string name="accept">Принять</string>
+    <string name="clear">Очистить</string>
+    <string name="create_flight">Создание рейса</string>
+    <string name="where_from_country">Откуда(страна)</string>
+    <string name="where_country">Куда(страна)</string>
+    <string name="where_from_city">Откуда(город)</string>
+    <string name="where_city">Куда(город)</string>
+    <string name="price_kg">Цена за кг груза ($)</string>
+    <string name="price_passenger">Цена за пасажира</string>
+    <string name="start_date">Дата начала поездки</string>
+    <string name="finish_date">Дата конца поездки</string>
+    <string name="comments">Подробности/Комментарий</string>
+    <string name="create">Создать</string>
+    <string name="menu">menu</string>
+    <string name="your_rating">Ваш рейтинг -</string>
+    <string name="cancel">Отменить</string>
+    <string name="information">Відомості</string>
+    <string name="passenger">Пассажиры</string>
+    <string name="register_user_such_as">Зарегистрирувать пользователя как:</string>
 
 
 </resources>
