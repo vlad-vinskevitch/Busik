@@ -217,7 +217,11 @@ public class CarrierAdapter extends BaseAdapter implements View.OnClickListener 
                                 writeTheMessage(position);
                                 break;
                             case R.id.delete_xml:
-                                creteAlertCancelFlight(position);
+                                if (!mGroup.get(position).getStatus().equals("Отменен")) {
+                                    creteAlertCancelFlight(position);
+                                }else {
+                                    ToastMessage("Рейс уже отменен");
+                                }
                                 break;
                         }
                         return true;

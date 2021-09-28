@@ -225,8 +225,6 @@ public class SenderAdapter extends BaseAdapter {
     }
 
     private void validationPassenger(int position) {
-        Calendar calendar = Calendar.getInstance();
-
         if (flight.getPassengers().size() == 0){
             try {
                 throw new ToastMessage("Вы должны быть пассажиром даного рейса", mContext);

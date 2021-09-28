@@ -59,6 +59,12 @@
 
     </LinearLayout>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/styleButton"
+        android:id="@+id/add_reviews_xml"
+        android:text="Оставить отзыв"/>
 
     <ListView
         android:id="@+id/list_reviews_xml"

@@ -115,6 +115,7 @@ public class PassengerAdapter extends BaseAdapter {
         info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ElseVariable.setStatusPassenger(passengers.get(mGroup.get(position).getEmail()).getStatus());
                 ElseVariable.setProfile(mGroup.get(position).getEmail());
                 navController.navigate(R.id.nav_profile);
             }

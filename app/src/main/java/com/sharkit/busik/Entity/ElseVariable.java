@@ -1,7 +1,15 @@
 package com.sharkit.busik.Entity;
 
 public class ElseVariable {
-    private static String profile, nameFlight;
+    private static String profile, nameFlight, statusPassenger;
+
+    public static String getStatusPassenger() {
+        return statusPassenger;
+    }
+
+    public static void setStatusPassenger(String statusPassenger) {
+        ElseVariable.statusPassenger = statusPassenger;
+    }
 
     public static String getNameFlight() {
         return nameFlight;
