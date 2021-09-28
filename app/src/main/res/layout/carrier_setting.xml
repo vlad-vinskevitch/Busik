@@ -165,7 +165,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:text="Ваш рейтинг - " />
+                    android:text="@string/your_rating" />
 
                 <TextView
                     android:id="@+id/rating_xml"

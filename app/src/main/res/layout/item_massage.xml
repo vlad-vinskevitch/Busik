@@ -16,7 +16,7 @@
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="ПІБ"
+
         style="@style/styleTextView"/>
     <TextView
         android:id="@+id/flight_xml"
@@ -25,13 +25,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         style="@style/styleTextView"
-        android:text="рейс"/>
+        />
 </LinearLayout>
     <TextView
         android:id="@+id/text_xml"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="text"
         style="@style/styleTextView"/>
     <LinearLayout
         android:layout_margin="5dp"
@@ -44,7 +43,7 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="data"
+
             style="@style/styleTextView"
             />
     </LinearLayout>

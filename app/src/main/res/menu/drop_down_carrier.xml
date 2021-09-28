@@ -21,6 +21,6 @@
     </item>
     <item
         android:id="@+id/delete_xml"
-        android:title="Удалить" >
+        android:title="Отменить рейс" >
     </item>
 </menu>

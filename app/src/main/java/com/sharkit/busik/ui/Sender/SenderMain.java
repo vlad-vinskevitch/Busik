@@ -6,6 +6,7 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +15,8 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,14 +24,12 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.sharkit.busik.Adapter.SenderAdapter;
@@ -65,10 +64,30 @@ public class SenderMain extends Fragment implements View.OnClickListener {
         View root = inflater.inflate(R.layout.sender_main, container, false);
         findView(root);
         onClick();
+        setAdaptive();
         findCountriesAndCities();
-//        setFilter();
-        setAllList();
+        closeTheFlight();
         return root;
+    }
+
+    private void closeTheFlight() {
+        collectionReference.whereLessThanOrEqualTo("finishDate", Calendar.getInstance().getTimeInMillis())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for (QueryDocumentSnapshot queryDocumentSnapshot :queryDocumentSnapshots){
+                    if (queryDocumentSnapshot.toObject(Flight.class).getFinishDate() + 172800000 < Calendar.getInstance().getTimeInMillis()) {
+                        updateStatus(queryDocumentSnapshot.toObject(Flight.class).getName());
+                    }
+                }
+                setAllList();
+            }
+        });
+    }
+
+    private void updateStatus(String name) {
+        collectionReference.document(name).update("status", "Завершен");
     }
 
     private void findCountriesAndCities() {
@@ -93,7 +112,7 @@ public class SenderMain extends Fragment implements View.OnClickListener {
     private void setAllList() {
         flights = new ArrayList<>();
                 collectionReference
-                        .whereEqualTo("status", "Ожидает")
+//                        .whereEqualTo("status", "Ожидает")
                         .whereGreaterThan("finishDate", Calendar.getInstance().getTimeInMillis())
                         .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
@@ -112,6 +131,18 @@ public class SenderMain extends Fragment implements View.OnClickListener {
     private void onClick() {
         profile.setOnClickListener(this);
         filter.setOnClickListener(this);
+    }
+    private void setAdaptive(){
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int h = metrics.heightPixels;
+        int w = metrics.widthPixels;
+
+        if(h < 1800){
+            LinearLayout.LayoutParams params_icon = new LinearLayout.LayoutParams(90,90);
+            filter.setLayoutParams(params_icon);
+            profile.setLayoutParams(params_icon);
+        }
+
     }
 
     private void createAlertFilter() {
@@ -201,6 +232,7 @@ public class SenderMain extends Fragment implements View.OnClickListener {
             @Override
             public void onSuccess(List<QuerySnapshot> querySnapshots) {
                 ArrayList<String> names = new ArrayList<>();
+                flights = new ArrayList<>();
                 for (QuerySnapshot queryDocumentSnapshots : querySnapshots) {
                     if (queryDocumentSnapshots.size() == 0) {
                         setAdapter();
@@ -212,7 +244,6 @@ public class SenderMain extends Fragment implements View.OnClickListener {
                         if (names.size() != 0 && !names.contains(queryDocumentSnapshot.toObject(Flight.class).getName())) {
                             flightArrayList.remove(queryDocumentSnapshot.toObject(Flight.class).getName());
                         }
-
                     }
                         if (flightArrayList.isEmpty()) {
                             setAdapter();
@@ -226,11 +257,10 @@ public class SenderMain extends Fragment implements View.OnClickListener {
                 for (int i = 0; i < names.size(); i++) {
                     Log.d("TAGA", names.get(i));
                 }
-                flights = new ArrayList<>();
                 collectionReference
                         .whereIn("name", names)
                         .whereEqualTo("status", "Ожидает")
-                        .whereGreaterThan("finishDate", Calendar.getInstance().getTimeInMillis())
+//                        .whereGreaterThan("finishDate", Calendar.getInstance().getTimeInMillis())
                         .get()
                         .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                             @Override

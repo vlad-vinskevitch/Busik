@@ -217,10 +217,7 @@ public class CarrierAdapter extends BaseAdapter implements View.OnClickListener 
                                 writeTheMessage(position);
                                 break;
                             case R.id.delete_xml:
-                                db.collection("Flights")
-                                        .document(mGroup.get(position).getName())
-                                        .delete();
-                                navController.navigate(R.id.nav_carrier_flights);
+                                creteAlertCancelFlight(position);
                                 break;
                         }
                         return true;
@@ -228,6 +225,22 @@ public class CarrierAdapter extends BaseAdapter implements View.OnClickListener 
                 });
             }
         });
+    }
+
+    private void creteAlertCancelFlight(int position) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_admin_country_cities, null);
+        TextView textView = view.findViewById(R.id.name_xml);
+        textView.setText("Вы точно хотите отменить рейс? После отмены пассажиры смогут оставить отзывы");
+        dialog.setOnDismissListener(DialogInterface::dismiss);
+        dialog.setPositiveButton("Подтвердить", (dialog1, which) -> {
+            db.collection("Flights").document(mGroup.get(position).getName()).update("status", "Отменен");
+            Navigation.findNavController((Activity) mContext, R.id.nav_host_carrier).navigate(R.id.nav_carrier_flights);
+        });
+
+        dialog.setNegativeButton("Назад", (dialog12, which) -> dialog12.dismiss());
+        dialog.setView(view);
+        dialog.show();
     }
 
     private void writeTheMessage(int position) {

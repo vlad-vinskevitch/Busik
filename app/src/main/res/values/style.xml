@@ -39,6 +39,9 @@
         <item name="android:background">@color/white</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+    <style name="styleImage_menu" parent="android:style/Theme.Dialog">
+        <item name="android:tint">@color/black</item>
+    </style>
 
 
 

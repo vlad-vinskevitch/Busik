@@ -18,7 +18,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             style="@style/styleTextView"
-            android:text="ФИО"/>
+           />
         <TextView
             android:id="@+id/date_xml"
             android:layout_weight="1"
@@ -26,7 +26,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             style="@style/styleTextView"
-            android:text="Дата"/>
+            />
     </LinearLayout>
 
     <TextView
@@ -35,17 +35,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/styleTextView"
-        android:text="Рейс"/>
+        />
     <TextView
         android:id="@+id/rating_xml"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/styleTextView"
-        android:text="рейтинг"/>
+        />
     <TextView
         android:id="@+id/text_reviews"
-        android:text="Текст відгуку"
+
         android:gravity="center"
         style="@style/styleTextView"
         android:layout_width="match_parent"

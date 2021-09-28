@@ -67,7 +67,7 @@ public class MessagesAdapter extends BaseAdapter {
 
         name.setPadding(60,0,0,0);
         flight.setPadding(0,0,60,0);
-        status.setPadding(60,0,0,0);
+//        status.setPadding(60,0,0,0);
         date.setPadding(0,0,60,0);
         text.setPadding(10,0,10,0);
 
@@ -76,14 +76,14 @@ public class MessagesAdapter extends BaseAdapter {
             name.setTextSize(14);
             flight.setTextSize(14);
             text.setTextSize(14);
-            status.setTextSize(14);
+//            status.setTextSize(14);
             date.setTextSize(14);
         }else {
             text.setPadding(10,0,10,0);
             name.setTextSize(11);
             flight.setTextSize(11);
             text.setTextSize(11);
-            status.setTextSize(11);
+//            status.setTextSize(11);
             date.setTextSize(11);
         }
 
@@ -131,6 +131,7 @@ public class MessagesAdapter extends BaseAdapter {
         flight = convertView.findViewById(R.id.flight_xml);
         text = convertView.findViewById(R.id.text_xml);
         date = convertView.findViewById(R.id.date_xml);
+//        status = convertView.findViewById(R.id.status_xml);
     }
     private void createToastMessage(String message){
         try {

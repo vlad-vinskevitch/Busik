@@ -5,6 +5,6 @@ import android.widget.Toast;
 
 public class ToastMessage extends Exception{
     public ToastMessage(String message, Context context) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 }
