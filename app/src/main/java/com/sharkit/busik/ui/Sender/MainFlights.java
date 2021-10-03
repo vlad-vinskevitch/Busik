@@ -32,7 +32,7 @@ import java.util.Map;
 
 public class MainFlights extends Fragment {
     private ListView listView;
-    private ArrayList<Flight> flights = new ArrayList<>();
+    private ArrayList<Flight> flights;
     private ImageView back;
     @Nullable
     @Override
@@ -55,9 +55,8 @@ public class MainFlights extends Fragment {
 
     private void getFlights() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
+        flights = new ArrayList<>();
         db.collection("Flights")
-
                 .whereArrayContains("emailsPassengers",StaticUser.getEmail())
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {

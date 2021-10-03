@@ -15,4 +15,8 @@
         android:id="@+id/send_review_xml"
         android:title="Оставить отзыв"/>
 
+    <item
+        android:id="@+id/information_xml"
+        android:title="Профиль"/>
+
 </menu>

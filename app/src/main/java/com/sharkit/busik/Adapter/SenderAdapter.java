@@ -90,6 +90,12 @@ public class SenderAdapter extends BaseAdapter {
                 PopupMenu menu = new PopupMenu(mContext, v);
                 MenuInflater menuInflater = menu.getMenuInflater();
                 menuInflater.inflate(R.menu.drop_down_sender, menu.getMenu());
+                if (mGroup.get(position).getPassengers().containsKey(StaticUser.getEmail())){
+                    menu.getMenu().getItem(0).setEnabled(false);
+                }else {
+                    menu.getMenu().getItem(1).setEnabled(false);
+                }
+
                 menu.show();
                 menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @SuppressLint("NonConstantResourceId")
@@ -97,15 +103,19 @@ public class SenderAdapter extends BaseAdapter {
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.registration_xml:
-                                getFlight(position);
+                                getFlight(position, menu.getMenu().getItem(0), menu.getMenu().getItem(1));
                                 break;
                             case R.id.cancel_xml:
-                                cancelBoarding(position);
+                                cancelBoarding(position, menu.getMenu().getItem(0), menu.getMenu().getItem(1));
                                 break;
                             case R.id.send_review_xml:
                                 leaveReview(position);
                                 break;
-
+                            case R.id.information_xml:
+//                                ElseVariable.setStatusPassenger(passengers.get(mGroup.get(position).getEmail()).getStatus());
+                                ElseVariable.setProfile(mGroup.get(position).getOwner());
+                                Navigation.findNavController((Activity) mContext, R.id.nav_host_sender).navigate(R.id.nav_profile);
+                            break;
                         }
                         return true;
                     }
@@ -343,7 +353,7 @@ public class SenderAdapter extends BaseAdapter {
                 });
     }
 
-    private void cancelBoarding(int position) {
+    private void cancelBoarding(int position, MenuItem item, MenuItem menuItem) {
         db.collection("Flights")
                 .whereEqualTo("owner", mGroup.get(position).getOwner())
                 .whereEqualTo("startCountry", mGroup.get(position).getStartCountry())
@@ -372,6 +382,8 @@ public class SenderAdapter extends BaseAdapter {
                                         .getDisplayName().equals("com.sharkit.busik:id/nav_main_flights")){
                                     Navigation.findNavController((Activity) mContext, R.id.nav_host_sender).navigate(R.id.nav_main_flights);
                                 }
+                                Navigation.findNavController((Activity) mContext, R.id.nav_host_sender).navigate(R.id.nav_sender_main);
+
                                 try {
                                     throw new ToastMessage("Вы успешно сняты с посадки", mContext);
                                 } catch (ToastMessage toastMessage) {
@@ -427,7 +439,7 @@ public class SenderAdapter extends BaseAdapter {
                 });
     }
 
-    private void getFlight(int position) {
+    private void getFlight(int position, MenuItem item, MenuItem menuItem) {
 
         db.collection("Flights")
                 .whereEqualTo("owner", mGroup.get(position).getOwner())
@@ -443,12 +455,12 @@ public class SenderAdapter extends BaseAdapter {
                         for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
                             flight = queryDocumentSnapshot.toObject(Flight.class);
                         }
-                        addPassenger();
+                        addPassenger(item,menuItem);
                     }
                 });
     }
 
-    private void addPassenger() {
+    private void addPassenger(MenuItem registration, MenuItem cancelBoarding) {
 
 
         if (flight.getPassengers().containsKey(StaticUser.getEmail())){
@@ -468,6 +480,7 @@ public class SenderAdapter extends BaseAdapter {
                 db.collection("Flights")
                         .document(flight.getName())
                         .update("passengers", flight.getPassengers(), "emailsPassengers", flight.getEmailsPassengers());
+        Navigation.findNavController((Activity) mContext, R.id.nav_host_sender).navigate(R.id.nav_sender_main);
 
         try {
             throw new ToastMessage("Посадка выполнена", mContext);

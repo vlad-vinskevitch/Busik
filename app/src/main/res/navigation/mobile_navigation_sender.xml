@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/nav_profile"
-        android:name="com.sharkit.busik.ui.Carrier.Profile"
+        android:name="com.sharkit.busik.ui.Sender.SenderReviewProfile"
         tools:layout="@layout/profile" />
 
 </navigation>

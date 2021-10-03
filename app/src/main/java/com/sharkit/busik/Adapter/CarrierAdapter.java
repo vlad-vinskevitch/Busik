@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -29,6 +31,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.sharkit.busik.Entity.ElseVariable;
 import com.sharkit.busik.Entity.Flight;
 import com.sharkit.busik.Entity.Message;
+import com.sharkit.busik.Entity.Passenger;
 import com.sharkit.busik.Entity.StaticUser;
 import com.sharkit.busik.Exception.ToastMessage;
 import com.sharkit.busik.R;
@@ -38,9 +41,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class CarrierAdapter extends BaseAdapter implements View.OnClickListener {
     private ArrayList<Flight> mGroup;
+    private ArrayList<Boolean> isMessages;
     private Context mContext;
     private TextView direction, priceCargo, pricePassenger, startDate, finishDate, status, note;
     private ImageView dropdownMenu;
@@ -48,9 +54,10 @@ public class CarrierAdapter extends BaseAdapter implements View.OnClickListener 
 //    private static Flight flight;
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public CarrierAdapter(ArrayList<Flight> mGroup, Context mContext) {
+    public CarrierAdapter(ArrayList<Flight> mGroup, Context mContext, ArrayList<Boolean> messages) {
         this.mGroup = mGroup;
         this.mContext = mContext;
+        isMessages = messages;
     }
 
     @Override
@@ -171,39 +178,37 @@ public class CarrierAdapter extends BaseAdapter implements View.OnClickListener 
     }
 
     private void dropdownMenuListener(int position) {
-
+        if (isMessages.get(position)){
+            dropdownMenu.setImageResource(R.drawable.burgermenu);
+        }
         NavController navController = Navigation.findNavController((Activity) mContext, R.id.nav_host_carrier);
-//        db.collection("Flights")
-//                .whereEqualTo("owner", StaticUser.getEmail())
-//                .whereEqualTo("startCountry", mGroup.get(position).getStartCountry())
-//                .whereEqualTo("finishCountry", mGroup.get(position).getFinishCountry())
-//                .whereEqualTo("startCity", mGroup.get(position).getStartCity())
-//                .whereEqualTo("finishCity", mGroup.get(position).getFinishCity())
-//                .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//            @Override
-//            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-//                for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
-//                    flight = queryDocumentSnapshot.toObject(Flight.class);
-//                }
-//            }
-//        });
         dropdownMenu.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.Q)
             @Override
             public void onClick(View v) {
-                PopupMenu menu =new PopupMenu(mContext, v);
+                PopupMenu menu = new PopupMenu(mContext, v);
                 MenuInflater menuInflater = menu.getMenuInflater();
                 menuInflater.inflate(R.menu.drop_down_carrier,menu.getMenu());
+                if (!mGroup.get(position).getStatus().equals("Ожидает")){
+                    menu.getMenu().getItem(0).setEnabled(false);
+                    menu.getMenu().getItem(2).setEnabled(false);
+                    menu.getMenu().getItem(3).setEnabled(false);
+                    menu.getMenu().getItem(4).setEnabled(false);
+                }
+                if (isMessages.get(position)) {
+                    menu.getMenu().getItem(1).setIcon(R.drawable.icon_mail);
+                }
+                menu.setForceShowIcon(true);
                 menu.show();
                 menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @SuppressLint("NonConstantResourceId")
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()){
-
                             case R.id.close_xml:
                                 db.collection("Flights")
                                         .document(mGroup.get(position).getName())
-                                        .update("status", "Завершен");
+                                        .update("status", "Завершен", "passengers", refreshPassengers(position));
                                 navController.navigate(R.id.nav_carrier_flights);
                                 break;
                             case R.id.passenger_xml:
@@ -231,6 +236,17 @@ public class CarrierAdapter extends BaseAdapter implements View.OnClickListener 
         });
     }
 
+    private Map<String, Passenger> refreshPassengers(int position) {
+        ArrayList<String> keys = new ArrayList<>();
+        keys.addAll(mGroup.get(position).getPassengers().keySet());
+        for (int i = 0; i < keys.size(); i++) {
+            if (mGroup.get(position).getPassengers().get(keys.get(i)).getStatus().equals("Ожидает")){
+                mGroup.get(position).getPassengers().get(keys.get(i)).setStatus("Отменен");
+            }
+        }
+        return mGroup.get(position).getPassengers();
+    }
+
     private void creteAlertCancelFlight(int position) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_admin_country_cities, null);
@@ -238,7 +254,8 @@ public class CarrierAdapter extends BaseAdapter implements View.OnClickListener 
         textView.setText("Вы точно хотите отменить рейс? После отмены пассажиры смогут оставить отзывы");
         dialog.setOnDismissListener(DialogInterface::dismiss);
         dialog.setPositiveButton("Подтвердить", (dialog1, which) -> {
-            db.collection("Flights").document(mGroup.get(position).getName()).update("status", "Отменен");
+            db.collection("Flights").document(mGroup.get(position).getName())
+                    .update("status", "Отменен", "passengers", refreshPassengers(position));
             Navigation.findNavController((Activity) mContext, R.id.nav_host_carrier).navigate(R.id.nav_carrier_flights);
         });
 
@@ -337,7 +354,6 @@ public class CarrierAdapter extends BaseAdapter implements View.OnClickListener 
         linear_arrival = convertView.findViewById(R.id.linear_arrival);
         linear_status = convertView.findViewById(R.id.linear_status);
         linear_details = convertView.findViewById(R.id.linear_details);
-
     }
 
 

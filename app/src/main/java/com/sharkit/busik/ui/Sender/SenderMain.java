@@ -24,12 +24,14 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.sharkit.busik.Adapter.SenderAdapter;
@@ -40,6 +42,7 @@ import com.sharkit.busik.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -112,8 +115,9 @@ public class SenderMain extends Fragment implements View.OnClickListener {
     private void setAllList() {
         flights = new ArrayList<>();
                 collectionReference
-//                        .whereEqualTo("status", "Ожидает")
                         .whereGreaterThan("finishDate", Calendar.getInstance().getTimeInMillis())
+                        .orderBy("finishDate")
+                        .orderBy("startDate", Query.Direction.ASCENDING)
                         .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     for (QueryDocumentSnapshot queryDocumentSnapshot :queryDocumentSnapshots){
@@ -254,29 +258,30 @@ public class SenderMain extends Fragment implements View.OnClickListener {
                     }
                     names = flightArrayList;
                 }
+
                 for (int i = 0; i < names.size(); i++) {
-                    Log.d("TAGA", names.get(i));
+                    getToFilter(names.get(i));
                 }
-                collectionReference
-                        .whereIn("name", names)
-                        .whereEqualTo("status", "Ожидает")
-//                        .whereGreaterThan("finishDate", Calendar.getInstance().getTimeInMillis())
-                        .get()
-                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                            @Override
-                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                Log.d("TAGA", "flight size : " + flights.size());
-
-                                for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
-                                    flights.add(queryDocumentSnapshot.toObject(Flight.class));
-                                }
-
-                                setAdapter();
-                            }
-                        });
             }
         });
 
+    }
+    private void getToFilter(String name){
+        collectionReference
+                .whereEqualTo("name", name)
+                .whereGreaterThan("finishDate", Calendar.getInstance().getTimeInMillis())
+                .orderBy("finishDate")
+                .orderBy("startDate", Query.Direction.ASCENDING)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
+                            flights.add(queryDocumentSnapshot.toObject(Flight.class));
+                        }
+                        setAdapter();
+                    }
+                });
     }
 
     private Task getTaskMinPrice(String key, TextInputEditText edit) {
